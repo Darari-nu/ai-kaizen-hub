@@ -13,9 +13,10 @@ export default {
         shu: '#C73E2E',   // 朱肉（承認印・CTAのみ）
         'shu-pale': '#F7E8E4',
         dusk: '#141821',  // ダーク没入ヒーローの地色（イラストの青灰夜に合わせる）
+        kinari: '#F4F0E7', // セクション背景の生成り（リズムづけ用）
       },
       fontFamily: {
-        display: ['"Zen Old Mincho"', 'serif'],
+        display: ['"Shippori Mincho B1"', '"Zen Old Mincho"', 'serif'],
         body: ['"BIZ UDPMincho"', '"Zen Old Mincho"', 'serif'],
       },
       maxWidth: {

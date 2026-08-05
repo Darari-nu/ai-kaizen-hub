@@ -113,23 +113,23 @@ const faqs = [
     </section>
 
     <!-- 2. ペイン -->
-    <section class="border-t border-rule">
-      <div class="mx-auto max-w-site px-5 py-14">
+    <section class="bg-kinari">
+      <div class="mx-auto max-w-site px-5 py-20">
         <SectionLabel text="よくある壁" />
-        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           こんな壁に、ぶつかってません？
         </h2>
-        <ul class="mt-8 max-w-prose">
+        <ul class="mt-10 max-w-2xl">
           {
             pains.map((p, i) => (
               <li
                 class:list={[
-                  'flex gap-4 border-rule py-4 leading-relaxed',
+                  'flex items-baseline gap-6 border-rule py-5 leading-relaxed',
                   i > 0 && 'border-t',
                 ]}
               >
-                <span class="font-display text-sm text-nezu">壁{i + 1}</span>
-                <span>{p}</span>
+                <span class="font-display text-4xl font-extrabold text-ink/15">0{i + 1}</span>
+                <span class="text-lg">{p}</span>
               </li>
             ))
           }
@@ -141,10 +141,10 @@ const faqs = [
     </section>
 
     <!-- 3. 無料コンテンツ -->
-    <section id="articles" class="border-t border-rule">
-      <div class="mx-auto max-w-site px-5 py-14">
+    <section id="articles">
+      <div class="mx-auto max-w-site px-5 py-20">
         <SectionLabel text="無料コンテンツ" />
-        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           ぜんぶ無料で、置いておきます。
         </h2>
         <div class="mt-8 grid max-w-3xl gap-x-8 gap-y-6 sm:grid-cols-3">
@@ -164,13 +164,16 @@ const faqs = [
         <div class="mt-8">
           {
             articles.map((a) => (
-              <article class="flex gap-6 border-t border-rule py-6 first:border-t-2 first:border-ink">
+              <article class="group flex gap-7 border-t border-rule py-7 first:border-t-2 first:border-ink">
                 {a.data.ogImage && (
-                  <div class="hidden w-44 shrink-0 sm:block">
+                  <div class="hidden w-56 shrink-0 overflow-hidden sm:block">
                     <img
                       src={a.data.ogImage}
                       alt=""
-                      class:list={['aspect-video w-full object-cover', a.data.draft && 'opacity-60']}
+                      class:list={[
+                        'aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]',
+                        a.data.draft && 'opacity-60',
+                      ]}
                     />
                   </div>
                 )}
@@ -223,10 +226,10 @@ const faqs = [
     </section>
 
     <!-- 4. 書いてる人 -->
-    <section class="border-t border-rule">
-      <div class="mx-auto max-w-site px-5 py-14">
+    <section>
+      <div class="mx-auto max-w-site px-5 py-20">
         <SectionLabel text="書いてる人" />
-        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           書いてるのは、だらリーヌ。
         </h2>
         <dl class="mt-8 max-w-prose">
@@ -255,10 +258,10 @@ const faqs = [
     </section>
 
     <!-- 5. なぜ無料か -->
-    <section class="border-t border-rule">
-      <div class="mx-auto max-w-site px-5 py-14">
+    <section class="bg-kinari">
+      <div class="mx-auto max-w-site px-5 py-20">
         <SectionLabel text="たいせつなこと" />
-        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           なぜ、ぜんぶ無料なのか。
         </h2>
         <p class="mt-6 max-w-prose leading-relaxed">
@@ -269,27 +272,29 @@ const faqs = [
       </div>
     </section>
 
-    <!-- 6. 登録CTA -->
-    <section id="register" class="border-t border-rule">
-      <div class="mx-auto max-w-site px-5 py-16">
-        <SectionLabel text="ニュースレター" />
-        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+    <!-- 6. 登録CTA(ダークバンド。ヒーローと呼応) -->
+    <section id="register" class="bg-dusk text-paper">
+      <div class="mx-auto max-w-site px-5 py-20">
+        <span class="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] text-paper/60"
+          ><span class="inline-block h-px w-6 bg-shu"></span>ニュースレター</span
+        >
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           続きは、受信箱に届きます。
         </h2>
-        <p class="mt-4 max-w-prose leading-relaxed">
+        <p class="mt-4 max-w-prose leading-relaxed text-paper/85">
           新しい記事と、会社にAIを通す実況の続きを、Substackで配信しています。登録は無料。メールアドレスだけです。
         </p>
-        <div class="mt-6">
+        <div class="mt-7">
           <SubstackEmbed />
         </div>
       </div>
     </section>
 
     <!-- 7. FAQ -->
-    <section class="border-t border-rule">
-      <div class="mx-auto max-w-site px-5 py-14">
+    <section>
+      <div class="mx-auto max-w-site px-5 py-20">
         <SectionLabel text="はじめての方へ" />
-        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           よくある質問
         </h2>
         <div class="mt-8 max-w-prose">
