@@ -1,0 +1,214 @@
+---
+// DARARIポータル — ダラリ重工業の社内イントラネット(という設定のパロディページ)。
+// 2000年代の社内ポータル様式美: 灰色背景・青リンク・表組み・過剰な「重要」マーク。
+import Base from '@/layouts/Base.astro';
+
+const notices = [
+  ['2026.08.04', '重要', '総務部', 'ノー残業デーの徹底について（再周知）（再々周知）'],
+  ['2026.08.01', '通達', '情報システム部', 'AI利用規程（暫定版）の制定について'],
+  ['2026.07.28', 'お願い', '経理部', '経費精算の締切厳守について（今月こそ）'],
+  ['2026.07.15', '通達', '総務部', '夏季休業期間中の入退館について'],
+  ['2026.07.01', '回覧', '広報・IR室', '社内報「だらり」7月号を掲載しました'],
+  ['2026.06.20', '重要', '品質保証部', '検査記録の記入漏れ防止について（月例）'],
+];
+
+const kettai = [
+  ['10万円未満', '課長', '即日〜3営業日'],
+  ['100万円未満', '部長', '1〜2週間'],
+  ['1,000万円未満', '本部長', '2週間〜1ヶ月'],
+  ['1,000万円以上', '稟議（役員決裁）', '1〜6ヶ月'],
+  ['クレジットカード払い', '経理部承認（四半期に一回）', '最長3ヶ月'],
+];
+
+// 方針の階層。下に降りるほど「前年比3%」が濃くなっていくJTC様式美。
+const policies = [
+  ['社方針', '変化をおそれず、創造と革新により、新たな百年の礎を築く'],
+  ['製造本部方針', '変化に対応し、生産性を前年比3%改善する'],
+  ['製造部方針', '生産性を前年比3%改善する（本部方針に同じ）'],
+  ['製造一課方針', '段取り時間を前年比3%短縮する'],
+  ['職場方針（第2ライン）', '5Sを徹底する。挨拶をする。前年比3%。'],
+];
+
+const rules = [
+  ['AI利用規程（暫定版）', '/company/ai-kitei/', true],
+  ['文書管理規程', '', false],
+  ['稟議規程', '', false],
+  ['出張旅費規程', '', false],
+  ['慶弔見舞金規程', '', false],
+  ['社印取扱規程', '', false],
+];
+---
+
+<Base
+  title="DARARIポータル（架空企業の社内サイト）"
+  description="架空企業ダラリ重工業の社内ポータル（という設定のページ）。通達・規程・決裁権限表・方針の階層が閲覧できます。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <!-- 架空明示バナー -->
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内サイト（という設定）です。
+    </div>
+
+    <!-- ポータルヘッダー -->
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">DARARIポータル</p>
+        <p class="text-[11px] text-white/80">社内限 ｜ ようこそ、AI活用推進室 さん（前回ログイン: 昨日 22:47）</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-4 px-3 py-4">
+      <!-- お知らせ -->
+      <div class="border border-[#999] bg-white">
+        <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+          ■ お知らせ・通達
+        </div>
+        <ul class="divide-y divide-[#eee] px-3 py-1">
+          {
+            notices.map(([date, tag, dept, text]) => (
+              <li class="flex flex-wrap items-baseline gap-2 py-1.5">
+                <span class="text-[#888]">{date}</span>
+                <span
+                  class:list={[
+                    'px-1.5 py-0.5 text-[10px] font-bold',
+                    tag === '重要' ? 'bg-[#c00] text-white' : 'bg-[#eef1f5] text-[#1b3a6b] border border-[#1b3a6b]',
+                  ]}
+                >
+                  {tag}
+                </span>
+                <span class="text-[#666]">[{dept}]</span>
+                {text === 'AI利用規程（暫定版）の制定について' ? (
+                  <a href="/company/ai-kitei/" class="text-[#00c] underline">
+                    {text}
+                  </a>
+                ) : (
+                  <span class="cursor-default text-[#00c] underline decoration-dotted">{text}</span>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <!-- 規程集 -->
+        <div class="border border-[#999] bg-white">
+          <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+            ■ 社内規程集
+          </div>
+          <ul class="divide-y divide-[#eee] px-3 py-1">
+            {
+              rules.map(([name, href, alive]) => (
+                <li class="flex items-baseline justify-between py-1.5">
+                  {alive ? (
+                    <a href={href} class="text-[#00c] underline">
+                      {name}
+                    </a>
+                  ) : (
+                    <span class="cursor-default text-[#00c] underline decoration-dotted">{name}</span>
+                  )}
+                  {alive ? (
+                    <span class="bg-[#c00] px-1.5 py-0.5 text-[10px] font-bold text-white">NEW</span>
+                  ) : (
+                    <span class="text-[10px] text-[#999]">PDF 準備中</span>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- リンク集 -->
+        <div class="border border-[#999] bg-white">
+          <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+            ■ 社内システム
+          </div>
+          <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
+            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">勤怠管理システム</span><span class="ml-2 text-[10px] text-[#999]">（応答なし）</span></li>
+            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">経費精算システム</span><span class="ml-2 text-[10px] text-[#c00]">Internet Explorer 11 推奨</span></li>
+            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">文書管理システム</span><span class="ml-2 text-[10px] text-[#999]">（要VPN・要申請・要研修）</span></li>
+            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">Copilot Chat</span><span class="ml-2 text-[10px] text-[#1b3a6b] font-bold">←これは使えます</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 決裁権限表 -->
+      <div class="border border-[#999] bg-white">
+        <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+          ■ 決裁権限表（抜粋）
+        </div>
+        <table class="w-full border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">金額</th>
+              <th class="border border-[#ddd] px-3 py-1.5">決裁者</th>
+              <th class="border border-[#ddd] px-3 py-1.5">所要期間（目安）</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              kettai.map(([amount, approver, period]) => (
+                <tr>
+                  <td class="border border-[#ddd] px-3 py-1.5">{amount}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5">{approver}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5">{period}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <p class="px-3 py-2 text-[11px] text-[#888]">
+          ※ 有料クラウドサービス（SaaS等）の新規契約は、金額にかかわらず情報システム部・法務部の事前確認が必要です。
+        </p>
+      </div>
+
+      <!-- 方針の階層 -->
+      <div class="border border-[#999] bg-white">
+        <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+          ■ 2026年度 方針体系（方針管理）
+        </div>
+        <div class="space-y-0 px-3 py-3">
+          {
+            policies.map(([level, text], i) => (
+              <div>
+                {i > 0 && <div class="ml-6 h-3 w-px bg-[#999]" />}
+                <div class="flex items-baseline gap-3" style={`margin-left: ${i * 1.5}rem`}>
+                  <span class="shrink-0 border border-[#1b3a6b] bg-[#eef1f5] px-2 py-0.5 text-[10px] font-bold text-[#1b3a6b]">
+                    {level}
+                  </span>
+                  <span class="text-[12px]">{text}</span>
+                </div>
+              </div>
+            ))
+          }
+          <p class="mt-3 text-[11px] text-[#888]">
+            ※ 下位方針は上位方針とベクトルを合わせて策定してください（毎年1月・方針展開会議にて審議）。
+          </p>
+        </div>
+      </div>
+
+      <!-- 社員証(登録導線) -->
+      <div class="border-2 border-[#c00] bg-[#fffbe6] px-4 py-3 text-[12px]">
+        <p class="font-bold text-[#c00]">🔒 閲覧権限について</p>
+        <p class="mt-1 leading-relaxed">
+          一部の回覧資料（規程の編集可能版・稟議実録・決裁権限表の全文）は社員限定です。
+          社員証をお持ちでない方は、入社手続き（<a href="https://dararinu.substack.com" class="font-bold text-[#00c] underline">Substack無料登録・1分</a>）をお願いします。
+          新しい通達も受信箱に届きます。
+        </p>
+      </div>
+
+      <!-- フッター -->
+      <div class="pb-6 text-center text-[11px] text-[#666]">
+        <p>本ポータルは社内専用です。画面の印刷・持ち出しは所属長の承認を得てください。</p>
+        <p class="mt-1">推奨環境: Internet Explorer 11 ／ 解像度 1024×768 以上</p>
+        <p class="mt-3">
+          <a href="/company/" class="text-[#00c] underline">コーポレートサイトへ</a> ｜
+          <a href="/" class="text-[#00c] underline">AIカイゼン（実況サイト）へ</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>

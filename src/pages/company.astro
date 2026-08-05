@@ -1,12 +1,40 @@
 ---
 // ダラリ重工業株式会社 — AIカイゼンの記事に登場する架空企業のコーポレートサイト(パロディ)。
-// 本体サイトとあえて別デザイン(THE・JTC企業サイト様式)にすることで「別会社感」を出す。
+// 本体サイトとあえて別デザイン(THE・JTC企業サイト様式)。画像は実写系(2026-08-06 darari指示)。
 import Base from '@/layouts/Base.astro';
 
 const COMPANY = {
   name: 'ダラリ重工業株式会社',
   nameEn: 'DARARI Heavy Industries, Ltd.',
   slogan: '誠実・堅実・着実',
+};
+
+const nav = [
+  ['#philosophy', '経営理念'],
+  ['#message', '代表挨拶'],
+  ['#profile', '会社概要'],
+  ['#officers', '役員一覧'],
+  ['#organization', '組織図'],
+  ['#products', '製品情報'],
+  ['#history', '沿革'],
+];
+
+const officers = {
+  取締役: [
+    ['代表取締役社長', '陀楽 進', '1985年入社。製造畑。座右の銘「石の上にも三年、稟議は半年」'],
+    ['取締役 専務執行役員 管理本部長', '締田 勘一', '経理一筋42年。四半期承認制度の設計者'],
+    ['取締役 常務執行役員 製造本部長', '現島 護', '元・時差第二工場長。現場からの信頼が厚い'],
+    ['取締役 技術本部長', '灰谷 徹', '研究開発出身。リレーDRシリーズの生みの親'],
+  ],
+  社外取締役: [
+    ['社外取締役', '貸間 堅志', '元・時差銀行 副頭取'],
+    ['社外取締役', '理論 正子', '灰谷大学 名誉教授（経営学）。著書『検討の経営学』'],
+  ],
+  執行役員: [
+    ['執行役員 経営企画本部長', '横串 通', '2023年の機能別組織移行を主導'],
+    ['執行役員 営業本部長', '売野 走', '国内営業出身。海外2拠点の立ち上げに従事'],
+    ['執行役員 品質本部長', '不良 零', '口ぐせは「ゼロは目標ではなく前提」'],
+  ],
 };
 
 const news = [
@@ -34,12 +62,52 @@ const products = [
   },
 ];
 
+// 機能別組織(横串)。2019年に事業部制→2023年に機能別へ回帰(沿革参照)。
+const organization = [
+  {
+    div: '経営企画本部',
+    depts: ['経営戦略部', '事業企画部（製品軸の横串はここ）', '広報・IR室'],
+  },
+  {
+    div: '営業本部',
+    depts: ['国内営業部', '海外事業部', 'アフターサービス部'],
+  },
+  {
+    div: '技術本部',
+    depts: ['研究開発部', '製品設計部', '技術管理部'],
+  },
+  {
+    div: '製造本部',
+    depts: [
+      '製造部（AI活用推進室はここ・室員1名）',
+      '生産技術部',
+      '生産管理部',
+      '調達部',
+    ],
+  },
+  {
+    div: '品質本部',
+    depts: ['品質保証部', '品質管理部', '信頼性試験課'],
+  },
+  {
+    div: '管理本部',
+    depts: [
+      '総務部',
+      '人事部',
+      '経理部（クレカ承認は四半期に一回）',
+      '法務部',
+      '情報システム部（「グレーなので使わないでください」）',
+    ],
+  },
+];
+
 const history = [
   ['1958年', '灰谷県時差市にて、駄楽製作所として創業'],
   ['1972年', 'ダラリ重工業株式会社に社名変更'],
   ['1986年', '時差第二工場 竣工。リレーの自動組立ライン稼働開始'],
   ['2001年', 'ISO9001認証取得'],
-  ['2019年', 'DX推進部 発足（実質アナログ）'],
+  ['2019年', '事業部制を導入。DX推進部 発足（実質アナログ）'],
+  ['2023年', '機能別組織へ移行（いわゆる先祖返り）。DX推進部は情報システム部に統合'],
   ['2026年', 'AI活用推進室 新設（室員1名）'],
 ];
 ---
@@ -48,46 +116,54 @@ const history = [
   title="ダラリ重工業株式会社（架空企業）"
   description="AIカイゼンの記事に登場する架空のJTC企業「ダラリ重工業株式会社」の公式サイト（という設定のページ）です。"
 >
-  <div class="corp bg-white text-[#222]">
+  <div class="corp bg-white text-[#222]" style="font-family: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Noto Sans JP', sans-serif;">
     <!-- 架空明示バナー -->
     <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
       ⚠️ ダラリ重工業は「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空の企業です。実在の企業・人物・地名とは一切関係ありません。
     </div>
 
-    <!-- コーポレートヘッダー -->
-    <header class="border-b border-[#ddd]">
-      <div class="mx-auto flex max-w-5xl items-center justify-between px-5 py-4">
-        <div>
+    <!-- コーポレートヘッダー(固定) -->
+    <header class="sticky top-0 z-20 border-b border-[#ddd] bg-white/95 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
+        <a href="#top" class="no-underline">
           <p class="text-lg font-bold tracking-wide text-[#1b3a6b]">{COMPANY.name}</p>
           <p class="text-[10px] tracking-[0.2em] text-[#888]">{COMPANY.nameEn}</p>
-        </div>
-        <nav class="hidden gap-6 text-sm text-[#444] sm:flex">
-          <span class="cursor-default">企業情報</span>
-          <span class="cursor-default">製品情報</span>
-          <span class="cursor-default">採用情報</span>
-          <span class="cursor-default rounded bg-[#1b3a6b] px-4 py-1.5 text-white">お問い合わせ</span>
+        </a>
+        <nav class="hidden items-center gap-5 text-[13px] text-[#333] lg:flex">
+          {
+            nav.map(([href, label]) => (
+              <a href={href} class="no-underline hover:text-[#1b3a6b]">
+                {label}
+              </a>
+            ))
+          }
+          <span class="cursor-default text-[#999]">採用情報</span>
+          <span class="cursor-default rounded bg-[#1b3a6b] px-4 py-2 text-white">お問い合わせ</span>
         </nav>
       </div>
     </header>
 
-    <!-- コーポレートヒーロー -->
-    <section class="relative overflow-hidden bg-[#10151d]">
+    <!-- ヒーロー(16:9・センター) -->
+    <section id="top" class="relative overflow-hidden bg-[#10151d]">
       <img
         src="/images/company/factory-line.png"
         alt="自動組立ライン"
-        class="h-72 w-full object-cover opacity-70 sm:h-96"
+        class="aspect-video max-h-[80vh] w-full object-cover"
       />
-      <div class="absolute inset-0 flex items-center">
-        <div class="mx-auto w-full max-w-5xl px-5">
-          <p class="text-3xl font-bold tracking-[0.3em] text-white sm:text-4xl">{COMPANY.slogan}</p>
-          <p class="mt-3 text-sm text-white/80">ものづくりで社会を支え、次の百年へ。</p>
-        </div>
+      <div class="absolute inset-0 bg-black/35"></div>
+      <div class="absolute inset-0 flex flex-col items-center justify-center px-5 text-center">
+        <p class="text-3xl font-bold tracking-[0.4em] text-white drop-shadow sm:text-5xl">
+          {COMPANY.slogan}
+        </p>
+        <p class="mt-5 text-sm tracking-widest text-white/85 sm:text-base">
+          ものづくりで社会を支え、次の百年へ。
+        </p>
       </div>
     </section>
 
     <!-- お知らせ -->
     <section class="border-b border-[#eee]">
-      <div class="mx-auto max-w-5xl px-5 py-8">
+      <div class="mx-auto max-w-6xl px-5 py-8">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
           <h2 class="shrink-0 pr-8 text-sm font-bold tracking-widest text-[#1b3a6b]">お知らせ</h2>
           <ul class="flex-1 text-sm">
@@ -106,41 +182,39 @@ const history = [
     </section>
 
     <!-- 経営理念 -->
-    <section class="bg-[#f6f8fa]">
-      <div class="mx-auto max-w-5xl px-5 py-14 text-center">
+    <section id="philosophy" class="scroll-mt-20 bg-[#f6f8fa]">
+      <div class="mx-auto max-w-6xl px-5 py-16 text-center">
         <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">経営理念</h2>
         <p class="mt-8 text-2xl font-bold tracking-[0.5em] sm:text-3xl">{COMPANY.slogan}</p>
         <p class="mx-auto mt-6 max-w-2xl text-sm leading-loose text-[#555]">
           わたしたちダラリ重工業は、創業以来68年にわたり、確かなものづくりを通じて社会の発展に貢献してまいりました。
-          変化の激しい時代にあっても、慌てず、騒がず、着実に。それがわたしたちの变わらぬ姿勢です。
+          変化の激しい時代にあっても、慌てず、騒がず、着実に。それがわたしたちの変わらぬ姿勢です。
         </p>
       </div>
     </section>
 
     <!-- 代表挨拶 -->
-    <section>
-      <div class="mx-auto max-w-5xl px-5 py-14">
+    <section id="message" class="scroll-mt-20">
+      <div class="mx-auto max-w-6xl px-5 py-16">
         <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">代表挨拶</h2>
         <div class="mt-8 flex flex-col gap-8 sm:flex-row">
           <figure class="shrink-0 sm:w-64">
-            <img src="/images/company/president.png" alt="代表取締役社長の肖像" class="w-full" />
+            <img src="/images/company/president.png" alt="代表取締役社長の肖像" class="w-full rounded-sm" />
             <figcaption class="mt-2 text-center text-xs text-[#888]">
               代表取締役社長　陀楽 進（だらく・すすむ）
             </figcaption>
           </figure>
           <div class="text-sm leading-loose text-[#444]">
-            <p>
-              平素より格別のご高配を賜り、厚く御礼申し上げます。
-            </p>
+            <p>平素より格別のご高配を賜り、厚く御礼申し上げます。</p>
             <p class="mt-4">
               当社は昭和33年の創業以来、「誠実・堅実・着実」の社是のもと、産業用リレーをはじめとする電気部品の製造一筋に歩んでまいりました。
-              近年、世間ではAI（人工知能）なるものが大変な話題となっており、当社においてもDX推進部を中心に、導入の是非について慎重に検討を重ねているところであります。
+              近年、世間ではAI（人工知能）なるものが大変な話題となっており、当社においても情報システム部を中心に、導入の是非について慎重に検討を重ねているところであります。
             </p>
             <p class="mt-4">
               検討には十分な時間をかける所存です。なにとぞ、気長にお見守りいただきますよう、お願い申し上げます。
             </p>
             <p class="mt-4">
-              もっとも——現場からは「検討ばかりで前に進まない」との声も聞こえております。今年、AI活用推進室を新設いたしました。室員は1名です。彼の奮闘に、ご期待ください。
+              もっとも——現場からは「検討ばかりで前に進まない」との声も聞こえております。本年、AI活用推進室を新設いたしました。室員は1名です。彼の奮闘に、ご期待ください。
             </p>
           </div>
         </div>
@@ -148,61 +222,104 @@ const history = [
     </section>
 
     <!-- 会社概要 -->
-    <section class="bg-[#f6f8fa]">
-      <div class="mx-auto max-w-5xl px-5 py-14">
+    <section id="profile" class="scroll-mt-20 bg-[#f6f8fa]">
+      <div class="mx-auto max-w-6xl px-5 py-16">
         <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">会社概要</h2>
-        <table class="mt-8 w-full border-collapse text-sm">
-          <tbody>
-            {
-              [
-                ['商号', 'ダラリ重工業株式会社（DARARI Heavy Industries, Ltd.）'],
-                ['創業', '1958年（昭和33年）'],
-                ['資本金', '4億8,000万円'],
-                ['従業員数', '1,204名（2026年4月現在）'],
-                ['本社所在地', '灰谷県時差市前田折町1丁目1番地'],
-                ['事業内容', '産業用リレー・電磁弁・圧力センサー・車載コネクタの製造販売'],
-                ['主要設備', '自動組立ライン28系列（空気圧機器・電磁シリンダー・シーケンサー制御）'],
-              ].map(([k, v]) => (
-                <tr class="border-b border-[#e5e5e5]">
-                  <th class="w-36 bg-[#eef1f5] px-4 py-3 text-left font-bold text-[#1b3a6b]">{k}</th>
-                  <td class="px-4 py-3 text-[#444]">{v}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <div class="mt-8 flex flex-col gap-8 lg:flex-row">
+          <figure class="lg:w-2/5">
+            <img src="/images/company/hq.png" alt="本社社屋" class="w-full rounded-sm" />
+            <figcaption class="mt-2 text-xs text-[#888]">本社社屋（灰谷県時差市）</figcaption>
+          </figure>
+          <table class="w-full border-collapse text-sm lg:flex-1">
+            <tbody>
+              {
+                [
+                  ['商号', 'ダラリ重工業株式会社（DARARI Heavy Industries, Ltd.）'],
+                  ['創業', '1958年（昭和33年）'],
+                  ['資本金', '4億8,000万円'],
+                  ['従業員数', '1,204名（2026年4月現在）'],
+                  ['本社所在地', '灰谷県時差市前田折町1丁目1番地'],
+                  ['事業内容', '産業用リレー・電磁弁・圧力センサー・車載コネクタの製造販売'],
+                  ['生産拠点', '時差本社工場／時差第二工場／海外2拠点'],
+                  ['主要設備', '自動組立ライン28系列（空気圧機器・電磁シリンダー・シーケンサー制御）'],
+                ].map(([k, v]) => (
+                  <tr class="border-b border-[#e5e5e5]">
+                    <th class="w-32 bg-[#eef1f5] px-4 py-3 text-left align-top font-bold text-[#1b3a6b]">{k}</th>
+                    <td class="px-4 py-3 text-[#444]">{v}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 役員一覧 -->
+    <section id="officers" class="scroll-mt-20">
+      <div class="mx-auto max-w-6xl px-5 py-16">
+        <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">役員一覧</h2>
+        {
+          Object.entries(officers).map(([group, members]) => (
+            <div class="mt-8">
+              <h3 class="border-l-4 border-[#1b3a6b] pl-3 text-sm font-bold text-[#1b3a6b]">{group}</h3>
+              <table class="mt-3 w-full border-collapse text-sm">
+                <tbody>
+                  {members.map(([title, name, bio]) => (
+                    <tr class="border-b border-[#eee]">
+                      <th class="w-72 px-4 py-3 text-left align-top font-bold text-[#444]">{title}</th>
+                      <td class="w-28 px-4 py-3 align-top font-bold">{name}</td>
+                      <td class="px-4 py-3 text-[#666]">{bio}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))
+        }
+        <p class="mt-4 text-xs text-[#888]">※ 2026年6月末現在。役員の氏名はすべて架空です。</p>
       </div>
     </section>
 
     <!-- 組織図 -->
-    <section>
-      <div class="mx-auto max-w-5xl px-5 py-14">
+    <section id="organization" class="scroll-mt-20 bg-[#f6f8fa]">
+      <div class="mx-auto max-w-6xl px-5 py-16">
         <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">組織図</h2>
-        <div class="mt-8 overflow-x-auto">
-          <div class="min-w-[640px] text-center text-sm">
-            <div class="mx-auto w-56 rounded border-2 border-[#1b3a6b] bg-[#1b3a6b] py-2 font-bold text-white">
-              取締役会
+        <p class="mt-3 text-xs text-[#888]">
+          ※ 2023年より機能別組織体制。製品軸の横断調整は経営企画本部 事業企画部が担当しています。
+        </p>
+        <div class="mt-8 overflow-x-auto pb-2">
+          <div class="min-w-[900px] text-center text-sm">
+            <div class="mx-auto w-52 rounded border-2 border-[#1b3a6b] bg-white py-2 font-bold text-[#1b3a6b]">
+              株主総会
+            </div>
+            <div class="mx-auto h-5 w-px bg-[#999]"></div>
+            <div class="mx-auto flex w-fit items-center gap-3">
+              <div class="w-52 rounded border-2 border-[#1b3a6b] bg-[#1b3a6b] py-2 font-bold text-white">
+                取締役会
+              </div>
+              <div class="w-32 rounded border border-[#999] py-1.5 text-xs text-[#666]">監査役会</div>
+            </div>
+            <div class="mx-auto h-5 w-px bg-[#999]"></div>
+            <div class="mx-auto flex w-fit items-center gap-3">
+              <div class="w-52 rounded border-2 border-[#1b3a6b] py-2 font-bold text-[#1b3a6b]">
+                代表取締役社長
+              </div>
+              <div class="w-32 rounded border border-[#999] py-1.5 text-xs text-[#666]">内部監査室</div>
             </div>
             <div class="mx-auto h-6 w-px bg-[#999]"></div>
-            <div class="mx-auto w-56 rounded border-2 border-[#1b3a6b] py-2 font-bold text-[#1b3a6b]">
-              代表取締役社長
-            </div>
-            <div class="mx-auto h-6 w-px bg-[#999]"></div>
-            <div class="mx-auto h-px w-[520px] bg-[#999]"></div>
-            <div class="mt-0 grid grid-cols-4 gap-4">
+            <div class="mx-auto h-px w-[860px] bg-[#999]"></div>
+            <div class="grid grid-cols-6 gap-3">
               {
-                [
-                  ['製造本部', ['製造部（AI活用推進室はここ）', '生産技術部', '品質保証部']],
-                  ['技術本部', ['開発設計部', '知的財産部']],
-                  ['管理本部', ['総務部', '経理部（クレカ承認は四半期に一回）', '法務部']],
-                  ['DX推進部', ['情報システム課（「グレーなので使わないでください」）']],
-                ].map(([dept, teams]) => (
+                organization.map((o) => (
                   <div>
                     <div class="mx-auto h-4 w-px bg-[#999]" />
-                    <div class="rounded border border-[#1b3a6b] py-2 font-bold text-[#1b3a6b]">{dept}</div>
-                    <ul class="mt-2 space-y-1 text-xs text-[#666]">
-                      {teams.map((t) => (
-                        <li class="rounded border border-[#ddd] px-1 py-1.5">{t}</li>
+                    <div class="rounded border border-[#1b3a6b] bg-[#eef1f5] py-2 text-[13px] font-bold text-[#1b3a6b]">
+                      {o.div}
+                    </div>
+                    <ul class="mt-2 space-y-1.5 text-[11px] leading-snug text-[#555]">
+                      {o.depts.map((d) => (
+                        <li class="rounded border border-[#ddd] bg-white px-1 py-1.5">{d}</li>
                       ))}
                     </ul>
                   </div>
@@ -218,11 +335,11 @@ const history = [
     </section>
 
     <!-- 製品情報 -->
-    <section class="bg-[#f6f8fa]">
-      <div class="mx-auto max-w-5xl px-5 py-14">
+    <section id="products" class="scroll-mt-20">
+      <div class="mx-auto max-w-6xl px-5 py-16">
         <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">製品情報</h2>
         <figure class="mt-8">
-          <img src="/images/company/products.png" alt="製品群" class="w-full" />
+          <img src="/images/company/products.png" alt="製品群" class="w-full rounded-sm" />
         </figure>
         <div class="mt-8 grid gap-6 sm:grid-cols-2">
           {
@@ -242,15 +359,15 @@ const history = [
     </section>
 
     <!-- 沿革 -->
-    <section>
-      <div class="mx-auto max-w-5xl px-5 py-14">
+    <section id="history" class="scroll-mt-20 bg-[#f6f8fa]">
+      <div class="mx-auto max-w-6xl px-5 py-16">
         <h2 class="text-xl font-bold tracking-[0.3em] text-[#1b3a6b]">沿革</h2>
         <table class="mt-8 w-full border-collapse text-sm">
           <tbody>
             {
               history.map(([y, t]) => (
                 <tr class="border-b border-[#eee]">
-                  <th class="w-28 px-4 py-3 text-left font-bold text-[#1b3a6b]">{y}</th>
+                  <th class="w-28 px-4 py-3 text-left align-top font-bold text-[#1b3a6b]">{y}</th>
                   <td class="px-4 py-3 text-[#444]">{t}</td>
                 </tr>
               ))
@@ -262,7 +379,7 @@ const history = [
 
     <!-- コーポレートフッター -->
     <footer class="bg-[#1b3a6b] text-white">
-      <div class="mx-auto max-w-5xl px-5 py-10 text-center text-xs">
+      <div class="mx-auto max-w-6xl px-5 py-10 text-center text-xs">
         <p class="font-bold tracking-widest">{COMPANY.name}</p>
         <p class="mt-2 text-white/70">
           このページは「<a href="/" class="underline">AIカイゼン</a>」の記事に登場する架空企業のサイト（という設定）です。
