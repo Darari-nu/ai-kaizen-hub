@@ -96,7 +96,7 @@ const faqs = [
           <div class="mt-10 flex flex-wrap items-center gap-5">
             <a
               href="#articles"
-              class="bg-paper px-7 py-3.5 font-bold text-ink no-underline transition-all duration-100 hover:bg-shu hover:text-paper active:translate-y-0.5 active:scale-[0.99]"
+              class="bg-paper px-7 py-3.5 font-bold text-ink no-underline shadow-[5px_5px_0_#C73E2E] transition-all duration-100 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#C73E2E] active:translate-x-1 active:translate-y-1 active:shadow-none"
               >無料で読みはじめる</a
             >
             <a
@@ -147,17 +147,38 @@ const faqs = [
         <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
           ぜんぶ無料で、置いておきます。
         </h2>
-        <div class="mt-8 grid max-w-3xl gap-x-8 gap-y-6 sm:grid-cols-3">
-          <div>
-            <p class="font-display text-lg font-bold">記録<span class="ml-2 text-shu">──</span></p>
+        <div class="mt-10 grid gap-7 sm:grid-cols-3">
+          <div class="group">
+            <div class="overflow-hidden">
+              <img
+                src="/images/axis/kiroku.png"
+                alt=""
+                class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+              />
+            </div>
+            <p class="mt-4 font-display text-lg font-bold">記録<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">会社にAIを申請→導入→使い倒す実況</p>
           </div>
-          <div>
-            <p class="font-display text-lg font-bold">AIカイゼン<span class="ml-2 text-shu">──</span></p>
+          <div class="group">
+            <div class="overflow-hidden">
+              <img
+                src="/images/axis/kaizen.png"
+                alt=""
+                class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+              />
+            </div>
+            <p class="mt-4 font-display text-lg font-bold">AIカイゼン<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">明日の業務がラクになる道具</p>
           </div>
-          <div>
-            <p class="font-display text-lg font-bold">ガバナンス<span class="ml-2 text-shu">──</span></p>
+          <div class="group">
+            <div class="overflow-hidden">
+              <img
+                src="/images/axis/governance.png"
+                alt=""
+                class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+              />
+            </div>
+            <p class="mt-4 font-display text-lg font-bold">ガバナンス<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">元・全社AIガバナンス担当が訳す、AIの決まりごと</p>
           </div>
         </div>

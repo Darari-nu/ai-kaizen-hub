@@ -42,6 +42,8 @@ yet hopeful poetic atmosphere, no text, no letters, no logos
 | 002 ChatGPT禁止 | 閉じた鳥かご・中で鳥が灯る＝禁止で閉じ込められた可能性 | `articles/002-chatgpt-kinshi.png` |
 | OGP共通(16:9) | 頭が夜明けの空＝頭の中にはもう夜明けが来ている | `og-default.png` |
 | 挿絵在庫 | 頭から花咲く残業デスク／金魚水槽頭と自販機 | `drafts/images/hero-candidates/v2-a.png` / `v2-b.png` |
+| 001 JTC AI事情 | 潜望鏡頭＝キュービクルの中から観察して実況 | `articles/001-jtc-ai-jijou.png` |
+| 3軸ビジュアル(1:1) | 記録=光るペン先／AIカイゼン=工具箱の若葉／ガバナンス=天秤の灯り（人物なし静物・小物版の子レシピ） | `axis/kiroku.png` `axis/kaizen.png` `axis/governance.png` |
 
 ## 検品（親レシピ固有）
 
