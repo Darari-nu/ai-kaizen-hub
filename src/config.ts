@@ -11,6 +11,11 @@ export const SITE = {
   // フッターのおまけカード（音楽・スタンプは専用ページを作らない。2026-08-05裁定）
   extras: [
     {
+      title: 'ダラリ重工業株式会社',
+      desc: '記事の舞台になる架空のJTC。社長挨拶が味わい深い',
+      href: '/company/',
+    },
+    {
       title: 'Dara',
       desc: 'AI音楽ユニット。Sunoで公開中',
       href: 'https://suno.com/@darari_nu',

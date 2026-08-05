@@ -19,19 +19,19 @@ const year = new Date().getFullYear();
 
     <div class="mt-8">
       <p class="text-[11px] tracking-[0.3em]">おまけ｜こんなのも作ってます</p>
-      <div class="mt-3 grid gap-3 sm:grid-cols-3">
+      <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {
           SITE.extras.map((x) =>
             x.href ? (
               <a
                 href={x.href}
-                rel="noopener"
-                target="_blank"
+                rel={x.href.startsWith('/') ? undefined : 'noopener'}
+                target={x.href.startsWith('/') ? undefined : '_blank'}
                 class="group border border-rule p-4 no-underline transition-colors hover:border-shu"
               >
                 <p class="font-display font-bold text-ink group-hover:text-shu">
                   {x.title}
-                  <span class="ml-1 text-xs font-normal text-nezu">↗</span>
+                  {!x.href.startsWith('/') && <span class="ml-1 text-xs font-normal text-nezu">↗</span>}
                 </p>
                 <p class="mt-1 text-xs leading-relaxed text-nezu">{x.desc}</p>
               </a>
