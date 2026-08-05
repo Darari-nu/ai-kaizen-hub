@@ -1,0 +1,42 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { SITE } from '@/config';
+---
+
+<Base title="プライバシーポリシー" description={`${SITE.name}のプライバシーポリシー。`}>
+  <Header />
+  <main class="mx-auto max-w-site px-5 py-14">
+    <h1 class="font-display text-3xl font-black">プライバシーポリシー</h1>
+    <div class="mt-8 max-w-prose space-y-6 leading-relaxed">
+      <section>
+        <h2 class="font-display text-xl font-bold">個人情報の取得について</h2>
+        <p class="mt-2">
+          当サイトは、お問い合わせフォームや会員登録機能を持たず、個人情報を当サイト自身のサーバーに保存することはありません。
+        </p>
+      </section>
+      <section>
+        <h2 class="font-display text-xl font-bold">ニュースレター登録について</h2>
+        <p class="mt-2">
+          当サイトに設置している登録フォームは、Substack社が提供する埋め込みフォームです。
+          入力されたメールアドレスはSubstackのプライバシーポリシーに基づいて管理され、当サイトが直接保存することはありません。
+        </p>
+      </section>
+      <section>
+        <h2 class="font-display text-xl font-bold">外部リンクについて</h2>
+        <p class="mt-2">
+          当サイトから移動した先のサイトにおける個人情報の取り扱いについては、各サイトのプライバシーポリシーをご確認ください。
+        </p>
+      </section>
+      <section>
+        <h2 class="font-display text-xl font-bold">改定について</h2>
+        <p class="mt-2">
+          本ポリシーの内容は、必要に応じて予告なく改定することがあります。改定後の内容は本ページに掲載した時点で効力を持つものとします。
+        </p>
+      </section>
+      <p class="text-sm text-nezu">制定日: 2026-08-05</p>
+    </div>
+  </main>
+  <Footer />
+</Base>

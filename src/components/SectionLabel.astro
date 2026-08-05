@@ -1,0 +1,9 @@
+---
+// セクション頭の小ラベル。枠なし・字間広めの静かな表示。
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+---
+
+<span class="inline-block text-[11px] tracking-[0.3em] text-nezu">{text}</span>

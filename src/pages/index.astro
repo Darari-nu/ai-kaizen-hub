@@ -1,0 +1,312 @@
+---
+import fs from 'node:fs';
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Footer from '@/components/Footer.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+import SubstackEmbed from '@/components/SubstackEmbed.astro';
+import { SITE } from '@/config';
+
+const articles = (await getCollection('articles')).sort(
+  (a, b) => a.data.number - b.data.number
+);
+
+// ヒーロー画像はMidjourneyで本人制作（public/images/README.md参照）。
+// public/images/hero.jpg|png|webp を置けば自動で差し替わる。
+const heroImage = ['jpg', 'png', 'webp']
+  .map((ext) => `images/hero.${ext}`)
+  .find((p) => fs.existsSync(new URL(`../../public/${p}`, import.meta.url)));
+
+// 今後の予告（3軸: 記録・カイゼン・ガバナンス。公開されたらMarkdownに置き換わる。ネタ元: drafts/ネタ帳.md）
+const comingSoon = [
+  'Claude TeamをJTCに通すまでにやったこと（記録）',
+  'AI研修の冒頭5分、これだけ話せば伝わる（ガバナンス）',
+];
+
+const pains = [
+  '「で、費用対効果は？」と聞かれて、導入する気が消える',
+  '「あなたじゃなくて、もっと適した人が」で、くじける',
+  'AIの申請を説明するPPTだけで、修正2週間の地獄',
+  '個人ならクレカで翌日からAI。会社だと、半年後。',
+];
+
+const career = [
+  ['製造現場', '10年。現場のしんどさは、体で知ってます'],
+  ['プロダクトリーダー', '10年。企画・設計・技術、ひととおりやりました'],
+  ['AIガバナンス構築', '全社のAIの決まりごとを作る側。マネジメントサイクルの仕組みまで'],
+  ['現職', '製造部門のAI活用推進責任者。Claude Teamを会社に通しました'],
+];
+
+const faqs = [
+  {
+    q: '非エンジニアですが、読めますか？',
+    a: 'そのための無料コンテンツです。「サーバーって何？」から説明します。専門語が出たら、その場で※をつけて解説するのがこのサイトの約束です。',
+  },
+  {
+    q: '会社の情報を書いて、大丈夫なんですか？',
+    a: '会社の機密は書きません。書くのは「どの会社にもある壁」と、その突破手順です。だからあなたの会社でも使えます。',
+  },
+  {
+    q: '何から読めばいいですか？',
+    a: 'まずはNo.001から。読んで「使えそう」と思ったら、Substackに登録してもらえたら続きが届きます。',
+  },
+];
+---
+
+<Base>
+  <main>
+    <!-- 1. ヒーロー（ダーク没入。イラストの夜に飛び込み、下の紙白へ抜ける） -->
+    <section class="relative overflow-hidden bg-dusk text-paper">
+      {
+        heroImage && (
+          <div class="absolute inset-0 lg:left-[42%]">
+            <img
+              src={`/${heroImage}`}
+              alt=""
+              class="h-full w-full object-cover object-[70%_center]"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-dusk via-dusk/55 to-dusk/10" />
+            <div class="absolute inset-0 bg-dusk/45 lg:bg-transparent" />
+          </div>
+        )
+      }
+      <div class="relative mx-auto max-w-site px-5">
+        <div class="flex items-baseline justify-between py-5">
+          <span class="font-display text-lg font-bold tracking-wide">{SITE.name}</span>
+          <a
+            href={SITE.substackUrl}
+            class="text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 hover:text-paper"
+            >Substackで読む</a
+          >
+        </div>
+        <div class="max-w-xl pb-28 pt-16 sm:pt-24 lg:pb-40 lg:pt-32">
+          <p class="text-xs tracking-[0.3em] text-paper/60">
+            会社員のための、AI導入の実況
+          </p>
+          <h1
+            class="mt-5 font-display text-4xl font-black leading-tight tracking-tight sm:text-5xl"
+          >
+            申請から使い倒すまで、<br /><span class="text-shu">ぜんぶ</span>見せます。
+          </h1>
+          <p class="mt-7 max-w-prose leading-relaxed text-paper/85">
+            「うちの会社じゃ無理」って思ってませんか？——その稟議、通せます。
+            製造業の中の人・だらリーヌが、会社にAIを申請して、導入して、使い倒すまでを、
+            先にぼくが失敗した記録ごと公開します。読むのは無料。むずかしい言葉には、その場で※をつけます。
+          </p>
+          <div class="mt-10 flex flex-wrap items-center gap-5">
+            <a
+              href="#articles"
+              class="bg-paper px-7 py-3.5 font-bold text-ink no-underline transition-all duration-100 hover:bg-shu hover:text-paper active:translate-y-0.5 active:scale-[0.99]"
+              >無料で読みはじめる</a
+            >
+            <a
+              href="#register"
+              class="text-sm text-paper/70 underline decoration-paper/30 underline-offset-4 hover:text-paper"
+              >さきにSubstack登録する</a
+            >
+          </div>
+        </div>
+        <p class="pb-6 text-right text-[11px] tracking-[0.3em] text-paper/50">
+          申請は、通せる。
+        </p>
+      </div>
+    </section>
+
+    <!-- 2. ペイン -->
+    <section class="border-t border-rule">
+      <div class="mx-auto max-w-site px-5 py-14">
+        <SectionLabel text="よくある壁" />
+        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+          こんな壁に、ぶつかってません？
+        </h2>
+        <ul class="mt-8 max-w-prose">
+          {
+            pains.map((p, i) => (
+              <li
+                class:list={[
+                  'flex gap-4 border-rule py-4 leading-relaxed',
+                  i > 0 && 'border-t',
+                ]}
+              >
+                <span class="font-display text-sm text-nezu">壁{i + 1}</span>
+                <span>{p}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 max-w-prose leading-relaxed">
+          ぜんぶ、ぼくが実際に食らった壁です。だからこのサイトには、突破した手順だけを置いていきます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. 無料コンテンツ -->
+    <section id="articles" class="border-t border-rule">
+      <div class="mx-auto max-w-site px-5 py-14">
+        <SectionLabel text="無料コンテンツ" />
+        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+          ぜんぶ無料で、置いておきます。
+        </h2>
+        <div class="mt-8 grid max-w-3xl gap-x-8 gap-y-6 sm:grid-cols-3">
+          <div>
+            <p class="font-display text-lg font-bold">記録<span class="ml-2 text-shu">──</span></p>
+            <p class="mt-1 text-sm leading-relaxed text-nezu">会社にAIを申請→導入→使い倒す実況</p>
+          </div>
+          <div>
+            <p class="font-display text-lg font-bold">AIカイゼン<span class="ml-2 text-shu">──</span></p>
+            <p class="mt-1 text-sm leading-relaxed text-nezu">明日の業務がラクになる道具</p>
+          </div>
+          <div>
+            <p class="font-display text-lg font-bold">ガバナンス<span class="ml-2 text-shu">──</span></p>
+            <p class="mt-1 text-sm leading-relaxed text-nezu">元・全社AIガバナンス担当が訳す、AIの決まりごと</p>
+          </div>
+        </div>
+        <div class="mt-8">
+          {
+            articles.map((a) => (
+              <article class="flex gap-6 border-t border-rule py-6 first:border-t-2 first:border-ink">
+                {a.data.ogImage && (
+                  <div class="hidden w-44 shrink-0 sm:block">
+                    <img
+                      src={a.data.ogImage}
+                      alt=""
+                      class:list={['aspect-video w-full object-cover', a.data.draft && 'opacity-60']}
+                    />
+                  </div>
+                )}
+                <div>
+                  <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <span class="font-display text-sm text-nezu">
+                      No.{String(a.data.number).padStart(3, '0')}
+                    </span>
+                    {a.data.draft ? (
+                      <span class="font-display text-xl font-bold text-nezu">{a.data.title}</span>
+                    ) : (
+                      <a
+                        href={`/articles/${a.slug}/`}
+                        class="font-display text-xl font-bold underline decoration-rule underline-offset-4 hover:text-shu hover:decoration-shu"
+                      >
+                        {a.data.title}
+                      </a>
+                    )}
+                    {a.data.draft && (
+                      <span class="border border-nezu px-1.5 py-0.5 text-[11px] tracking-widest text-nezu">
+                        準備中
+                      </span>
+                    )}
+                  </div>
+                  <p class="mt-2 max-w-prose text-sm leading-relaxed text-nezu">
+                    {a.data.description}
+                  </p>
+                </div>
+              </article>
+            ))
+          }
+          {
+            comingSoon.map((t, i) => (
+              <article class="border-t border-rule py-5">
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <span class="font-display text-sm text-nezu">
+                    No.{String(articles.length + i + 1).padStart(3, '0')}
+                  </span>
+                  <span class="font-display text-xl font-bold text-nezu">{t}</span>
+                  <span class="border border-nezu px-1.5 py-0.5 text-[11px] tracking-widest text-nezu">
+                    執筆中
+                  </span>
+                </div>
+              </article>
+            ))
+          }
+          <div class="border-t border-rule"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 書いてる人 -->
+    <section class="border-t border-rule">
+      <div class="mx-auto max-w-site px-5 py-14">
+        <SectionLabel text="書いてる人" />
+        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+          書いてるのは、だらリーヌ。
+        </h2>
+        <dl class="mt-8 max-w-prose">
+          {
+            career.map(([t, d], i) => (
+              <div
+                class:list={[
+                  'flex flex-col gap-1 border-rule py-4 sm:flex-row sm:gap-6',
+                  i > 0 && 'border-t',
+                ]}
+              >
+                <dt class="shrink-0 font-display font-bold sm:w-48">{t}</dt>
+                <dd class="leading-relaxed text-nezu">{d}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="mt-6 max-w-prose leading-relaxed">
+          肩書きで信じてもらうつもりはないんです。実際に通した記録を読んで、「これならうちでもいける」と思ってもらうのがこのサイトの仕事です。
+          くわしくは<a
+            href="/about/"
+            class="underline decoration-rule underline-offset-4 hover:text-shu">プロフィール</a
+          >へ。
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. なぜ無料か -->
+    <section class="border-t border-rule">
+      <div class="mx-auto max-w-site px-5 py-14">
+        <SectionLabel text="たいせつなこと" />
+        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+          なぜ、ぜんぶ無料なのか。
+        </h2>
+        <p class="mt-6 max-w-prose leading-relaxed">
+          「怪しくない？」——ですよね。理由はシンプルで、ぼくには本業があるからです。
+          ここで売り込む必要がないんです。読んで「使えた」と思ったら、Substackで読者になってくれたら、それで十分。
+          その代わり、中身は本気で書きます。
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. 登録CTA -->
+    <section id="register" class="border-t border-rule">
+      <div class="mx-auto max-w-site px-5 py-16">
+        <SectionLabel text="ニュースレター" />
+        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+          続きは、受信箱に届きます。
+        </h2>
+        <p class="mt-4 max-w-prose leading-relaxed">
+          新しい記事と、会社にAIを通す実況の続きを、Substackで配信しています。登録は無料。メールアドレスだけです。
+        </p>
+        <div class="mt-6">
+          <SubstackEmbed />
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. FAQ -->
+    <section class="border-t border-rule">
+      <div class="mx-auto max-w-site px-5 py-14">
+        <SectionLabel text="はじめての方へ" />
+        <h2 class="mt-4 font-display text-2xl font-bold sm:text-3xl">
+          よくある質問
+        </h2>
+        <div class="mt-8 max-w-prose">
+          {
+            faqs.map((f, i) => (
+              <details class:list={['group border-rule py-4', i > 0 && 'border-t']}>
+                <summary class="flex cursor-pointer list-none items-baseline gap-4 font-bold">
+                  <span class="font-display text-sm text-nezu">Q</span>
+                  {f.q}
+                </summary>
+                <p class="mt-3 pl-7 leading-relaxed text-nezu">{f.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

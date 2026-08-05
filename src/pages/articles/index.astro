@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+
+const articles = (await getCollection('articles'))
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => a.data.number - b.data.number);
+---
+
+<Base title="記事一覧" description="無料で読める記事の一覧。">
+  <Header />
+  <main class="mx-auto max-w-site px-5 py-14">
+    <SectionLabel text="無料コンテンツ" />
+    <h1 class="mt-4 font-display text-3xl font-black">記事一覧</h1>
+    <div class="mt-8">
+      {
+        articles.length === 0 ? (
+          <p class="max-w-prose leading-relaxed text-nezu">
+            いま、1本目を執筆中です。公開したらSubstackでお知らせするので、
+            <a href="/#register" class="underline decoration-rule underline-offset-4 hover:text-shu">
+              登録して待っていてください
+            </a>
+            。
+          </p>
+        ) : (
+          articles.map((a) => (
+            <article class="border-t border-rule py-5 last:border-b">
+              <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span class="font-display text-sm text-nezu">
+                  No.{String(a.data.number).padStart(3, '0')}
+                </span>
+                <a
+                  href={`/articles/${a.slug}/`}
+                  class="font-display text-xl font-bold underline decoration-rule underline-offset-4 hover:text-shu hover:decoration-shu"
+                >
+                  {a.data.title}
+                </a>
+              </div>
+              <p class="mt-2 max-w-prose text-sm leading-relaxed text-nezu">{a.data.description}</p>
+            </article>
+          ))
+        )
+      }
+    </div>
+  </main>
+  <Footer />
+</Base>

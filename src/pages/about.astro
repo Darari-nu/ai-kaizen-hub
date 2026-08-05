@@ -1,0 +1,46 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import SectionLabel from '@/components/SectionLabel.astro';
+import SubstackEmbed from '@/components/SubstackEmbed.astro';
+---
+
+<Base
+  title="だらリーヌについて"
+  description="製造現場15年、海外OEM製品リーダー10年、前職はAIガバナンス構築、現職は製造部門のAI活用推進責任者。だらリーヌの経歴。"
+>
+  <Header />
+  <main class="mx-auto max-w-site px-5 py-14">
+    <SectionLabel text="書いてる人" />
+    <h1 class="mt-4 font-display text-3xl font-black sm:text-4xl">
+      だらリーヌについて
+    </h1>
+    <div class="mt-8 max-w-prose space-y-5 leading-relaxed">
+      <p>
+        製造業のJTC（伝統的な日本企業）に勤めています。現場で10年、プロダクトリーダーを10年。
+        企画・設計・技術をひととおりやって、「現場のしんどさ」は体で知っているつもりです。
+      </p>
+      <p>
+        その後、全社のAIガバナンス構築を担当。倫理・セキュリティ・契約、そしてAIマネジメントサイクルの仕組みづくり——つまり「AIの決まりを作る側」を経験しました。
+        いまは製造部門のAI活用推進責任者として、「AIを使い倒す側」をやっています。
+        Claude Teamを会社に通したのも、この立場です。
+      </p>
+      <p>
+        決まりを作る側と、使い倒す側。両方やった人間は、実はあんまりいないんですね。
+        だから「どう申請すれば通るのか」「情シスは何を気にするのか」を、当事者として書けます。
+      </p>
+      <p>
+        このサイトに置くのは、その実況記録です。会社の機密は書きません。
+        書くのは、どの会社にもある壁と、その突破手順だけです。
+      </p>
+    </div>
+    <div class="mt-12 max-w-prose border-t border-rule pt-8">
+      <p class="leading-relaxed">続きはSubstackで配信しています。登録は無料です。</p>
+      <div class="mt-4">
+        <SubstackEmbed />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>

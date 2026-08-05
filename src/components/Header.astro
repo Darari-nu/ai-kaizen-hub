@@ -1,0 +1,20 @@
+---
+import { SITE } from '@/config';
+---
+
+<header class="border-b border-rule">
+  <div class="mx-auto flex max-w-site items-baseline justify-between px-5 py-4">
+    <a href="/" class="font-display text-lg font-bold tracking-wide no-underline">
+      {SITE.name}
+      <span
+        class="ml-2 hidden align-middle text-[11px] font-normal tracking-widest text-nezu sm:inline"
+        >{SITE.tagline}</span
+      >
+    </a>
+    <a
+      href={SITE.substackUrl}
+      class="text-sm text-nezu underline decoration-rule underline-offset-4 hover:text-shu hover:decoration-shu"
+      >Substackで読む</a
+    >
+  </div>
+</header>

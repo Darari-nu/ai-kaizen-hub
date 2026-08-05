@@ -1,0 +1,51 @@
+---
+import { SITE } from '@/config';
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-rule">
+  <div class="mx-auto max-w-site px-5 py-10 text-sm text-nezu">
+    <div class="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+      <div>
+        <p class="font-display text-base text-ink">{SITE.name}</p>
+        <p class="mt-1">書いてるのは、{SITE.author}。</p>
+      </div>
+      <p>
+        <a href="/privacy/" class="underline decoration-rule underline-offset-4 hover:text-ink"
+          >プライバシーポリシー</a
+        >
+      </p>
+    </div>
+
+    <div class="mt-8">
+      <p class="text-[11px] tracking-[0.3em]">おまけ｜こんなのも作ってます</p>
+      <div class="mt-3 grid gap-3 sm:grid-cols-3">
+        {
+          SITE.extras.map((x) =>
+            x.href ? (
+              <a
+                href={x.href}
+                rel="noopener"
+                target="_blank"
+                class="group border border-rule p-4 no-underline transition-colors hover:border-shu"
+              >
+                <p class="font-display font-bold text-ink group-hover:text-shu">
+                  {x.title}
+                  <span class="ml-1 text-xs font-normal text-nezu">↗</span>
+                </p>
+                <p class="mt-1 text-xs leading-relaxed text-nezu">{x.desc}</p>
+              </a>
+            ) : (
+              <div class="border border-dashed border-rule p-4">
+                <p class="font-display font-bold text-nezu">{x.title}</p>
+                <p class="mt-1 text-xs leading-relaxed text-nezu">{x.desc}</p>
+              </div>
+            )
+          )
+        }
+      </div>
+    </div>
+
+    <p class="mt-8 text-xs">© {year} {SITE.author}</p>
+  </div>
+</footer>
