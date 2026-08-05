@@ -1,0 +1,154 @@
+- generic [active] [ref=f210e1]:
+  - main [ref=f210e2]:
+    - generic [ref=f210e7]:
+      - generic [ref=f210e8]:
+        - generic [ref=f210e9]: AIカイゼン
+        - link "Substackで読む" [ref=f210e10] [cursor=pointer]:
+          - /url: https://dararinu.substack.com
+      - generic [ref=f210e11]:
+        - paragraph [ref=f210e12]: 会社員のための、AI導入の実況
+        - heading "申請から使い倒すまで、 ぜんぶ見せます。" [level=1] [ref=f210e13]: 申請から使い倒すまで、ぜんぶ見せます。
+        - paragraph [ref=f210e14]: 「うちの会社じゃ無理」って思ってませんか？——その稟議、通せます。 製造業の中の人・だらリーヌが、会社にAIを申請して、導入して、使い倒すまでを、 先にぼくが失敗した記録ごと公開します。読むのは無料。むずかしい言葉には、その場で※をつけます。
+        - generic [ref=f210e15]:
+          - link "無料で読みはじめる" [ref=f210e16] [cursor=pointer]:
+            - /url: "#articles"
+          - link "さきにSubstack登録する" [ref=f210e17] [cursor=pointer]:
+            - /url: "#register"
+      - paragraph [ref=f210e18]: 申請は、通せる。
+    - generic [ref=f210e20]:
+      - generic [ref=f210e21]: よくある壁
+      - heading "こんな壁に、ぶつかってません？" [level=2] [ref=f210e22]
+      - list [ref=f210e23]:
+        - listitem [ref=f210e24]:
+          - generic [ref=f210e25]: 壁1
+          - generic [ref=f210e26]: 「で、費用対効果は？」と聞かれて、導入する気が消える
+        - listitem [ref=f210e27]:
+          - generic [ref=f210e28]: 壁2
+          - generic [ref=f210e29]: 「あなたじゃなくて、もっと適した人が」で、くじける
+        - listitem [ref=f210e30]:
+          - generic [ref=f210e31]: 壁3
+          - generic [ref=f210e32]: AIの申請を説明するPPTだけで、修正2週間の地獄
+        - listitem [ref=f210e33]:
+          - generic [ref=f210e34]: 壁4
+          - generic [ref=f210e35]: 個人ならクレカで翌日からAI。会社だと、半年後。
+      - paragraph [ref=f210e36]: ぜんぶ、ぼくが実際に食らった壁です。だからこのサイトには、突破した手順だけを置いていきます。
+    - generic [ref=f210e38]:
+      - generic [ref=f210e39]: 無料コンテンツ
+      - heading "ぜんぶ無料で、置いておきます。" [level=2] [ref=f210e40]
+      - generic [ref=f210e41]:
+        - generic [ref=f210e42]:
+          - paragraph [ref=f210e43]: 記録──
+          - paragraph [ref=f210e44]: 会社にAIを申請→導入→使い倒す実況
+        - generic [ref=f210e45]:
+          - paragraph [ref=f210e46]: AIカイゼン──
+          - paragraph [ref=f210e47]: 明日の業務がラクになる道具
+        - generic [ref=f210e48]:
+          - paragraph [ref=f210e49]: ガバナンス──
+          - paragraph [ref=f210e50]: 元・全社AIガバナンス担当が訳す、AIの決まりごと
+      - generic [ref=f210e51]:
+        - article [ref=f210e52]:
+          - generic [ref=f210e54]:
+            - generic [ref=f210e55]:
+              - generic [ref=f210e56]: No.001
+              - generic [ref=f210e57]: JTC企業のAI事情って？——中の人が、つらつら書いてみます
+              - generic [ref=f210e58]: 準備中
+            - paragraph [ref=f210e59]: 製造業JTCの中の人が見た、リアルな社内AI事情。基本はCopilot Chat、いちばん使われている用途は翻訳、そして有料AIになると途端に上がる申請ハードルの話。
+        - article [ref=f210e60]:
+          - generic [ref=f210e62]:
+            - generic [ref=f210e63]:
+              - generic [ref=f210e64]: No.002
+              - generic [ref=f210e65]: 「うちの会社、AIのルールなくない？」——元・全社AIガバナンス担当が、最初の3点セットを雛形ごと置いていきます
+              - generic [ref=f210e66]: 準備中
+            - paragraph [ref=f210e67]: 社内にAIのルールがない。グレーだから使えない。その行き止まりを壊す「紙3枚」の作り方を、全社AIガバナンスを作る側だった当事者が雛形つきで解説します。
+        - article [ref=f210e68]:
+          - generic [ref=f210e70]:
+            - generic [ref=f210e71]:
+              - generic [ref=f210e72]: No.003
+              - generic [ref=f210e73]: 「うちの会社、ChatGPT禁止なんだよね」——禁止で安心している会社が、いちばん危ない話
+              - generic [ref=f210e74]: 準備中
+            - paragraph [ref=f210e75]: 生成AIを禁止すれば安全、は逆です。禁止が生むのは安心ではなくシャドーIT。AI導入の現場に立つ当事者が、禁止したがる会社の中身と、上司への返し方まで書きます。
+        - article [ref=f210e76]:
+          - generic [ref=f210e77]:
+            - generic [ref=f210e78]: No.004
+            - generic [ref=f210e79]: Claude TeamをJTCに通すまでにやったこと（記録）
+            - generic [ref=f210e80]: 執筆中
+        - article [ref=f210e81]:
+          - generic [ref=f210e82]:
+            - generic [ref=f210e83]: No.005
+            - generic [ref=f210e84]: AI研修の冒頭5分、これだけ話せば伝わる（ガバナンス）
+            - generic [ref=f210e85]: 執筆中
+    - generic [ref=f210e88]:
+      - generic [ref=f210e89]: 書いてる人
+      - heading "書いてるのは、だらリーヌ。" [level=2] [ref=f210e90]
+      - generic [ref=f210e91]:
+        - generic [ref=f210e92]:
+          - term [ref=f210e93]: 製造現場
+          - definition [ref=f210e94]: 10年。現場のしんどさは、体で知ってます
+        - generic [ref=f210e95]:
+          - term [ref=f210e96]: プロダクトリーダー
+          - definition [ref=f210e97]: 10年。企画・設計・技術、ひととおりやりました
+        - generic [ref=f210e98]:
+          - term [ref=f210e99]: AIガバナンス構築
+          - definition [ref=f210e100]: 全社のAIの決まりごとを作る側。マネジメントサイクルの仕組みまで
+        - generic [ref=f210e101]:
+          - term [ref=f210e102]: 現職
+          - definition [ref=f210e103]: 製造部門のAI活用推進責任者。Claude Teamを会社に通しました
+      - paragraph [ref=f210e104]:
+        - text: 肩書きで信じてもらうつもりはないんです。実際に通した記録を読んで、「これならうちでもいける」と思ってもらうのがこのサイトの仕事です。 くわしくは
+        - link "プロフィール" [ref=f210e105] [cursor=pointer]:
+          - /url: /about/
+        - text: へ。
+    - generic [ref=f210e107]:
+      - generic [ref=f210e108]: たいせつなこと
+      - heading "なぜ、ぜんぶ無料なのか。" [level=2] [ref=f210e109]
+      - paragraph [ref=f210e110]: 「怪しくない？」——ですよね。理由はシンプルで、ぼくには本業があるからです。 ここで売り込む必要がないんです。読んで「使えた」と思ったら、Substackで読者になってくれたら、それで十分。 その代わり、中身は本気で書きます。
+    - generic [ref=f210e112]:
+      - generic [ref=f210e113]: ニュースレター
+      - heading "続きは、受信箱に届きます。" [level=2] [ref=f210e114]
+      - paragraph [ref=f210e115]: 新しい記事と、会社にAIを通す実況の続きを、Substackで配信しています。登録は無料。メールアドレスだけです。
+      - iframe [ref=f210e117]
+    - generic [ref=f210e119]:
+      - generic [ref=f210e120]: はじめての方へ
+      - heading "よくある質問" [level=2] [ref=f210e121]
+      - generic [ref=f210e122]:
+        - group [ref=f210e123]:
+          - generic "Q 非エンジニアですが、読めますか？" [ref=f210e124] [cursor=pointer]:
+            - generic [ref=f210e125]: Q
+            - text: 非エンジニアですが、読めますか？
+        - group [ref=f210e126]:
+          - generic "Q 会社の情報を書いて、大丈夫なんですか？" [ref=f210e127] [cursor=pointer]:
+            - generic [ref=f210e128]: Q
+            - text: 会社の情報を書いて、大丈夫なんですか？
+        - group [ref=f210e129]:
+          - generic "Q 何から読めばいいですか？" [ref=f210e130] [cursor=pointer]:
+            - generic [ref=f210e131]: Q
+            - text: 何から読めばいいですか？
+  - contentinfo [ref=f210e132]:
+    - generic [ref=f210e133]:
+      - generic [ref=f210e134]:
+        - generic [ref=f210e135]:
+          - paragraph [ref=f210e136]: AIカイゼン
+          - paragraph [ref=f210e137]: 書いてるのは、だらリーヌ。
+        - paragraph [ref=f210e138]:
+          - link "プライバシーポリシー" [ref=f210e139] [cursor=pointer]:
+            - /url: /privacy/
+      - generic [ref=f210e140]:
+        - paragraph [ref=f210e141]: おまけ｜こんなのも作ってます
+        - generic [ref=f210e142]:
+          - link [ref=f210e143] [cursor=pointer]:
+            - /url: https://suno.com/@darari_nu
+            - paragraph [ref=f210e144]: Dara ↗
+            - paragraph [ref=f210e145]: AI音楽ユニット。Sunoで公開中
+          - link [ref=f210e146] [cursor=pointer]:
+            - /url: https://suno.com/@coban3137
+            - paragraph [ref=f210e147]: coban ↗
+            - paragraph [ref=f210e148]: AI音楽。繊細な女性ボーカル
+          - generic [ref=f210e149]:
+            - paragraph [ref=f210e150]: LINEスタンプ
+            - paragraph [ref=f210e151]: ただいま制作中
+      - paragraph [ref=f210e152]: © 2026 だらリーヌ
+  - generic [ref=f210e155]:
+    - button [ref=f210e156]
+    - button [ref=f210e162]
+    - button [ref=f210e166]
+    - button [ref=f210e174]
