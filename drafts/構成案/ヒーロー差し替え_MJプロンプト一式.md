@@ -6,7 +6,7 @@ darari方針: Codex産ヒーローは仮。MJの当たりが出たら差し替�
 
 | ファイル | シーン |
 |---|---|
-| `public/images/hero.png` | 終電×開いた鳥かご（4:5） |
+| ~~`public/images/hero.png`~~ | ✅差し替え済み(2026-08-06): MJ産「開いた鳥かご頭の男×白い鳥」16:9を`hero.webp`として採用。レイアウト側で対応済みのため4:5は不要になった |
 | `public/images/articles/001-jtc-ai-jijou.png` | キュービクルの潜望鏡頭 |
 | `public/images/articles/002-ai-rules-starter.png` | 3枚の紙×信号機頭（青点灯） |
 | `public/images/articles/003-chatgpt-kinshi.png` | 閉じたPCの前×閉じた鳥かご頭 |
