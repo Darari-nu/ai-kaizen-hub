@@ -48,14 +48,14 @@ const sections = articles.map((a) => `
     ${a.note ? `<div class="note"><b>🔎 検品メモ</b><br>${esc(a.note)}</div>` : ''}
     <div class="btns">
       <button class="btn btn-edit" data-act="edit" data-slug="${a.slug}">✏️ 修正する</button>
-      <button class="btn btn-ghost" data-act="reload" data-slug="${a.slug}">🔄 最新を読み込む</button>
     </div>
     <p class="status" id="status-${a.slug}"></p>
   </header>
   <div class="editor" id="editor-${a.slug}" hidden>
     <textarea id="ta-${a.slug}" spellcheck="false"></textarea>
     <div class="btns">
-      <button class="btn btn-save" data-act="save" data-slug="${a.slug}">💾 保存してコミット</button>
+      <button class="btn btn-save" data-act="save" data-slug="${a.slug}">💾 ドライブに保存</button>
+      <button class="btn btn-ghost" data-act="copy" data-slug="${a.slug}">📋 全文コピー</button>
       <button class="btn btn-ghost" data-act="cancel" data-slug="${a.slug}">やめる</button>
     </div>
   </div>
@@ -120,19 +120,19 @@ a:focus-visible{outline:2px solid var(--shu);outline-offset:2px;}
 <div class="wrap">
   <p class="lead">社外秘（あなた専用）｜draft ${articles.length}本｜2026-08-06版</p>
   <h1>AIカイゼン <span>検品室</span></h1>
-  <p class="conn" id="conn">GitHub連携: 確認中…</p>
+  <p class="conn" id="conn">Googleドライブ連携: 確認中…</p>
   <div class="howto">
     <b>使い方</b><br>
-    「✏️ 修正する」→本文(Markdown)を直す→「💾 保存してコミット」で、そのままGitHubに保存されます（あなたのGitHub連携で動きます）。<br>
+    「✏️ 修正する」→本文(Markdown)を直す→「💾 ドライブに保存」で、あなたのGoogleドライブに「検品_記事名_日時.md」が保存されます。<br>
+    保存し終わったら、チャットで「<b>検品回収して</b>」と一言ください。たまがドライブから回収してサイトに反映します。<br>
     初回は接続の確認が出るので許可してください。チャットに「ここ直して」でもOK。灰色の点線の語は未公開サイト内リンクです。
   </div>
   <nav id="toc">${toc}</nav>
   ${sections}
 </div>
 <script>
-const OWNER='Darari-nu', REPO='ai-kaizen-hub', BRANCH='main';
-const state={};   // slug -> {sha, md}
-let GH=null;      // resolved server name
+const state={};   // slug -> {md}
+let DRIVE=null;   // resolved server name (Google Drive)
 
 const $=(id)=>document.getElementById(id);
 const setStatus=(slug,msg,cls)=>{const el=$('status-'+slug);el.textContent=msg;el.className='status'+(cls?' '+cls:'');};
@@ -171,93 +171,71 @@ function render(slug, raw){
 document.querySelectorAll('article[data-slug]').forEach(el=>{
   const slug=el.dataset.slug;
   const raw=$('md-'+slug).textContent;
-  state[slug]={sha:null, md:raw};
+  state[slug]={md:raw};
   render(slug, raw);
 });
 
-function extract(result){
-  const texts=[];
-  for(const b of (result.content||[])){
-    if(typeof b.text==='string') texts.push(b.text);
-    if(b.resource && typeof b.resource.text==='string') texts.push(b.resource.text);
-  }
-  if(typeof result.payload==='string') texts.push(result.payload);
-  let sha=null, body=null;
-  for(const t of texts){
-    const m=t.match(/SHA: ([0-9a-f]{40})/);
-    if(m) sha=m[1];
-  }
-  const cands=texts.filter(t=>t.startsWith('---\\n')||t.includes('\\n---\\n'));
-  body=cands.sort((a,b)=>b.length-a.length)[0]||null;
-  if(!body){
-    body=texts.filter(t=>!/^successfully/.test(t)).sort((a,b)=>b.length-a.length)[0]||null;
-  }
-  return {sha, body};
-}
-
 const ERRCOPY={
-  needs_reauth:'GitHub連携の認証が切れています。claude.aiの設定→コネクタでGitHubを再接続してください。',
-  server_not_connected:'GitHubコネクタが未接続です。claude.aiの設定→コネクタでGitHubを追加してください。',
+  needs_reauth:'Googleドライブ連携の認証が切れています。claude.aiの設定→コネクタでGoogle Driveを再接続してください。',
+  server_not_connected:'Google Driveコネクタが未接続です。claude.aiの設定→コネクタでGoogle Driveを追加してください。',
+  selection_required:'Google Driveコネクタが複数あります。表示された選択ダイアログでどれか1つを選んでください。',
   not_granted:'このページにコネクタ利用の許可が出ていません。ページを開き直して許可してください。',
-  capability_disabled:'この環境では編集機能が使えません。チャットで「ここ直して」と送ってください。',
-  blocked_by_policy:'組織ポリシーでブロックされています。',
+  capability_disabled:'この環境では保存機能が使えません。「📋 全文コピー」でコピーしてチャットに貼ってください。',
+  blocked_by_policy:'組織ポリシーでブロックされています。「📋 全文コピー」でチャットに貼ってください。',
 };
 function errMsg(e, isWrite){
-  if(e && e.code==='server_unavailable' && isWrite) return '⚠️ 通信不安定: コミットされたか不明です。GitHubのcommit履歴を確認してから、必要ならもう一度保存してください。';
+  if(e && e.code==='server_unavailable' && isWrite) return '⚠️ 通信不安定: 保存されたか不明です。ドライブに「検品_」ファイルができているか確認して、なければもう一度保存してください。';
   if(e && ERRCOPY[e.code]) return ERRCOPY[e.code];
-  if(e && e.code==='tool_error') return '保存エラー: '+(e.message||'ツールが失敗を返しました');
-  return 'エラー('+((e&&e.code)||'不明')+'): '+((e&&e.message)||'');
-}
-
-async function ghCall(tool, input, opts){
-  return window.claude.mcp.callTool(GH, tool, input, opts);
-}
-
-async function reload(slug, silent){
-  if(!GH){ if(!silent) setStatus(slug,'GitHub連携が未接続のため、表示は保存済みスナップショットです。','err'); return; }
-  setStatus(slug,'読み込み中…');
-  try{
-    const r=await ghCall('get_file_contents',{owner:OWNER,repo:REPO,path:'src/content/articles/'+slug+'.md'},{cache:false});
-    const {sha,body}=extract(r);
-    if(body){ state[slug]={sha, md:body}; render(slug, body); setStatus(slug, sha?'最新版を読み込みました':'読み込みました(SHA取得できず: 保存時に再取得します)','ok'); }
-    else setStatus(slug,'本文を取り出せませんでした。チャットで直してください。','err');
-  }catch(e){ setStatus(slug, errMsg(e,false), 'err'); }
+  if(e && e.code==='tool_error') return '保存エラー: '+(e.message||'ツールが失敗を返しました')+' 「📋 全文コピー」でチャットに貼ってもOKです。';
+  return 'エラー('+((e&&e.code)||'不明')+'): '+((e&&e.message)||'')+' 「📋 全文コピー」でチャットに貼ってもOKです。';
 }
 
 function openEditor(slug){
   $('ta-'+slug).value=state[slug].md;
   $('editor-'+slug).hidden=false;
   $('body-'+slug).hidden=true;
-  if(GH && !state[slug].sha){ reload(slug, true).then(()=>{ if(state[slug].md) $('ta-'+slug).value=state[slug].md; }); }
 }
 function closeEditor(slug){
   $('editor-'+slug).hidden=true;
   $('body-'+slug).hidden=false;
 }
 
+function stamp(){
+  const d=new Date();
+  const p=(n)=>String(n).padStart(2,'0');
+  return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds());
+}
+
 async function save(slug, btn){
-  if(!window.claude?.mcp || !GH){ setStatus(slug,'GitHub連携が使えない環境です。編集内容をコピーしてチャットに貼ってください。','err'); return; }
   const md=$('ta-'+slug).value;
-  btn.disabled=true; setStatus(slug,'コミット中…');
+  if(!window.claude?.mcp || !DRIVE){ setStatus(slug,'ドライブ連携が使えない環境です。「📋 全文コピー」でコピーしてチャットに貼ってください。','err'); return; }
+  btn.disabled=true; setStatus(slug,'ドライブに保存中…');
   try{
-    if(!state[slug].sha){
-      const r0=await ghCall('get_file_contents',{owner:OWNER,repo:REPO,path:'src/content/articles/'+slug+'.md'},{cache:false});
-      state[slug].sha=extract(r0).sha;
-    }
-    const input={owner:OWNER,repo:REPO,branch:BRANCH,path:'src/content/articles/'+slug+'.md',content:md,
-      message:'検品修正: '+slug+'（検品室から）'};
-    if(state[slug].sha) input.sha=state[slug].sha;
-    const r=await ghCall('create_or_update_file', input);
-    let p=r.payload;
-    if(typeof p==='string'){ try{p=JSON.parse(p);}catch(_){p=null;} }
-    const newSha=p&&p.content&&p.content.sha;
-    state[slug]={sha:newSha||null, md:md};
+    await window.claude.mcp.callTool(DRIVE,'create_file',{
+      title:'検品_'+slug+'_'+stamp()+'.md',
+      textContent:md,
+      contentMimeType:'text/markdown',
+      disableConversionToGoogleType:true,
+    });
+    state[slug]={md:md};
     render(slug, md);
     closeEditor(slug);
-    $('state-'+slug).textContent='✓ 保存済み';
-    setStatus(slug,'GitHubにコミットしました ✓','ok');
+    $('state-'+slug).textContent='✓ ドライブ保存済み';
+    setStatus(slug,'ドライブに保存しました ✓ あとでチャットで「検品回収して」と言えば反映されます','ok');
   }catch(e){ setStatus(slug, errMsg(e,true), 'err'); }
   btn.disabled=false;
+}
+
+async function copyMd(slug){
+  const ed=$('editor-'+slug);
+  const md=ed.hidden ? state[slug].md : $('ta-'+slug).value;
+  try{
+    await navigator.clipboard.writeText(md);
+    setStatus(slug,'全文をコピーしました。チャットに貼って「反映して」でOKです','ok');
+  }catch(_){
+    const ta=$('ta-'+slug); ed.hidden=false; ta.value=md; ta.select();
+    setStatus(slug,'コピーできなかったので全選択しました。手動でコピーしてください','err');
+  }
 }
 
 document.addEventListener('click',(ev)=>{
@@ -266,23 +244,23 @@ document.addEventListener('click',(ev)=>{
   const slug=b.dataset.slug;
   if(b.dataset.act==='edit') openEditor(slug);
   else if(b.dataset.act==='cancel') closeEditor(slug);
-  else if(b.dataset.act==='reload') reload(slug);
+  else if(b.dataset.act==='copy') copyMd(slug);
   else if(b.dataset.act==='save') save(slug, b);
 });
 
 (async function init(){
   const conn=$('conn');
   if(!window.claude || window.claude.mcp===undefined){
-    conn.innerHTML='GitHub連携: <span class="bad">この表示環境では使えません</span>（読むのはOK。直しはチャットへ）';
+    conn.innerHTML='Googleドライブ連携: <span class="bad">この表示環境では使えません</span>（読むのはOK。直しは📋コピー→チャットへ）';
     return;
   }
   try{
     const r=await window.claude.mcp.listTools();
     const s=(r.servers||[]).find(x=>x.tools&&x.tools.length);
-    if(s){ GH=s.server; conn.innerHTML='GitHub連携: <b>接続済み（'+s.server+'）</b> — 保存ボタンでそのままコミットされます'; }
-    else { conn.innerHTML='GitHub連携: <span class="bad">未接続</span> — claude.aiの設定→コネクタでGitHubを接続すると、このページから保存できます'; }
+    if(s){ DRIVE=s.server; conn.innerHTML='Googleドライブ連携: <b>接続済み（'+s.server+'）</b> — 保存すると「検品_記事名_日時.md」がドライブにできます'; }
+    else { conn.innerHTML='Googleドライブ連携: <span class="bad">未接続</span> — claude.aiの設定→コネクタでGoogle Driveを接続すると、このページから保存できます'; }
   }catch(e){
-    conn.innerHTML='GitHub連携: <span class="bad">確認できませんでした</span>（'+((e&&e.code)||'')+'）読むのはOK。直しはチャットへ';
+    conn.innerHTML='Googleドライブ連携: <span class="bad">確認できませんでした</span>（'+((e&&e.code)||'')+'）読むのはOK。直しは📋コピー→チャットへ';
   }
 })();
 </script>`;
