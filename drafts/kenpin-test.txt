@@ -1,0 +1,1 @@
+ping from 検品室 save-function test
