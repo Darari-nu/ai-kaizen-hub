@@ -63,28 +63,49 @@ import Base from '@/layouts/Base.astro';
           </tbody>
         </table>
 
-        <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（入力してよい情報・してはならない情報）</h2>
-        <div class="mt-3 grid gap-3 sm:grid-cols-2">
-          <div class="border border-[#1b3a6b]">
-            <p class="bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">入力してよい情報</p>
-            <ul class="list-disc space-y-1 px-3 py-2 pl-8">
-              <li>一般に公開されている情報</li>
-              <li>固有名詞を伏せた業務の相談（「A社」「ある部品」等に置き換えたもの）</li>
-              <li>自分が書いた文章の校正・翻訳（機密情報を含まないもの）</li>
-            </ul>
-          </div>
-          <div class="border border-[#c00]">
-            <p class="bg-[#fdeeee] px-3 py-1.5 font-bold text-[#c00]">入力してはならない情報</p>
-            <ul class="list-disc space-y-1 px-3 py-2 pl-8">
-              <li>顧客名・取引先名・未公開の取引条件</li>
-              <li>未公開の数値（原価・歩留まり・売上等）</li>
-              <li>図面・仕様書・プログラムの中身</li>
-              <li>個人情報</li>
-            </ul>
-          </div>
-        </div>
+        <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（情報のレベル区分と取扱い）</h2>
+        <p class="mt-2 text-[12px]">
+          入力の可否は「情報の種類」ではなく、下表のレベルで判断する。個人情報についても、
+          一律禁止とはせず本表のレベルに従う（2026年8月改定。改定前は個人情報を一律禁止としていたが、
+          名刺1枚も健康情報も同じ扱いとなり、現場が判断できないため改めた）。
+        </p>
+        <table class="mt-3 w-full border-collapse text-[12px]">
+          <tbody>
+            {
+              [
+                [
+                  'レベル1',
+                  '入力可',
+                  '公開情報／固有名詞を伏せた業務相談（「A社」「ある部品」等）／自分が書いた文章の校正・翻訳／社外の一般的な技術情報',
+                ],
+                [
+                  'レベル2',
+                  '承認を得れば入力可',
+                  '社内限りの手順・議事メモ（固有名詞を伏せたもの）／名刺情報など、本人が業務上の連絡先として渡した個人情報／自部門の非公開でない業務データ',
+                ],
+                [
+                  'レベル3',
+                  '入力禁止',
+                  '顧客名・取引先名・未公開の取引条件／未公開の数値（原価・歩留まり・売上等）／図面・仕様書・プログラムの中身／健康情報・評価・給与など、本人の不利益になりうる個人情報',
+                ],
+              ].map(([lv, judge, ex]) => (
+                <tr class="border border-[#1b3a6b]">
+                  <th class="w-20 border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
+                    {lv}
+                  </th>
+                  <th class="w-32 border border-[#1b3a6b] px-2 py-1.5 text-left align-top font-bold">
+                    {judge}
+                  </th>
+                  <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{ex}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
         <p class="mt-2 text-[12px] text-[#666]">
-          （備考）迷った場合は、固有名詞を置き換えて抽象化すること。それでも迷う場合は入力しない。
+          （備考1）レベル2の承認は、所属長またはAI活用推進室のいずれかで足りる。書面は不要、メールで可。<br />
+          （備考2）迷った場合は、固有名詞を置き換えて抽象化し、レベル1に落としてから入力すること。
+          それでも判断がつかない場合はAI活用推進室に照会する。
         </p>
 
         <h2 class="mt-6 font-bold text-[#1b3a6b]">第4条（責任分担）</h2>
