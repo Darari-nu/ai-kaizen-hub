@@ -36,10 +36,9 @@ function embedImage(ogImage) {
 const NOTES = {
   '001-jtc-ai-jijou': { status: 'ok', note: '8/7本人検品OK。以降の修正指示なし。' },
   '002-ai-rules-starter': { status: 'ok', note: '8/7検品OK。Q4に「どのくらい効果あるの？と聞かれるパターン→また後日書きますね」を追加済み。' },
-  '003-chatgpt-kinshi': { status: 'fix', note: '8/7の加筆(上司「ほんとうにいるのか？」/コンサル鵜呑み)を取り込み、「長い・何が言いたいか分からなくなる」への対処として約2割圧縮しました。ボツにはせず整理した形です。これで読み通せるか見てください。' },
-  '004-claude-team': { status: 'fix', note: '8/7反映: 専門用語を平易化(Controller/Processor→「データの持ち主は会社側、Anthropicは預かって処理する立場」、JIT/ロールベース→「役割ごとに権限を分ける設定」、Primary Owner→「組織の代表管理者」)。情シス3項目・台帳棚卸し・同意画面スクショ・クレカ1ヶ月オチも入っています。' },
-  '005-hiyou-taikoka': { status: 'fix', note: '8/7反映: 「年契約ではなく」の矛盾を修正(実際は年払い・人数を最小構成でスタート→増やし方にブレーキを見せる、に書き換え)。「上司が聞いているのは、で、人が減るの？」も追加済み。' },
-  '006-meishi-bot': { status: 'fix', note: '8/7全面改訂: VPSの話は削除(別記事送り)。代わりにLINE Developers/Google Vision/OpenAIの登録手順とキーの扱いを追加。フロー図はCodexで生成予定(未着手)。実物リポ(line-business-card-bot)のまるっと解説は続編としてネタ帳に登録済み。' },
+  '004-claude-team': { status: 'ok', note: '8/8本人検品OK。専門用語の平易化まで反映済み。' },
+  '005-hiyou-taikoka': { status: 'ok', note: '8/8本人検品OK。本人の加筆(「目に見える証明が難しい」「自分が社長だったらそう思っちゃいます」「人件費」)を取り込み済み。' },
+  '006-meishi-bot': { status: 'fix', note: '8/8反映: 冒頭の「いつもの」を削除(本人加筆)。完成形のLINEスクショと、AIブラウザ機能の一文+スクショを追加しました。⚠️画像2枚はまだ置けていません(チャット添付だとファイルとして受け取れないため)。下記2つのパスにファイルで置いてください: public/images/articles/006-line-demo.png(LINE完成形) と 006-ai-browser.png(Claudeデスクトップ+ブラウザ)。置いたら「画像置いたよ」と一言ください' },
   '007-rpa-daitai': { status: 'fix', note: '8/7反映: アプリ内ブラウザ(Claude Code/Codex)でAIに操作させながら作る話を追加。「勝手にやっていいの？」にブラウザ自動操作を禁止している会社がある件も追加しました。' },
   '008-shanai-system': { status: 'fix', note: '8/7反映: マニュアルをAIに読ませる案(更新されてない事故の注意つき)、Claude Codeの裏画面スクショ技、AI規程のレベル制(第3条を改定)への言及を追加。' },
   '011-dare-ga-itta': { status: 'fix', note: '8/7反映: 部長判断の理由=月2,000円のコスト、中にClaudeが入っていてマニュアルまで放り込んで手順書化していた話を追加。ツール名のぼかしは維持しています。' },
