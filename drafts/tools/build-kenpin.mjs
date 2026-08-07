@@ -1,21 +1,49 @@
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, existsSync, statSync, mkdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 
-const DIR = '/Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles';
+const ROOT = '/Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP';
+const DIR = join(ROOT, 'src/content/articles');
+const PUBLIC = join(ROOT, 'public');
 const OUT = '/tmp/kenpin.html';
 
+// ヒーロー画像をdataURIで埋め込む（Artifactは外部ホストへの通信が禁止のため）
+// 元画像は数MBあるので、macOSのsipsで幅720pxのjpegサムネを作ってから埋める
+const CACHE = '/tmp/kenpin-thumbs';
+mkdirSync(CACHE, { recursive: true });
+function embedImage(ogImage) {
+  if (!ogImage) return null;
+  const base = ogImage.replace(/^\//, '').replace(/\.[^.]+$/, '');
+  for (const ext of ['.webp', '.png', '.jpg', '.jpeg']) {
+    const src = join(PUBLIC, base + ext);
+    if (!existsSync(src)) continue;
+    const origKb = Math.round(statSync(src).size / 1024);
+    const thumb = join(CACHE, base.replace(/\//g, '_') + '.jpg');
+    try {
+      if (!existsSync(thumb) || statSync(thumb).mtimeMs < statSync(src).mtimeMs) {
+        execFileSync('sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '62', '-Z', '720', src, '--out', thumb], { stdio: 'ignore' });
+      }
+      const buf = readFileSync(thumb);
+      return { uri: `data:image/jpeg;base64,${buf.toString('base64')}`, path: base + ext, kb: origKb };
+    } catch {
+      return { failed: true, path: base + ext, kb: origKb };
+    }
+  }
+  return null;
+}
+
+// status: 'ok'=本人検品済み / 'fix'=指示を反映したので再検品 / 'new'=初回検品待ち
 const NOTES = {
-  '001-jtc-ai-jijou': '✅8/7本人検品OK。',
-  '002-ai-rules-starter': '✅8/7検品OK+追記反映: Q4に「どのくらい効果あるの？と聞かれるパターン→また後日書きますね」を追加済み。',
-  '003-chatgpt-kinshi': '🔄8/7二度目の書き換え: 「禁止の会社は今や少数派。多いのは禁止してないのに実質使えない会社」を軸に再構成。社内エピソードは「ぼくの会社は禁止してない(申請制)。それでもこうなる」の文脈に移動して矛盾解消。想定問答に「申請制なら問題ないでしょ？→申請ゼロなら禁止と同じ」を追加。再検品を。',
-  '004-claude-team': '🔄8/7追記反映: 情シス確認リストに「サービス自体のセキュリティ/事故時の履歴/SSO」を追加、「ぼくが管理者・台帳管理・半期棚卸し(Claude Code製アプリで)」の先出しを追加。法務に「同意画面スクショ保管」を追加(電帳法の名指しは裏取り不能のため入れず、実務メリットで書いた)。クレカ1ヶ月オチは反映済み。再検品を。',
-  '005-hiyou-taikoka': '🔄8/7追記反映: 時間短縮が弱い理由に「上司が聞いているのは、で、人が減るの？」を追加。数字は8/6裁定のまま。再検品を。',
-  '006-meishi-bot': '🔄8/7反映: 「役員向け」→「管理職向け」に変更、初出に「(わかりやすさのための、ぼくの架空会社です)」を追加。実物リポ(line-business-card-bot)のまるっと解説はネタ帳に登録済み(続編候補)。再検品を。',
-  '007-rpa-daitai': '🔄8/7反映: 安定のコツ末尾に「迷ったらスクショでAIに聞けば一発/拡張機能のAIならスクショも不要」を追加(008へ内部リンク)。記述粒度の会社バレ確認は引き続きお願いします。',
-  '008-shanai-system': 'あなたのキモ(スクショで聞く/Claude Codeで手順書)を核に構成。実体験の温度で直せる箇所があれば。',
-  '010-ai-kenshu': '台本は「たたき台の合体版(A→B→C)」で書きました。A/B/C単体に変える場合は一言ください。',
-  '011-dare-ga-itta': 'Asana実録をダラリ重工業に翻訳(ツール名は「あるタスク管理ツール」)。ぼかし加減これでOK？',
-  '012-kuni-mo-yare': '政府文書はWebで裏取り済み(AI推進法2025.9施行/基本計画2025.12.23閣議決定/2026.7.14改定)。「様子見こそ最大のリスク」は趣旨要約なので、原文PDFと突き合わせたい人はことばメモのリンクから。',
+  '001-jtc-ai-jijou': { status: 'ok', note: '8/7本人検品OK。以降の修正指示なし。' },
+  '002-ai-rules-starter': { status: 'ok', note: '8/7検品OK。Q4に「どのくらい効果あるの？と聞かれるパターン→また後日書きますね」を追加済み。' },
+  '003-chatgpt-kinshi': { status: 'fix', note: '8/7の加筆(上司「ほんとうにいるのか？」/コンサル鵜呑み)を取り込み、「長い・何が言いたいか分からなくなる」への対処として約2割圧縮しました。ボツにはせず整理した形です。これで読み通せるか見てください。' },
+  '004-claude-team': { status: 'fix', note: '8/7反映: 専門用語を平易化(Controller/Processor→「データの持ち主は会社側、Anthropicは預かって処理する立場」、JIT/ロールベース→「役割ごとに権限を分ける設定」、Primary Owner→「組織の代表管理者」)。情シス3項目・台帳棚卸し・同意画面スクショ・クレカ1ヶ月オチも入っています。' },
+  '005-hiyou-taikoka': { status: 'fix', note: '8/7反映: 「年契約ではなく」の矛盾を修正(実際は年払い・人数を最小構成でスタート→増やし方にブレーキを見せる、に書き換え)。「上司が聞いているのは、で、人が減るの？」も追加済み。' },
+  '006-meishi-bot': { status: 'fix', note: '8/7全面改訂: VPSの話は削除(別記事送り)。代わりにLINE Developers/Google Vision/OpenAIの登録手順とキーの扱いを追加。フロー図はCodexで生成予定(未着手)。実物リポ(line-business-card-bot)のまるっと解説は続編としてネタ帳に登録済み。' },
+  '007-rpa-daitai': { status: 'fix', note: '8/7反映: アプリ内ブラウザ(Claude Code/Codex)でAIに操作させながら作る話を追加。「勝手にやっていいの？」にブラウザ自動操作を禁止している会社がある件も追加しました。' },
+  '008-shanai-system': { status: 'fix', note: '8/7反映: マニュアルをAIに読ませる案(更新されてない事故の注意つき)、Claude Codeの裏画面スクショ技、AI規程のレベル制(第3条を改定)への言及を追加。' },
+  '011-dare-ga-itta': { status: 'fix', note: '8/7反映: 部長判断の理由=月2,000円のコスト、中にClaudeが入っていてマニュアルまで放り込んで手順書化していた話を追加。ツール名のぼかしは維持しています。' },
+  '012-kuni-mo-yare': { status: 'fix', note: '8/7全面書き直し: 「国が言えば通る」の言い過ぎを是正し、「国を出しても『で、うちは何をするの？』で終わった」失敗談を軸に。閣議決定などの用語も噛み砕きました。政府文書の裏取りは維持。' },
 };
 
 const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
@@ -28,8 +56,17 @@ const articles = files.map((f) => {
       return [l.slice(0, i).trim(), l.slice(i + 1).trim().replace(/^'(.*)'$/, '$1')];
     })
   );
-  return { slug: f.replace('.md', ''), fm, raw, note: NOTES[f.replace('.md', '')] || '' };
+  const slug = f.replace('.md', '');
+  const meta = NOTES[slug] || { status: 'new', note: '' };
+  return { slug, fm, raw, status: meta.status, note: meta.note, hero: embedImage(fm.ogImage) };
 });
+
+const STATUS = {
+  ok: { label: '✅ 検品ずみ', cls: 'st-ok' },
+  fix: { label: '🔄 指示を反映（再検品おねがいします）', cls: 'st-fix' },
+  new: { label: '🆕 検品まち', cls: 'st-new' },
+};
+const done = articles.filter((a) => a.status === 'ok').length;
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -37,14 +74,20 @@ const toc = articles.map((a) => `
   <a class="toc-item" href="#${a.slug}">
     <span class="toc-no">No.${String(a.fm.number).padStart(3, '0')}</span>
     <span class="toc-title">${esc(a.fm.title)}</span>
-    <span class="chip">${esc(a.fm.series)}</span>
+    <span class="badge ${STATUS[a.status].cls}">${STATUS[a.status].label.replace(/（.*/, '')}</span>
   </a>`).join('');
 
 const sections = articles.map((a) => `
 <article id="${a.slug}" data-slug="${a.slug}">
   <header>
     <p class="meta"><span class="chip">${esc(a.fm.series)}</span> No.${String(a.fm.number).padStart(3, '0')}｜draft <span class="save-state" id="state-${a.slug}"></span></p>
+    <p class="badge-row"><span class="badge ${STATUS[a.status].cls}">${STATUS[a.status].label}</span></p>
     <h2>${esc(a.fm.title)}</h2>
+    ${a.hero
+      ? a.hero.failed
+        ? `<p class="imgnote">（挿絵 ${esc(a.hero.path)} の縮小に失敗しました）</p>`
+        : `<figure class="hero"><img src="${a.hero.uri}" alt="" loading="lazy"><figcaption>挿絵: ${esc(a.hero.path)}（元ファイル ${a.hero.kb}KB・ここでは縮小表示）</figcaption></figure>`
+      : `<p class="imgnote">（挿絵はまだありません: ${esc(a.fm.ogImage || '未設定')}）</p>`}
     ${a.note ? `<div class="note"><b>🔎 検品メモ</b><br>${esc(a.note)}</div>` : ''}
     <div class="btns">
       <button class="btn btn-edit" data-act="edit" data-slug="${a.slug}">✏️ 修正する</button>
@@ -92,6 +135,16 @@ article .meta{font-size:.75rem;color:var(--nezu);display:flex;gap:.6rem;align-it
 .save-state{color:var(--ok);font-weight:700;}
 article h2{font-size:1.25rem;line-height:1.6;margin:.2rem 0 1rem;text-wrap:balance;}
 .note{background:var(--card);border-left:3px solid var(--shu);padding:.7rem .9rem;font-size:.83rem;margin:0 0 .8rem;}
+.badge{font-size:.7rem;padding:.15rem .5rem;border:1px solid currentColor;white-space:nowrap;}
+.st-ok{color:var(--ok)}
+.st-fix{color:var(--shu)}
+.st-new{color:var(--nezu)}
+.badge-row{margin:0 0 .4rem}
+.toc-item .badge{align-self:center}
+.hero{margin:0 0 .9rem}
+.hero img{width:100%;height:auto;display:block;border:1px solid var(--rule);}
+.hero figcaption{font-size:.7rem;color:var(--nezu);margin-top:.25rem;}
+.imgnote{font-size:.75rem;color:var(--nezu);margin:0 0 .8rem;}
 .btns{display:flex;gap:.6rem;margin:.4rem 0 .6rem;flex-wrap:wrap;}
 .btn{font-family:inherit;font-size:.85rem;padding:.55rem 1rem;border:1px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer;}
 .btn-save{background:var(--shu);border-color:var(--shu);color:#fff;font-weight:700;}
@@ -118,7 +171,7 @@ article h2{font-size:1.25rem;line-height:1.6;margin:.2rem 0 1rem;text-wrap:balan
 a:focus-visible{outline:2px solid var(--shu);outline-offset:2px;}
 </style>
 <div class="wrap">
-  <p class="lead">社外秘（あなた専用）｜draft ${articles.length}本｜2026-08-06版</p>
+  <p class="lead">社外秘（あなた専用）｜全${articles.length}本｜✅検品ずみ ${done}本 / のこり ${articles.length - done}本</p>
   <h1>AIカイゼン <span>検品室</span></h1>
   <p class="conn" id="conn">Googleドライブ連携: 確認中…</p>
   <div class="howto">
