@@ -4,7 +4,7 @@ description: '会議1時間、議事録づくりに1時間。録音を聞き返�
 pubDate: 2026-08-08
 series: 'AIカイゼン'
 number: 17
-ogImage: '/images/articles/017-gijiroku.png'
+ogImage: '/images/articles/017-gijiroku.jpg'
 draft: true
 ---
 

@@ -4,7 +4,7 @@ description: 'ルールがないから使えない、は行き止まりじゃあ
 pubDate: 2026-08-05
 series: 'ガバナンス'
 number: 2
-ogImage: '/images/articles/002-ai-rules-starter.png'
+ogImage: '/images/articles/002-ai-rules-starter.jpg'
 draft: true
 ---
 

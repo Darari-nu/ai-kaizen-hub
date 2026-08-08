@@ -4,7 +4,7 @@ description: '経費精算、勤怠、あの画面たち。分厚いマニュア
 pubDate: 2026-08-06
 series: 'AIカイゼン'
 number: 8
-ogImage: '/images/articles/008-shanai-system.png'
+ogImage: '/images/articles/008-shanai-system.jpg'
 draft: true
 ---
 

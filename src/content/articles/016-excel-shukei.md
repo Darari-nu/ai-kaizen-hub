@@ -4,7 +4,7 @@ description: '毎月同じファイルを開いて、コピペして、集計し
 pubDate: 2026-08-08
 series: 'AIカイゼン'
 number: 16
-ogImage: '/images/articles/016-excel-shukei.png'
+ogImage: '/images/articles/016-excel-shukei.jpg'
 draft: true
 ---
 

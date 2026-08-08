@@ -4,7 +4,7 @@ description: '会議録発行システムも勤務管理システムも、毎回
 pubDate: 2026-08-06
 series: 'AIカイゼン'
 number: 7
-ogImage: '/images/articles/007-rpa-daitai.png'
+ogImage: '/images/articles/007-rpa-daitai.jpg'
 draft: true
 ---
 

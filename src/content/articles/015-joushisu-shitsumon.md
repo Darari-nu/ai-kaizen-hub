@@ -4,7 +4,7 @@ description: 'AI申請が情シスで止まる。何を聞かれるか分から�
 pubDate: 2026-08-08
 series: 'ガバナンス'
 number: 15
-ogImage: '/images/articles/015-joushisu-shitsumon.png'
+ogImage: '/images/articles/015-joushisu-shitsumon.jpg'
 draft: true
 ---
 

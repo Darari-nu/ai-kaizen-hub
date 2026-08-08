@@ -4,7 +4,7 @@ description: '部長判断で「使わない」になったツールが、本部
 pubDate: 2026-08-06
 series: '記録'
 number: 11
-ogImage: '/images/articles/011-dare-ga-itta.png'
+ogImage: '/images/articles/011-dare-ga-itta.jpg'
 draft: true
 ---
 

@@ -4,7 +4,7 @@ description: '2025年12月、日本初の「人工知能基本計画」が閣議
 pubDate: 2026-08-06
 series: 'ガバナンス'
 number: 12
-ogImage: '/images/articles/012-kuni-mo-yare.png'
+ogImage: '/images/articles/012-kuni-mo-yare.jpg'
 draft: true
 ---
 

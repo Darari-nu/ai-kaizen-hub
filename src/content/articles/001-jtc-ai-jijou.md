@@ -4,7 +4,7 @@ description: 'SNSでは「AIすごい」の大合唱なのに、会社のPCは�
 pubDate: 2026-08-05
 series: '記録'
 number: 1
-ogImage: '/images/articles/001-jtc-ai-jijou.png'
+ogImage: '/images/articles/001-jtc-ai-jijou.jpg'
 draft: true
 ---
 

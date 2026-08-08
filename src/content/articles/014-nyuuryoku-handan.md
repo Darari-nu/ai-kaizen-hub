@@ -4,7 +4,7 @@ description: '「入れていいか毎回迷って、結局使わない」を終
 pubDate: 2026-08-08
 series: 'ガバナンス'
 number: 14
-ogImage: '/images/articles/014-nyuuryoku-handan.png'
+ogImage: '/images/articles/014-nyuuryoku-handan.jpg'
 draft: true
 ---
 

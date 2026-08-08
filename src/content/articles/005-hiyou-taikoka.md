@@ -4,7 +4,7 @@ description: 'AIの費用対効果は時間短縮で説明するから迷子に�
 pubDate: 2026-08-06
 series: 'ガバナンス'
 number: 5
-ogImage: '/images/articles/005-hiyou-taikoka.png'
+ogImage: '/images/articles/005-hiyou-taikoka.jpg'
 draft: true
 ---
 

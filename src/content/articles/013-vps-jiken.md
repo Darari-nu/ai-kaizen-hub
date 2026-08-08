@@ -4,7 +4,7 @@ description: '名刺Botを動かすためにVPSを契約し、セキュリティ
 pubDate: 2026-08-08
 series: '記録'
 number: 13
-ogImage: '/images/articles/013-vps-jiken.png'
+ogImage: '/images/articles/013-vps-jiken.jpg'
 draft: true
 ---
 

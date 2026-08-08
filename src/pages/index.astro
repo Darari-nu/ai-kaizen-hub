@@ -11,6 +11,10 @@ const articles = (await getCollection('articles')).sort(
   (a, b) => a.data.number - b.data.number
 );
 
+// 挿絵がまだ無い記事（書きたて）は画像枠ごと出さない。壊れ画像を出さないための存在チェック
+const hasImage = (p: string | undefined) =>
+  !!p && fs.existsSync(new URL(`../../public${p}`, import.meta.url));
+
 // ヒーロー画像はMidjourneyで本人制作（public/images/README.md参照）。
 // public/images/hero.jpg|png|webp を置けば自動で差し替わる。
 const heroImage = ['jpg', 'png', 'webp']
@@ -186,7 +190,7 @@ const faqs = [
           {
             articles.map((a) => (
               <article class="group flex gap-7 border-t border-rule py-7 first:border-t-2 first:border-ink">
-                {a.data.ogImage && (
+                {hasImage(a.data.ogImage) && (
                   <div class="hidden w-56 shrink-0 overflow-hidden sm:block">
                     <img
                       src={a.data.ogImage}
