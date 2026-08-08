@@ -1,0 +1,168 @@
+---
+// 会議録発行システム 操作マニュアル — 「分厚くて読まれないマニュアル」のパロディ実物。
+// 記事008「マニュアルをAIに読ませる」のデモ素材として使う。
+// 様式美: 無意味な改訂履歴・二重番号の章立て・本題が6章まで出てこない構成。
+import Base from '@/layouts/Base.astro';
+
+const kaitei = [
+  ['第7版', '2026.06.30', '「押印」を「確認」に変更（働き方改革対応）'],
+  ['第6版', '2025.11.15', '誤字の修正（3箇所）'],
+  ['第5版', '2025.04.01', '組織名の変更に伴う修正'],
+  ['第4版', '2024.10.01', '章番号の修正（第8章と第9章の入替）'],
+  ['第3版', '2024.04.01', '組織名の変更に伴う修正'],
+  ['第2版', '2023.10.15', '表紙のロゴを変更'],
+  ['初版', '2023.04.01', '制定'],
+];
+
+const mokuji = [
+  ['第1章', 'はじめに', '3'],
+  ['第2章', '用語の定義', '5'],
+  ['第3章', 'システムの起動（対応ブラウザ）', '9'],
+  ['第4章', 'ログインとパスワードの管理', '12'],
+  ['第5章', 'メイン画面の構成', '18'],
+  ['第6章', '会議録の新規発行', '24'],
+  ['第7章', 'カテゴリの選択基準', '38'],
+  ['第8章', '承認者の指定', '45'],
+  ['第9章', '一時保存と復元', '52'],
+  ['第10章', '印刷と配布', '58'],
+  ['第11章', 'トラブルシューティング', '65'],
+  ['第12章', 'お問い合わせ', '74'],
+  ['付録A', 'コード一覧', '76'],
+  ['付録B', '関連申請書様式（G-1〜G-9）', '82'],
+];
+---
+
+<Base
+  title="会議録発行システム 操作マニュアル 第7版（架空）"
+  description="架空企業ダラリ重工業の社内システム操作マニュアル（という設定のページ）。分厚くて読まれないマニュアルの実物です。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] leading-relaxed text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業のマニュアル（という設定）です。全87ページある体（てい）ですが、実在するのはこのページだけです。
+    </div>
+
+    <div class="mx-auto max-w-3xl px-4 py-8">
+      <!-- 表紙 -->
+      <div class="border-2 border-[#1b3a6b] bg-white p-8 text-center">
+        <p class="text-[11px]">社内限（社外持出禁止）</p>
+        <p class="mt-8 text-2xl font-bold tracking-widest">会議録発行システム</p>
+        <p class="mt-2 text-xl font-bold tracking-widest">操作マニュアル</p>
+        <p class="mt-6 text-sm">第7版（全87ページ）</p>
+        <p class="mt-10 text-sm">ダラリ重工業株式会社　情報システム部</p>
+        <p class="text-[11px] text-[#666]">文書番号: DHI-IS-M-012-07</p>
+      </div>
+
+      <!-- 改訂履歴 -->
+      <div class="mt-6 border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">改訂履歴</p>
+        <table class="w-full border-collapse text-[12px]">
+          <tbody>
+            {kaitei.map(([v, d, naiyo]) => (
+              <tr class="border-b border-[#ddd]">
+                <td class="w-20 border-r border-[#ddd] px-3 py-1.5">{v}</td>
+                <td class="w-28 border-r border-[#ddd] px-3 py-1.5">{d}</td>
+                <td class="px-3 py-1.5">{naiyo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 目次 -->
+      <div class="mt-6 border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">目次</p>
+        <table class="w-full border-collapse text-[12px]">
+          <tbody>
+            {mokuji.map(([sho, title, page]) => (
+              <tr class="border-b border-dotted border-[#ccc]">
+                <td class="w-20 px-3 py-1.5">{sho}</td>
+                <td class="px-3 py-1.5">{title}</td>
+                <td class="w-16 px-3 py-1.5 text-right">{page}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 本文（抜粋の体） -->
+      <div class="mt-6 space-y-6 border-2 border-[#1b3a6b] bg-white p-6">
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第1章　はじめに</h2>
+          <p class="mt-2">
+            本マニュアルは、会議録発行システム（以下「本システム」という）の操作方法について定めるものである。
+            本システムの利用にあたっては、本マニュアルのほか、文書管理規程、会議体運営規程、
+            情報セキュリティ管理規程および関連する通達類を遵守すること。
+          </p>
+          <p class="mt-2">
+            なお、本マニュアルに定めのない事項については、情報システム部に照会のうえ、その指示に従うこと。
+            照会は原則として所属長を経由して行うこと。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第2章　用語の定義</h2>
+          <p class="mt-2">本マニュアルにおいて使用する用語の定義は、次の各号に定めるところによる。</p>
+          <ol class="mt-2 list-decimal space-y-1 pl-8">
+            <li>「会議録」とは、会議体運営規程第2条に定める会議体の議事の記録をいう。</li>
+            <li>「発行」とは、会議録を本システムに登録し、発行番号を取得する行為をいう。</li>
+            <li>「発行者」とは、発行を行う者をいう。</li>
+            <li>「承認者」とは、発行者の指定する承認を行う者をいう。</li>
+            <li>「一時保存」とは、発行に至らない状態で入力内容を保存する行為をいう（第9章参照）。</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第3章　システムの起動（対応ブラウザ）</h2>
+          <p class="mt-2">
+            本システムは Internet Explorer 6.0 以上での動作を保証する。その他のブラウザを使用した場合に
+            生じた不具合については、情報システム部は責任を負わない。
+            デスクトップに作成されたショートカットからの起動は推奨しない（第11章11.3参照）。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第6章　会議録の新規発行</h2>
+          <p class="mt-2">6.1　メイン画面より「会議録 新規発行」を選択する。</p>
+          <p>6.2　カテゴリ、宛先（回覧先）、承認者、ジャンル、職場、会議名および開催日を入力する。カテゴリの選択基準は第7章を参照のこと。</p>
+          <p>6.3　議事内容を入力する。議事内容には決定事項、保留事項および宿題（担当・期限を含む）を記載すること。</p>
+          <p>6.4　入力内容を確認のうえ、以下の手順で発行する。</p>
+          <p class="pl-6">6.4.1　入力内容に誤りがないことを確認する。</p>
+          <p class="pl-6">6.4.2　再度、入力内容に誤りがないことを確認する。</p>
+          <p class="pl-6">6.4.3　画面下部の「発行」ボタンを押下する。</p>
+          <p class="pl-6">6.4.4　表示される発行番号（GJR-で始まる番号）を控える。</p>
+          <p>6.5　発行後の修正は、会議録修正申請書（様式G-7）を情報システム部に提出して行う。修正には5営業日を要する。</p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第7章　カテゴリの選択基準</h2>
+          <p class="mt-2">
+            カテゴリは会議体の性質に応じて選択する。「定例会議」とは定期に開催される会議をいい、
+            「臨時会議」とは臨時に開催される会議をいう。「打合せ」とは会議に至らない打合せをいい、
+            「連絡会」とは連絡を目的とする会をいう。いずれにも該当しない場合は「その他」を選択し、
+            会議名の冒頭に【その他】と付記すること。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第11章　トラブルシューティング（抜粋）</h2>
+          <p class="mt-2">11.1　画面が表示されない場合　→　ブラウザを再起動する。解消しない場合はPCを再起動する。</p>
+          <p>11.2　入力内容が消えた場合　→　60分間操作がなかったものと思われる。最初から入力し直す。</p>
+          <p>11.3　ショートカットから起動できない場合　→　ショートカットを削除し、ポータルから起動する。</p>
+          <p>11.4　上記で解消しない場合　→　情報システム部（内線2000）に連絡する。つながらない場合が多いが、根気よくかけ直すこと。</p>
+        </section>
+
+        <p class="border-t border-[#ccc] pt-3 text-center text-[11px] text-[#666]">
+          （以下、87ページまで続く体）　─　24 / 87　─
+        </p>
+      </div>
+
+      <p class="mt-4 text-[11px]">
+        <a href="/company/intranet/kaigiroku/" class="text-[#00c] underline">会議録発行システムへ戻る</a> ｜
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータルへ戻る</a>
+      </p>
+    </div>
+  </div>
+</Base>
