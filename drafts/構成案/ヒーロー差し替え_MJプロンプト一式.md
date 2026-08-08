@@ -50,4 +50,7 @@ surrealism / surrealist dreamlike scene, mountains made of stacked spreadsheet p
 surrealism / surrealist dreamlike scene, a meeting room where people with cassette recorder heads sit around a long table, in the center one sheet of paper with three empty checkboxes glowing softly, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
 ```
 
-（018 名刺Bot解説は本文確定後に追記）
+**018 名刺Bot解説**（写真がシートの1行になるまでの旅／隠喩=中身が透けて見える機械）
+```
+surrealism / surrealist dreamlike scene, a small transparent machine on a desk showing its inner clockwork, a business card entering one side and a single glowing spreadsheet row emerging from the other, a curious cat watching beside it, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
