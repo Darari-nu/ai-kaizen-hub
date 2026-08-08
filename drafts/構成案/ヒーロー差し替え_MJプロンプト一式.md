@@ -50,6 +50,26 @@ surrealism / surrealist dreamlike scene, mountains made of stacked spreadsheet p
 surrealism / surrealist dreamlike scene, a meeting room where people with cassette recorder heads sit around a long table, in the center one sheet of paper with three empty checkboxes glowing softly, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
 ```
 
+**019 自動化の引っ越し**（設計図を手に隣の家へ／隠喩=同じ間取りをAIと建て直す）
+```
+surrealism / surrealist dreamlike scene, a tiny office worker carrying a rolled blueprint walking from a coin-operated vending-machine house toward an open handmade wooden house, identical furniture visible in both, one window glowing, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**020 このサイトをAIと作った**（画面の中で組み上がる家／隠喩=読んでいる場所が実物）
+```
+surrealism / surrealist dreamlike scene, a man watching a glowing house being assembled inside a computer monitor by many small mechanical hands, blueprints floating around the desk at night, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**021 レベル規程**（3つの箱に仕分ける／隠喩=同じ箱に入れない）
+```
+surrealism / surrealist dreamlike scene, an office worker calmly sorting floating paper documents into three large boxes labeled with one two three, one box glowing softly, a single sealed box pushed far away, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**022 AIブラウザ伴走**（同じ画面を見るふたつの視線／隠喩=隣で見ていてくれる）
+```
+surrealism / surrealist dreamlike scene, an office worker and a translucent glowing figure sitting side by side looking at the same computer screen, the glowing figure pointing at one button on the screen, night office, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
 **018 名刺Bot解説**（写真がシートの1行になるまでの旅／隠喩=中身が透けて見える機械）
 ```
 surrealism / surrealist dreamlike scene, a small transparent machine on a desk showing its inner clockwork, a business card entering one side and a single glowing spreadsheet row emerging from the other, a curious cat watching beside it, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
