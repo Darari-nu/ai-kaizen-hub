@@ -94,6 +94,7 @@ const sections = articles.map((a) => `
     <p class="meta"><span class="chip">${esc(a.fm.series)}</span> No.${String(a.fm.number).padStart(3, '0')}｜draft <span class="save-state" id="state-${a.slug}"></span></p>
     <p class="badge-row"><span class="badge ${STATUS[a.status].cls}">${STATUS[a.status].label}</span></p>
     <h2>${esc(a.fm.title)}</h2>
+    ${a.fm.hook ? `<p class="hook">📣 メニュー呼び込み文: ${esc(a.fm.hook)}</p>` : ''}
     ${a.hero
       ? a.hero.failed
         ? `<p class="imgnote">（挿絵 ${esc(a.hero.path)} の縮小に失敗しました）</p>`
@@ -156,6 +157,7 @@ article h2{font-size:1.25rem;line-height:1.6;margin:.2rem 0 1rem;text-wrap:balan
 .hero img{width:100%;height:auto;display:block;border:1px solid var(--rule);}
 .hero figcaption{font-size:.7rem;color:var(--nezu);margin-top:.25rem;}
 .imgnote{font-size:.75rem;color:var(--nezu);margin:0 0 .8rem;}
+.hook{font-size:.85rem;font-weight:700;color:var(--shu);margin:.2rem 0 .6rem;}
 .btns{display:flex;gap:.6rem;margin:.4rem 0 .6rem;flex-wrap:wrap;}
 .btn{font-family:inherit;font-size:.85rem;padding:.55rem 1rem;border:1px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer;}
 .btn-save{background:var(--shu);border-color:var(--shu);color:#fff;font-weight:700;}

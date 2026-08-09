@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 18
 ogImage: '/images/articles/018-meishi-bot-kaisetsu.jpg'
 draft: true
+hook: 'AIが作ったBotの中身、こわくないので見てみませんか'
 ---
 
 「AIがコードを書いてくれた。動いた。……で、中身は？」

@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 22
 ogImage: '/images/articles/022-ai-browser.jpg'
 draft: true
+hook: '初めての登録画面、AIに同じ画面を見てもらいながら進められます'
 ---
 
 「Nextって押していいの？ これ、課金されない？」

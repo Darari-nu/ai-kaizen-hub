@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 7
 ogImage: '/images/articles/007-rpa-daitai.jpg'
 draft: true
+hook: 'RPAって高いですよね。実は、作れるものありますよ'
 ---
 
 毎日開く、あの社内システム。

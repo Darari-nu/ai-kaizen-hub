@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 6
 ogImage: '/images/articles/006-meishi-bot.jpg'
 draft: true
+hook: '名刺管理サービスにお金払ってませんか？ AIで作れます'
 ---
 
 今回の舞台は、[ダラリ重工業](/company/)です（わかりやすさのための、ぼくの架空会社です）。

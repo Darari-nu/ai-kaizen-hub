@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 17
 ogImage: '/images/articles/017-gijiroku.jpg'
 draft: true
+hook: '議事録の清書、やめられます。AIに書かせて確認だけ'
 ---
 
 会議が終わって、席に戻って、録音を聞き返す。

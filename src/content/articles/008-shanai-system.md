@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 8
 ogImage: '/images/articles/008-shanai-system.jpg'
 draft: true
+hook: '社内システムの分厚いマニュアル、もう探さなくていいです'
 ---
 
 経費精算システムの画面の前で、固まったことありません？

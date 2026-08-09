@@ -15,6 +15,10 @@ const articles = (await getCollection('articles')).sort(
 const hasImage = (p: string | undefined) =>
   !!p && fs.existsSync(new URL(`../../public${p}`, import.meta.url));
 
+// AIカイゼン軸だけは「できることメニュー」で逆引きできるようにする（2026-08-08 darari発案）。
+// hookはメニュー用の呼び込み文。記事タイトルが正で、メニューにも小さく併記する（釣り防止）
+const kaizenMenu = articles.filter((a) => a.data.series === 'AIカイゼン' && a.data.hook);
+
 // ヒーロー画像はMidjourneyで本人制作（public/images/README.md参照）。
 // public/images/hero.jpg|png|webp を置けば自動で差し替わる。
 const heroImage = ['jpg', 'png', 'webp']
@@ -186,6 +190,39 @@ const faqs = [
             <p class="mt-1 text-sm leading-relaxed text-nezu">元・全社AIガバナンス担当が訳す、AIの決まりごと</p>
           </div>
         </div>
+
+        {
+          kaizenMenu.length > 0 && (
+            <div class="mt-14 border-2 border-ink">
+              <p class="border-b-2 border-ink bg-ink px-5 py-3 font-display text-sm font-bold tracking-[0.15em] text-paper">
+                AIカイゼン<span class="mx-2 text-shu">──</span>そのお金と手間、浮かせられるかもしれません
+              </p>
+              <ul class="m-0 list-none p-0">
+                {kaizenMenu.map((a) => (
+                  <li class="border-t border-rule first:border-t-0">
+                    {a.data.draft ? (
+                      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 px-5 py-4 opacity-70">
+                        <span class="font-display font-bold">{a.data.hook}</span>
+                        <span class="border border-nezu px-1.5 py-0.5 text-[11px] tracking-widest text-nezu">準備中</span>
+                        <span class="w-full text-xs text-nezu">{a.data.title}</span>
+                      </div>
+                    ) : (
+                      <a
+                        href={`/articles/${a.slug}/`}
+                        class="group flex flex-wrap items-baseline gap-x-3 gap-y-0.5 px-5 py-4 no-underline hover:bg-kinari"
+                      >
+                        <span class="font-display font-bold underline decoration-rule underline-offset-4 group-hover:text-shu group-hover:decoration-shu">
+                          {a.data.hook}
+                        </span>
+                        <span class="w-full text-xs text-nezu">{a.data.title}</span>
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
         <div class="mt-8">
           {
             articles.map((a) => (

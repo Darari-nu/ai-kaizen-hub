@@ -6,6 +6,7 @@ series: 'AIカイゼン'
 number: 16
 ogImage: '/images/articles/016-excel-shukei.jpg'
 draft: true
+hook: '毎月のExcel手作業集計、そろそろ引退させませんか'
 ---
 
 毎月、あの日が来ます。
