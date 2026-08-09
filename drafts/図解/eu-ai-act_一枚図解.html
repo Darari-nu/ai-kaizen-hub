@@ -1,0 +1,140 @@
+<title>EU AI Act 一枚図解</title>
+<style>
+  :root{
+    --paper:#FCFBF8; --ink:#23211E; --muted:#6E675C; --rule:#D9D4CB; --chip:#F1EDE4;
+    --kinshi:#A8322A; --high:#9A6516; --tomei:#33628C; --min:#4A7A55;
+    --kinshi-bg:#F7E9E7; --high-bg:#F5EDDD; --tomei-bg:#E7EEF5; --min-bg:#E9F0EA;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic Medium","Yu Gothic",Meiryo,sans-serif;
+    font-feature-settings:"palt"; line-height:1.6;
+    padding:28px 16px 40px;
+  }
+  .sheet{max-width:820px;margin:0 auto}
+  header{border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:22px}
+  .eyebrow{font-size:11px;letter-spacing:.22em;color:var(--muted);font-weight:700}
+  h1{font-size:clamp(22px,4.6vw,30px);font-weight:800;letter-spacing:.02em;text-wrap:balance;margin-top:6px}
+  .lede{font-size:13px;color:var(--muted);margin-top:8px}
+  h2{font-size:15px;font-weight:800;letter-spacing:.12em;margin:26px 0 4px;display:flex;align-items:baseline;gap:10px}
+  h2 .sub{font-size:11px;font-weight:400;letter-spacing:.04em;color:var(--muted)}
+  .qa{font-size:12px;color:var(--muted);margin-bottom:10px}
+
+  /* ── リスク4段 ── */
+  .ladder{display:flex;flex-direction:column;gap:8px}
+  .rung{display:grid;grid-template-columns:112px 1fr;border:1px solid var(--rule);background:#fff}
+  .rung .band{color:#fff;font-weight:800;display:flex;flex-direction:column;justify-content:center;padding:10px 12px;font-size:14px;line-height:1.35}
+  .rung .band small{font-weight:600;font-size:10px;opacity:.85;letter-spacing:.06em}
+  .rung .body{padding:10px 14px 11px}
+  .rung .point{font-weight:800;font-size:13.5px}
+  .rung .ex{margin-top:5px;display:flex;flex-wrap:wrap;gap:4px 6px}
+  .rung .ex span{font-size:11px;background:var(--chip);border:1px solid var(--rule);padding:1px 8px;border-radius:2px;color:#4A443B}
+  .rung .duty{margin-top:6px;font-size:12px;color:var(--muted)}
+  .rung .duty b{color:var(--ink)}
+  .r1 .band{background:var(--kinshi)} .r1{background:var(--kinshi-bg)}
+  .r2 .band{background:var(--high)}   .r2{background:var(--high-bg)}
+  .r3 .band{background:var(--tomei)}  .r3{background:var(--tomei-bg)}
+  .r4 .band{background:var(--min)}    .r4{background:var(--min-bg)}
+
+  /* ── 役割 ── */
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--rule);font-size:13px}
+  th,td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--ink);color:var(--paper);font-size:11.5px;letter-spacing:.08em;font-weight:700}
+  td.role{font-weight:800;white-space:nowrap;background:var(--chip)}
+  td.role small{display:block;font-weight:600;font-size:10px;color:var(--muted);letter-spacing:.04em}
+  td .you{font-size:11.5px;color:var(--muted)}
+
+  /* ── まざりやすい3点 ── */
+  .traps{display:flex;flex-direction:column;gap:8px;counter-reset:trap}
+  .trap{border:1.5px solid var(--ink);background:#fff;padding:10px 14px 11px;position:relative}
+  .trap::before{counter-increment:trap;content:counter(trap);position:absolute;top:-1.5px;left:-1.5px;
+    width:26px;height:26px;background:var(--ink);color:var(--paper);font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center}
+  .trap p{margin-left:34px;font-size:13px}
+  .trap p b{background:linear-gradient(transparent 68%,#F0DCB8 0)}
+
+  footer{margin-top:26px;border-top:1px solid var(--rule);padding-top:10px;font-size:10.5px;color:var(--muted);line-height:1.7}
+  @media (max-width:520px){ .rung{grid-template-columns:88px 1fr} .rung .band{font-size:12.5px;padding:8px 9px} }
+  @media print{ body{padding:0} .sheet{max-width:none} }
+</style>
+
+<div class="sheet">
+  <header>
+    <p class="eyebrow">会議前の共通認識用 ── 1枚だけ読んでください</p>
+    <h1>EU AI Act、この2つだけ揃えれば会議が進みます</h1>
+    <p class="lede">①AIは「危なさ」で4段階に分かれる（禁止とハイリスクは別物）　②登場人物は4役（提供者と製造者は別物）</p>
+  </header>
+
+  <h2>① リスクの4段階 <span class="sub">上に行くほど厳しい。まず「うちの案件はどの段？」から</span></h2>
+  <div class="ladder">
+    <div class="rung r1">
+      <div class="band">禁止AI<small>そもそもダメ</small></div>
+      <div class="body">
+        <p class="point">何をどう頑張っても使えません。義務の話ですらない。</p>
+        <div class="ex"><span>ソーシャルスコアリング</span><span>職場・学校での感情推定</span><span>公共空間のリアルタイム顔識別（原則）</span></div>
+        <p class="duty"><b>やること:</b> 該当したら企画自体を止める</p>
+      </div>
+    </div>
+    <div class="rung r2">
+      <div class="band">ハイリスクAI<small>使える。ただし重い</small></div>
+      <div class="body">
+        <p class="point">禁止ではありません。ただし義務がフル装備で付きます。</p>
+        <div class="ex"><span>採用・人事評価</span><span>与信・信用審査</span><span>重要インフラの制御</span><span>製品の安全部品</span></div>
+        <p class="duty"><b>やること:</b> リスク管理・記録・人間の監視・適合性評価など一式</p>
+      </div>
+    </div>
+    <div class="rung r3">
+      <div class="band">透明性義務<small>正体を明かせばOK</small></div>
+      <div class="body">
+        <p class="point">「AIですよ」「AI生成ですよ」と相手に分かるようにすれば使えます。</p>
+        <div class="ex"><span>チャットボット</span><span>ディープフェイク・AI生成コンテンツの表示</span></div>
+        <p class="duty"><b>やること:</b> 表示・通知だけ</p>
+      </div>
+    </div>
+    <div class="rung r4">
+      <div class="band">最小リスク<small>自由</small></div>
+      <div class="body">
+        <p class="point">義務なし。世の中のAIの大半はここです。</p>
+        <div class="ex"><span>スパムフィルタ</span><span>ゲームのAI</span><span>社内の文書要約など</span></div>
+        <p class="duty"><b>やること:</b> なし（任意の行動規範のみ）</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>② 登場人物は4役 <span class="sub">「うちはどの立場？」で義務が決まる</span></h2>
+  <table>
+    <tr><th style="width:120px">役割</th><th>ひとことで</th><th>会社で言うと</th></tr>
+    <tr>
+      <td class="role">提供者<small>Provider</small></td>
+      <td>AIシステムを開発して、<b>自社の名前で</b>市場に出す人。義務が一番重い。</td>
+      <td class="you">AI機能を作って売る事業部・ベンダー</td>
+    </tr>
+    <tr>
+      <td class="role">導入者<small>Deployer</small></td>
+      <td>できあがったAIを<b>業務で使う</b>組織。使い方側の義務を負う。</td>
+      <td class="you">採用選考にAIツールを使う人事部、など</td>
+    </tr>
+    <tr>
+      <td class="role">製品製造者<small>Manufacturer</small></td>
+      <td>自社製品にAIを<b>組み込んで</b>自社名で出す人。<b>提供者と同じ義務</b>になり得る。</td>
+      <td class="you">機械・装置にAI診断機能を載せて出荷する製造業</td>
+    </tr>
+    <tr>
+      <td class="role">輸入・流通<small>Importer / Distributor</small></td>
+      <td>EU域外のAIをEUに持ち込む・流通させる人。確認義務を負う。</td>
+      <td class="you">海外製AI入り製品をEUで販売する部門</td>
+    </tr>
+  </table>
+
+  <h2>③ まざりやすいポイント <span class="sub">会議でこんがらがったら、ここに戻る</span></h2>
+  <div class="traps">
+    <div class="trap"><p><b>「禁止」と「ハイリスク」は別物。</b>禁止=企画を止める。ハイリスク=やれるが義務フル装備。「採用AI」は禁止ではなくハイリスクです。</p></div>
+    <div class="trap"><p><b>「提供者」と「製造者」も別物。</b>ただし自社製品にAIを組み込んで自社名で出すと、製造者でも提供者の義務を負い得ます。うち（製造業）が一番引っかかりやすいのはここ。</p></div>
+    <div class="trap"><p><b>EUで売らないなら、この表は使いません。</b>適用されるのはEU域内に製品・サービスを出す場合（日本企業でも域外適用あり）。だから最初の質問はいつも「どこの国で発売する？」です。</p></div>
+  </div>
+
+  <footer>
+    社内の共通認識づくり用の整理です。法的助言ではありません。個別案件の判断は原文（EU AI Act / Regulation (EU) 2024/1689）と法務確認を優先してください。／作成: AI管理チーム参考資料・2026-08
+  </footer>
+</div>
