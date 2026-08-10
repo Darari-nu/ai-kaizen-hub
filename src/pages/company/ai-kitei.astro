@@ -1,168 +1,199 @@
 ---
-// AI利用規程(暫定版) — ダラリ重工業の社内規程(という設定)。
-// 記事「社内AIルールの最初の3点セット」の記入済みサンプルとして機能する。
-import Base from '@/layouts/Base.astro';
+// AI利用規程 — ダラリ重工業の社内規程(という設定)。2026-08-10 全部改正:
+// 暫定版5条建て→章立ての条文体へ。詳細な判断表は「基準」に委任し、
+// 規程(義務・体制)/基準(判断表)/ガイドライン(推奨)の3層に体系整備した。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const teigi = [
+  ['AIサービス', '機械学習等の技術を用いて、文章・画像・音声・プログラム等の生成、分類、予測その他の処理を行う社外のサービスをいう。'],
+  ['生成AI', 'AIサービスのうち、利用者の入力に応じて文章・画像等を新たに生成するものをいう。'],
+  ['入力', 'AIサービスに対して、文字、画像、音声、ファイルその他の形式で情報を送信することをいう。'],
+  ['機密情報', '情報セキュリティ管理規程に定める社外秘以上の情報をいう。'],
+  ['AI搭載製品', '当社が開発、製造または販売する製品であって、AIの機能を組み込んだものをいう。'],
+  ['私的アカウント', '当社が契約または貸与していない、役職員個人の名義によるAIサービスのアカウントをいう。'],
+];
+
+const kinshi = [
+  '私的アカウントによる業務利用（業務情報の入力を伴うもの）',
+  '設備または機械の安全に関わる判断を、所定の承認なくAIサービスに代替させること',
+  'AIサービス利用基準に定めのないAIサービスへの機密情報の入力',
+  'AIサービスの出力を、事実確認を行わずに社外に提出すること',
+];
+
+const kaitei = [
+  ['2026年8月1日', '制定（暫定版・5条建て）', '社規第2026-08号'],
+  ['2026年8月改定', '第3条（情報のレベル区分）を改定。個人情報の一律禁止を廃し、レベル制に改めた', '—'],
+  ['2026年8月10日', '全部改正。規程・基準・ガイドラインの3層に体系を整備し、判断表を基準へ移設', '社規第2026-08号の2'],
+];
 ---
 
-<Base
-  title="AI利用規程（暫定版）｜DARARIポータル（架空）"
-  description="架空企業ダラリ重工業のAI利用規程（暫定版）。社内AIルール3点セットの記入済みサンプルです。"
+<PortalDoc
+  title="AI利用規程｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業のAI利用規程。総則・管理体制・利用・教育調査・雑則の章立て条文体。自社の雛形として流用できます。"
+  docTitle="ＡＩ利用規程"
+  docNo="社規第2026-08号の2"
+  history={['2026年8月1日 制定', '2026年8月10日 全部改正']}
+  shokan="製造部AI活用推進室（起案）・情報システム部"
 >
-  <div
-    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
-    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
-  >
-    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
-      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内規程（という設定）です。自社の雛形として自由に流用してください。
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第1章 総則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第1条（目的）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、ダラリ重工業株式会社（以下「当社」という。）におけるAIサービスの利用およびAI搭載製品の開発に関する基本的事項を定め、機密情報の保護と業務の効率化を両立させることを目的とする。禁止のための規程ではなく、安心して使うための規程である。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（適用範囲）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、当社のすべての役員および従業員（出向者、派遣社員および嘱託を含む。以下「役職員」という。）に適用する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　業務委託先が当社の業務においてAIサービスを利用する場合は、契約においてこの規程に準じた取扱いを求める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（定義）</h2>
+  <p class="mt-2 leading-relaxed">この規程において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {teigi.map(([word, def], i) => (
+      <li>
+        （{i + 1}）<b>{word}</b>　{def}
+      </li>
+    ))}
+  </ol>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第4条（関連規程等との関係）</h2>
+  <p class="mt-2 leading-relaxed">
+    情報の管理について情報セキュリティ管理規程、個人情報保護規程または文書管理規程に定めのある事項は、それらの定めるところによる。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　この規程の実施に必要な具体的判断基準は「基準」として、推奨事項は「ガイドライン」として、別に定める。文書の体系および効力は<a href="/company/kitei-taikei/" class="text-[#00c] underline">社内規程体系（AI関連）</a>のとおりとする。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第2章 管理体制</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第5条（AI管理責任者）</h2>
+  <p class="mt-2 leading-relaxed">
+    当社に、AI管理責任者を置き、担当役員をもって充てる。AI管理責任者は、当社におけるAI利用の管理を統括する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第6条（AI活用推進室）</h2>
+  <p class="mt-2 leading-relaxed">
+    AI活用推進室は、この規程および関連する基準・ガイドラインの維持管理、利用者教育の教材整備、利用に関する照会対応ならびにAIサービス利用台帳の整備を行う。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第7条（AI審議会）</h2>
+  <p class="mt-2 leading-relaxed">
+    規程および基準に定めのない重要な案件は、AI審議会において審議し、方向性を決定する。AI審議会は、AI管理責任者、法務部長、情報システム部長および関係部門の長をもって構成し、事務局はAI活用推進室が務める。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）審議の結果、繰り返し生じる案件は、基準に追記して以後の審議を不要とする。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第3章 利用</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第8条（利用の原則）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、業務上の目的に限り、この規程および基準の範囲内でAIサービスを利用することができる。AIサービスの出力は参考情報とし、業務上の最終判断は利用者が行う。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第9条（利用できるAIサービス）</h2>
+  <p class="mt-2 leading-relaxed">
+    利用できるAIサービスの区分および新たなAIサービスの利用申請の手続は、<a href="/company/ai-service-kijun/" class="text-[#00c] underline">AIサービス利用基準</a>に定める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第10条（入力情報の取扱い）</h2>
+  <p class="mt-2 leading-relaxed">
+    AIサービスに入力できる情報の区分および取扱いは、<a href="/company/ai-nyuryoku-kijun/" class="text-[#00c] underline">AI入力情報基準</a>に定める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第11条（AI搭載製品の開発）</h2>
+  <p class="mt-2 leading-relaxed">
+    AI搭載製品の開発に着手するときは、<a href="/company/ai-product-kijun/" class="text-[#00c] underline">AI搭載製品開発基準</a>に定める確認を経なければならない。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第12条（禁止事項）</h2>
+  <p class="mt-2 leading-relaxed">役職員は、次の各号に掲げる行為をしてはならない。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {kinshi.map((k, i) => (
+      <li>（{i + 1}）{k}</li>
+    ))}
+  </ol>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第4章 教育・調査・報告</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第13条（教育）</h2>
+  <p class="mt-2 leading-relaxed">
+    各部門の長は、所属する役職員に対し、年1回以上、この規程および関連法令に関する教育を実施する。教材はAI活用推進室が提供し、職場ごとの実施率をAI活用推進室が確認する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第14条（利用状況の調査）</h2>
+  <p class="mt-2 leading-relaxed">
+    AI活用推進室は、アンケートその他の方法により、社内のAI利用状況を定期的に把握する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第15条（インシデント報告）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、この規程または基準に反する利用（誤操作によるものを含む。）を認知したときは、速やかに所属長およびAI活用推進室に報告する。自主的な報告を行った者に対し、当社は報告を理由とする不利益な取扱いをしない。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第5章 雑則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第16条（点検）</h2>
+  <p class="mt-2 leading-relaxed">
+    AI活用推進室は、この規程および基準どおりに運用されているかを、教育の実施率、AIサービス利用台帳の整備状況その他の重要な項目に絞って定期的に点検する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第17条（改廃）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程の改廃は、AI審議会の審議を経て社長が決定する。基準の改廃は所管部門の長が、ガイドラインの改廃はAI活用推進室が行うことができる。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）AIサービスの仕様および関係法令は数ヶ月単位で変化する。「完璧な規程」ではなく「見直す仕組み」をもって適正を保つ。変わりやすい事項ほど、軽く改定できる文書（基準・ガイドライン）に置くこと。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">附則</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>この規程は2026年8月10日から施行する。</li>
+    <li>たたき台はAI活用推進室（室員1名）が起案し、法務部の直しが7回入った。</li>
+    <li>「グレーだから使わない」ではなく「この規程の範囲で使う」ことを推奨する。</li>
+  </ol>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">年月日</th>
+        <th class="border border-[#ccc] px-3 py-1.5">内容</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kaitei.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 この規程の作り方（紙3枚のたたき台から法務を通すまで）は
+      <a href="/articles/002-ai-rules-starter/" class="text-[#00c] underline">「押さえるのは3点だけ。倫理・セキュリティ・法務」</a>、
+      レベル表の設計は<a href="/articles/021-level-kitei/" class="text-[#00c] underline">「レベル規程の書き方」</a>で解説されています。
     </div>
 
-    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
-      <div class="mx-auto flex max-w-3xl items-baseline justify-between">
-        <p class="text-lg font-bold">DARARIポータル</p>
-        <a href="/company/intranet/" class="text-[11px] text-white/80 underline">← ポータルトップへ</a>
-      </div>
+    <div class="mt-4 border-2 border-[#c00] bg-[#fffbe6] px-4 py-3 text-[12px]">
+      <p class="font-bold text-[#c00]">🔒 社員限定回覧</p>
+      <p class="mt-1 leading-relaxed">
+        本規程の<b>編集可能版（Word）</b>・自社に通すときの<b>改変ポイント解説</b>・制定までの<b>稟議実録</b>は、社員限定の回覧資料です。
+        閲覧には社員証が必要です。
+      </p>
+      <p class="mt-2">
+        → <a href="https://dararinu.substack.com" class="font-bold text-[#00c] underline">社員証の発行はこちら（Substack無料登録）</a>
+        <span class="ml-1 text-[10px] text-[#888]">※入社手続きは1分で完了します</span>
+      </p>
     </div>
-
-    <div class="mx-auto max-w-3xl px-3 py-6">
-      <div class="border border-[#999] bg-white px-6 py-8 sm:px-10">
-        <p class="text-right text-[11px] text-[#888]">
-          社規第2026-08号<br />2026年8月1日 制定<br />所管: 情報システム部・製造部AI活用推進室
-        </p>
-        <h1 class="mt-6 text-center text-xl font-bold tracking-widest">ＡＩ利用規程（暫定版）</h1>
-
-        <h2 class="mt-8 font-bold text-[#1b3a6b]">第1条（目的）</h2>
-        <p class="mt-2 leading-relaxed">
-          本規程は、当社におけるAI（人工知能）サービスの利用について、機密情報の保護と業務の効率化を両立させることを目的とする。禁止のための規程ではなく、安心して使うための規程である。
-        </p>
-
-        <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（利用できるAIサービス）</h2>
-        <p class="mt-2 leading-relaxed">利用可否は「アクセスできるか」ではなく、本条の区分によって定める。</p>
-        <table class="mt-3 w-full border-collapse text-[12px]">
-          <thead>
-            <tr class="bg-[#f5f5f0] text-left">
-              <th class="border border-[#ccc] px-3 py-1.5">サービス</th>
-              <th class="border border-[#ccc] px-3 py-1.5">利用</th>
-              <th class="border border-[#ccc] px-3 py-1.5">機密情報の入力</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              [
-                ['Copilot Chat（会社支給）', '可（申請不要）', '可（入力は学習に使用されない契約）'],
-                ['ChatGPT（無料版）', '法務部への申請により可', '不可'],
-                ['ChatGPT Enterprise', '導入検討中（AI活用推進室）', '導入後に可とする予定'],
-                ['個人契約のAIサービス', '業務利用は不可', '不可'],
-              ].map((row) => (
-                <tr>
-                  {row.map((c) => (
-                    <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
-                  ))}
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-
-        <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（情報のレベル区分と取扱い）</h2>
-        <p class="mt-2 text-[12px]">
-          入力の可否は「情報の種類」ではなく、下表のレベルで判断する。個人情報についても、
-          一律禁止とはせず本表のレベルに従う（2026年8月改定。改定前は個人情報を一律禁止としていたが、
-          名刺1枚も健康情報も同じ扱いとなり、現場が判断できないため改めた）。
-        </p>
-        <table class="mt-3 w-full border-collapse text-[12px]">
-          <tbody>
-            {
-              [
-                [
-                  'レベル1',
-                  '入力可',
-                  '公開情報／固有名詞を伏せた業務相談（「A社」「ある部品」等）／自分が書いた文章の校正・翻訳／社外の一般的な技術情報',
-                ],
-                [
-                  'レベル2',
-                  '承認を得れば入力可',
-                  '社内限りの手順・議事メモ（固有名詞を伏せたもの）／名刺情報など、本人が業務上の連絡先として渡した個人情報／自部門の非公開でない業務データ',
-                ],
-                [
-                  'レベル3',
-                  '入力禁止',
-                  '顧客名・取引先名・未公開の取引条件／未公開の数値（原価・歩留まり・売上等）／図面・仕様書・プログラムの中身／健康情報・評価・給与など、本人の不利益になりうる個人情報',
-                ],
-              ].map(([lv, judge, ex]) => (
-                <tr class="border border-[#1b3a6b]">
-                  <th class="w-20 border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
-                    {lv}
-                  </th>
-                  <th class="w-32 border border-[#1b3a6b] px-2 py-1.5 text-left align-top font-bold">
-                    {judge}
-                  </th>
-                  <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{ex}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-        <p class="mt-2 text-[12px] text-[#666]">
-          （備考1）レベル2の承認は、所属長またはAI活用推進室のいずれかで足りる。書面は不要、メールで可。<br />
-          （備考2）迷った場合は、固有名詞を置き換えて抽象化し、レベル1に落としてから入力すること。
-          それでも判断がつかない場合はAI活用推進室に照会する。
-        </p>
-
-        <h2 class="mt-6 font-bold text-[#1b3a6b]">第4条（責任分担）</h2>
-        <table class="mt-3 w-full border-collapse text-[12px]">
-          <tbody>
-            {
-              [
-                ['ツールの契約・アカウント管理', '情報システム部'],
-                ['本規程の内容と見直し', '製造部 AI活用推進室'],
-                ['契約書・法的リスクの確認', '法務部'],
-                ['利用者教育', '各部門（教材はAI活用推進室が提供）'],
-              ].map(([k, v]) => (
-                <tr>
-                  <th class="w-1/2 border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left font-normal">{k}</th>
-                  <td class="border border-[#ccc] px-3 py-1.5">{v}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-
-        <h2 class="mt-6 font-bold text-[#1b3a6b]">第5条（見直し）</h2>
-        <p class="mt-2 leading-relaxed">
-          本規程は四半期に一回見直す。AIサービスの仕様および関係法令は数ヶ月単位で変化するため、「完璧な規程」ではなく「見直す仕組み」をもって適正を保つ。
-        </p>
-
-        <h2 class="mt-6 font-bold text-[#1b3a6b]">附則</h2>
-        <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
-          <li>本規程は2026年8月1日から施行する。</li>
-          <li>本規程は暫定版である。たたき台はAI活用推進室（室員1名）が起案し、法務部の直しが7回入った。</li>
-          <li>「グレーだから使わない」ではなく「本規程の範囲で使う」ことを推奨する。</li>
-        </ol>
-      </div>
-
-      <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
-        💡 この規程の作り方（紙3枚のたたき台から法務を通すまで）は、
-        <a href="/articles/002-ai-rules-starter/" class="text-[#00c] underline">AIカイゼン「押さえるのは3点だけ。倫理・セキュリティ・法務」</a>
-        で解説されています。
-      </div>
-
-      <div class="mt-4 border-2 border-[#c00] bg-[#fffbe6] px-4 py-3 text-[12px]">
-        <p class="font-bold text-[#c00]">🔒 社員限定回覧</p>
-        <p class="mt-1 leading-relaxed">
-          本規程の<b>編集可能版（Word）</b>・自社に通すときの<b>改変ポイント解説</b>・制定までの<b>稟議実録</b>は、社員限定の回覧資料です。
-          閲覧には社員証が必要です。
-        </p>
-        <p class="mt-2">
-          → <a href="https://dararinu.substack.com" class="font-bold text-[#00c] underline">社員証の発行はこちら（Substack無料登録）</a>
-          <span class="ml-1 text-[10px] text-[#888]">※入社手続きは1分で完了します</span>
-        </p>
-      </div>
-
-      <div class="py-6 text-center text-[11px] text-[#666]">
-        <a href="/company/intranet/" class="text-[#00c] underline">ポータルトップへ</a> ｜
-        <a href="/company/" class="text-[#00c] underline">コーポレートサイトへ</a> ｜
-        <a href="/" class="text-[#00c] underline">AIカイゼンへ</a>
-      </div>
-    </div>
-  </div>
-</Base>
+  </Fragment>
+</PortalDoc>

@@ -1,0 +1,92 @@
+---
+// 生成AI活用ガイドライン — 拘束力のない「手引き」(という設定)。
+// 規程・基準とちがい、ですます調で現場向けに書かれているのが様式美。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const ngs = [
+  ['会議の録音をそのまま外部AIに投げる', '取引先名・未公開数値が入りがちです。まずダミーデータや固有名詞の置き換えで試してください'],
+  ['出力をコピペでそのまま社外に提出する', 'AIは自信満々に間違えます。数字と固有名詞は必ず原本と突き合わせてください'],
+  ['私物スマホの個人アカウントで業務の相談をする', '会社の管理が及ばない場所に業務情報が残ります（AI基準-002で禁止されています）'],
+  ['「AIがこう言ったので」を判断の根拠にする', '最終判断はあなたです。AIは参考情報です（AI利用規程第8条）'],
+];
+---
+
+<PortalDoc
+  title="生成AI活用ガイドライン｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の生成AI活用ガイドライン。拘束力のない現場向けの手引き。抽象化のコツ・NG集つき。自社の雛形として流用できます。"
+  docTitle="生成ＡＩ活用ガイドライン"
+  docNo="AIガイドライン-001"
+  history={['2026年8月10日 発行（随時更新）']}
+  shokan="製造部AI活用推進室"
+>
+  <div class="mt-6 border border-[#1b3a6b] bg-[#eef1f5] px-4 py-2 text-[12px] leading-relaxed">
+    このガイドラインは<b>「べからず集」ではなく「使い方のコツ集」</b>です。守る義務があるのは
+    <a href="/company/ai-kitei/" class="text-[#00c] underline">AI利用規程</a>と各基準まで。
+    ここに書いてあるのは推奨です。いい使い方を見つけたら、AI活用推進室に教えてください（次の版に載せます）。
+  </div>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. まずはここから（申請不要の範囲）</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>会社支給のCopilot Chatを開きます（全社PCに配布済み・申請不要です）。</li>
+    <li>自分が書いた文章の校正・要約・翻訳から試します（レベル1の範囲です）。</li>
+    <li>慣れてきたら、固有名詞を伏せた業務相談へ進みます。</li>
+  </ol>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. 抽象化のコツ（レベルを1つ下げる技術）</h2>
+  <p class="mt-2 leading-relaxed">
+    固有名詞を一般名に置き換えるだけで、入力できる範囲がぐっと広がります。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">そのまま（入力禁止になりがち）</th>
+        <th class="border border-[#ccc] px-3 py-1.5">置き換え後（レベル1）</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="border border-[#ccc] px-3 py-1.5">取引先の実名・製品型式・ライン名</td>
+        <td class="border border-[#ccc] px-3 py-1.5">「A社」「ある部品」「ある組立ライン」</td>
+      </tr>
+      <tr>
+        <td class="border border-[#ccc] px-3 py-1.5">実際の原価・数量</td>
+        <td class="border border-[#ccc] px-3 py-1.5">「100円として」「1日1,000個として」（仮の数字に置く）</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （参考）置き換えても文脈から特定できてしまう場合があります。迷ったらAI活用推進室へ。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. 頼み方のコツ</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li><b>役割と形式を先に伝える</b>：「あなたは製造業の品質担当です。次のメモを、上司向けの報告3行にしてください」</li>
+    <li><b>出力の形を指定する</b>：「表にして」「箇条書き5点で」「200字以内で」</li>
+    <li><b>出力に突っ込む</b>：一発で正解を求めず、「ここが違う」「もっと短く」と会話で直します。</li>
+  </ol>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. よくあるNG集</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <tbody>
+      {ngs.map(([ng, why]) => (
+        <tr>
+          <th class="w-56 border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left align-top font-bold">{ng}</th>
+          <td class="border border-[#ccc] px-3 py-1.5 align-top">{why}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">5. 困ったら</h2>
+  <p class="mt-2 leading-relaxed">
+    AI活用推進室に気軽に照会してください。「こんな使い方はダメですか」の相談は、怒られません。
+    間違えて入力してしまったときも同じです（自主的な報告で不利益な扱いはしない、とAI利用規程第15条で決まっています）。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 抽象化テクの実践は<a href="/articles/014-nyuuryoku-handan/" class="text-[#00c] underline">「迷ったら固有名詞を『A社』に変える」</a>、
+      具体的な業務での使い方は<a href="/" class="text-[#00c] underline">AIカイゼンの記事一覧</a>からどうぞ。
+    </div>
+  </Fragment>
+</PortalDoc>

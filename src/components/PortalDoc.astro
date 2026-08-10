@@ -1,0 +1,54 @@
+---
+// DARARIポータルの社内文書 共通枠（架空企業ダラリ重工業の文書様式美）。
+// 右上に文書番号・制定改定歴・所管、中央に文書名。本文はslotで各文書が書く。
+import Base from '@/layouts/Base.astro';
+
+interface Props {
+  title: string; // <title>
+  description: string;
+  docTitle: string; // 紙面中央の文書名
+  docNo: string; // 文書番号（例: 社規第2026-08号）
+  history: string[]; // 右上の制定・改定行（例: '2026年8月1日 制定'）
+  shokan: string; // 所管部門
+}
+const { title, description, docTitle, docNo, history, shokan } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内文書（という設定）です。自社の雛形として自由に流用してください。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-3xl items-baseline justify-between">
+        <p class="text-lg font-bold">DARARIポータル</p>
+        <a href="/company/intranet/" class="text-[11px] text-white/80 underline">← ポータルトップへ</a>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-3xl px-3 py-6">
+      <div class="border border-[#999] bg-white px-6 py-8 sm:px-10">
+        <p class="text-right text-[11px] leading-relaxed text-[#888]">
+          {docNo}<br />
+          {history.map((h) => <Fragment>{h}<br /></Fragment>)}
+          所管: {shokan}
+        </p>
+        <h1 class="mt-6 text-center text-xl font-bold tracking-widest">{docTitle}</h1>
+        <slot />
+      </div>
+
+      <slot name="after" />
+
+      <div class="py-6 text-center text-[11px] text-[#666]">
+        <a href="/company/kitei-taikei/" class="text-[#00c] underline">規程体系</a> ｜
+        <a href="/company/intranet/" class="text-[#00c] underline">ポータルトップ</a> ｜
+        <a href="/company/" class="text-[#00c] underline">コーポレートサイト</a> ｜
+        <a href="/" class="text-[#00c] underline">AIカイゼンへ</a>
+      </div>
+    </div>
+  </div>
+</Base>

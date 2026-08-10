@@ -1,0 +1,112 @@
+---
+// 社内規程体系（AI関連）— 規程・基準・ガイドラインの棲み分けを示す体系ページ(という設定)。
+// 「変わりやすいものほど軽い文書に置く」= 記事032(基準改定編)の世界観の実物。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const layers = [
+  ['規程', '義務・体制・原則（何をしなければならないか）', 'あり', 'AI審議会の審議を経て社長', '年1回見直し'],
+  ['基準', '具体的な判断表・手続（どう判断するか）', 'あり', '所管部門の長', '四半期ごと見直し'],
+  ['ガイドライン', '推奨・コツ・例（こうするとうまくいく）', 'なし（推奨）', 'AI活用推進室', '随時'],
+];
+
+const docs = [
+  ['規程', 'AI利用規程', '/company/ai-kitei/', '社規第2026-08号の2'],
+  ['基準', 'AI入力情報基準（レベル1・2・3）', '/company/ai-nyuryoku-kijun/', 'AI基準-001'],
+  ['基準', 'AIサービス利用基準', '/company/ai-service-kijun/', 'AI基準-002'],
+  ['基準', 'AI搭載製品開発基準', '/company/ai-product-kijun/', 'AI基準-003'],
+  ['ガイドライン', '生成AI活用ガイドライン', '/company/ai-guideline/', 'AIガイドライン-001'],
+];
+
+const related = [
+  '情報セキュリティ管理規程',
+  '個人情報保護規程',
+  '文書管理規程',
+  '購買管理規程（外部委託を含む）',
+];
+---
+
+<PortalDoc
+  title="社内規程体系（AI関連）｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業のAI関連文書の体系。規程・基準・ガイドラインの棲み分け（拘束力・決裁・改定頻度）を一覧できます。"
+  docTitle="社内規程体系（ＡＩ関連）"
+  docNo="総務部管理・体系図2026-03"
+  history={['2026年8月10日 整備']}
+  shokan="総務部・製造部AI活用推進室"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 3層の棲み分け</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    AI関連の社内文書は、次の3層で構成する。<b>変わりやすい事項ほど、軽く改定できる下の層に置く</b>のが原則である（重い文書に細かいことを書くと、改定が回らなくなり、文書のほうが現実に置いていかれる）。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-2 py-1.5">階層</th>
+        <th class="border border-[#ccc] px-2 py-1.5">何を書くか</th>
+        <th class="border border-[#ccc] px-2 py-1.5">拘束力</th>
+        <th class="border border-[#ccc] px-2 py-1.5">改廃の決裁</th>
+        <th class="border border-[#ccc] px-2 py-1.5">見直し</th>
+      </tr>
+    </thead>
+    <tbody>
+      {layers.map(([name, what, force, who, freq]) => (
+        <tr>
+          <th class="border border-[#ccc] bg-[#eef1f5] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">{name}</th>
+          <td class="border border-[#ccc] px-2 py-1.5">{what}</td>
+          <td class="border border-[#ccc] px-2 py-1.5">{force}</td>
+          <td class="border border-[#ccc] px-2 py-1.5">{who}</td>
+          <td class="border border-[#ccc] px-2 py-1.5">{freq}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. AI関連文書の一覧</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-2 py-1.5">階層</th>
+        <th class="border border-[#ccc] px-2 py-1.5">文書名</th>
+        <th class="border border-[#ccc] px-2 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {docs.map(([layer, name, href, no]) => (
+        <tr>
+          <td class="border border-[#ccc] px-2 py-1.5">{layer}</td>
+          <td class="border border-[#ccc] px-2 py-1.5">
+            <a href={href} class="text-[#00c] underline">{name}</a>
+          </td>
+          <td class="border border-[#ccc] px-2 py-1.5">{no}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. 関連する上位・周辺規程</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    次の規程に定めのある事項は、AI関連文書に優先する（AI利用規程第4条）。
+  </p>
+  <ul class="mt-2 space-y-1 pl-6 text-[12px] leading-relaxed">
+    {related.map((r) => (
+      <li>
+        ・<span class="cursor-default text-[#00c] underline decoration-dotted">{r}</span>
+        <span class="ml-2 text-[10px] text-[#999]">（本ポータルからは閲覧できません。原本は総務部書庫）</span>
+      </li>
+    ))}
+  </ul>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. 運用の考え方</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 text-[12px] leading-relaxed">
+    <li>基準に定めのない重要案件は、AI審議会で審議し、繰り返し生じるものは基準に追記する（審議→基準への昇格）。</li>
+    <li>改定の多くは書き回しの修正である。ためらわず直し、改定履歴に1行残す。</li>
+    <li>ガイドラインは現場の発見を吸い上げる場所とする。よい使い方は随時追記する。</li>
+  </ol>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 なぜ3層に分けるのか（改定を軽く回す設計思想）は
+      <a href="/articles/032-kijun-kaitei/" class="text-[#00c] underline">「AIルールの改定、『大ごと』だと構えていませんか」</a>、
+      年間で回す仕組みの全体は<a href="/articles/023-governance-cycle/" class="text-[#00c] underline">「年間サイクルに乗せて回す」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>
