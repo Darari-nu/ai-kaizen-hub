@@ -1,0 +1,137 @@
+---
+// 情報セキュリティ基準 — 情報セキュリティ管理規程第8条の委任を受けた基準(という設定)。
+// 2026-08-10改定で「AIサービスへの入力」の節を追加。AI独自区分を作らず本基準の区分を
+// AI入力情報基準のレベルに読み替える(第0原則「乗っかる」の実物)。記事014・021から参照。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const kubuns = [
+  ['公開', '社外に公表済み、または公表を前提とする情報', '製品カタログ／プレスリリース／採用情報／公開済みの技術資料'],
+  ['社内限', '社内で共有できる情報。社外への開示は不可', '作業手順書／社内報／会議体の議事メモ／社内教育資料'],
+  [
+    '社外秘',
+    '部門限りで取り扱う情報。持ち出しには承認を要する',
+    '図面・仕様書／原価・歩留まりの数値／取引条件／設備のレイアウト図',
+  ],
+  ['機密', '指定者のみが取り扱う情報。指定は部門長が行う', '人事情報（評価・給与）／未発表の経営情報／顧客から機密指定を受けた資料'],
+];
+
+const toriatsukai = [
+  ['公開', '可', '可', '可'],
+  ['社内限', '不可', '可（会社契約のサービスに限る）', '可'],
+  ['社外秘', '不可（NDA締結先に限り部門長承認で可）', '部門長の承認を要する', '部門長の承認を要する'],
+  ['機密', '不可', '不可', '指定者の承認を要する'],
+];
+
+const aiYomikae = [
+  ['公開', 'レベル1', '入力可'],
+  ['社内限（固有名詞を伏せたもの）', 'レベル1', '入力可'],
+  ['社内限', 'レベル2', '承認を得れば入力可'],
+  ['社外秘・機密', 'レベル3', '入力禁止'],
+];
+---
+
+<PortalDoc
+  title="情報セキュリティ基準｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の情報セキュリティ基準。公開・社内限・社外秘・機密の4区分と取扱い表、AI入力レベルへの読み替え表。自社の雛形として流用してください。"
+  docTitle="情報セキュリティ基準"
+  docNo="情セ基-001"
+  history={['2020年4月1日 制定（という設定）', '2026年8月10日 改定（AIサービスへの入力の節を追加）']}
+  shokan="情報システム部"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
+  <p class="mt-2 leading-relaxed">
+    この基準は、情報セキュリティ管理規程第8条の定めに基づき、当社が取り扱う情報の区分および取扱いを定める。
+  </p>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）情報セキュリティ管理規程の原本は総務部書庫にある。本ポータルには未掲載。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. 情報の区分</h2>
+  <p class="mt-2 text-[12px]">
+    当社の情報は、次の4区分のいずれかに分類する。区分の指定がない情報は、作成部門が本表に照らして区分を定める。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <tbody>
+      {kubuns.map(([ku, teigi, rei]) => (
+        <tr class="border border-[#1b3a6b]">
+          <th class="w-20 border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
+            {ku}
+          </th>
+          <td class="w-56 border border-[#1b3a6b] px-2 py-1.5 align-top">{teigi}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{rei}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. 取扱い表</h2>
+  <p class="mt-2 text-[12px]">区分ごとの取扱いは下表による。</p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="border border-[#1b3a6b] bg-[#eef1f5]">
+        <th class="w-20 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">区分</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">社外への共有</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">クラウド保存</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">紙の持ち出し</th>
+      </tr>
+    </thead>
+    <tbody>
+      {toriatsukai.map(([ku, share, cloud, kami]) => (
+        <tr class="border border-[#1b3a6b]">
+          <th class="border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
+            {ku}
+          </th>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{share}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{cloud}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{kami}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. AIサービスへの入力</h2>
+  <p class="mt-2 leading-relaxed">
+    AIサービス（生成AIを含む。）への入力の可否は、AI独自の区分を設けず、本基準の区分を<a
+      href="/company/ai-nyuryoku-kijun/"
+      class="text-[#00c] underline">AI入力情報基準</a
+    >のレベルに読み替えて判断する。読み替えは下表による。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="border border-[#1b3a6b] bg-[#eef1f5]">
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">本基準の区分</th>
+        <th class="w-24 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">読み替え先</th>
+        <th class="w-40 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">可否</th>
+      </tr>
+    </thead>
+    <tbody>
+      {aiYomikae.map(([ku, lv, kahi]) => (
+        <tr class="border border-[#1b3a6b]">
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{ku}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top font-bold text-[#1b3a6b]">{lv}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{kahi}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）レベル2の承認の手続は、AI入力情報基準3.に定めるところによる。固有名詞の伏せ方は同基準4.を参照。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <p class="mt-2 text-[12px] leading-relaxed">
+    2020年4月1日　制定。<br />
+    2026年8月10日　「4.
+    AIサービスへの入力」の節を追加。AI独自の情報区分を新設せず、本基準の区分をAI入力情報基準のレベルに接続した（規程体系の整備）。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 この「読み替え」の考え方（AI独自ルールを作らず既存の区分に乗っかる）は
+      <a href="/articles/021-level-kitei/" class="text-[#00c] underline">「レベル規程の書き方」</a>、
+      入力する側の判断のコツは<a href="/articles/014-nyuuryoku-handan/" class="text-[#00c] underline"
+        >「迷ったら固有名詞を『A社』に変える」</a
+      >で解説している。
+    </div>
+  </Fragment>
+</PortalDoc>

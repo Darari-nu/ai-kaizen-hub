@@ -4,6 +4,7 @@
 import Base from '@/layouts/Base.astro';
 
 const notices = [
+  ['2026.08.10', '重要', '総務部', '既存基準へのAI項目追加について（情報セキュリティ・クラウド・調達・契約・製品開発の各基準を改定）'],
   ['2026.08.10', '通達', '総務部', 'AI関連規程の体系整備について（規程・基準・ガイドラインの制定）'],
   ['2026.08.04', '重要', '総務部', 'ノー残業デーの徹底について（再周知）（再々周知）'],
   ['2026.08.01', '通達', '情報システム部', 'AI利用規程（暫定版）の制定について'],
@@ -33,6 +34,11 @@ const policies = [
 const rules = [
   ['社内規程体系（AI関連）', '/company/kitei-taikei/', true],
   ['AI利用規程', '/company/ai-kitei/', true],
+  ['情報セキュリティ基準', '/company/joho-security-kijun/', true],
+  ['クラウドサービス利用基準', '/company/cloud-kijun/', true],
+  ['調達基準（サプライヤー評価）', '/company/chotatsu-kijun/', true],
+  ['契約審査基準（秘密保持条項）', '/company/keiyaku-kijun/', true],
+  ['製品開発基準（ステージゲート）', '/company/seihin-kaihatsu-kijun/', true],
   ['AI入力情報基準', '/company/ai-nyuryoku-kijun/', true],
   ['AIサービス利用基準', '/company/ai-service-kijun/', true],
   ['AI搭載製品開発基準', '/company/ai-product-kijun/', true],
@@ -86,7 +92,11 @@ const rules = [
                   {tag}
                 </span>
                 <span class="text-[#666]">[{dept}]</span>
-                {text === 'AI関連規程の体系整備について（規程・基準・ガイドラインの制定）' ? (
+                {text === '既存基準へのAI項目追加について（情報セキュリティ・クラウド・調達・契約・製品開発の各基準を改定）' ? (
+                  <a href="/company/kitei-taikei/" class="text-[#00c] underline">
+                    {text}
+                  </a>
+                ) : text === 'AI関連規程の体系整備について（規程・基準・ガイドラインの制定）' ? (
                   <a href="/company/kitei-taikei/" class="text-[#00c] underline">
                     {text}
                   </a>

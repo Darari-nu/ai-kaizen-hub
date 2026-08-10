@@ -1,0 +1,78 @@
+---
+// クラウドサービス利用基準 — 情報セキュリティ管理規程第12条の委任を受けた基準(という設定)。
+// 2026-08-10改定でAIサービスの特則を追加(AI独自の審査フローは新設せず、本基準に接続)。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const kansaten = [
+  ['データの保存場所', '保存先の国・リージョンはどこか。国外保存の場合、移転に問題がないか'],
+  ['契約形態', '利用規約への同意のみで足りるサービスか。会社として契約書を交わす必要がないか'],
+  ['認証・アクセス管理', 'SSO（シングルサインオン）に対応しているか。退職者のアカウントを確実に止められるか'],
+  ['解約時の扱い', '解約時にデータの返還・削除が保証されているか。エクスポート手段があるか'],
+  ['入力データの二次利用', '入力・保存したデータを、サービス提供者が自社の目的（学習・分析等）に利用しないか'],
+];
+---
+
+<PortalDoc
+  title="クラウドサービス利用基準｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業のクラウドサービス利用基準。審査の5観点・申請と台帳・AIサービスの特則。自社の雛形として自由に流用してください。"
+  docTitle="クラウドサービス利用基準"
+  docNo="情セ基-002"
+  history={['2022年10月1日 制定（という設定）', '2026年8月10日 改定（AIサービスの特則を追加）']}
+  shokan="情報システム部"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
+  <p class="mt-2 leading-relaxed">
+    この基準は、情報セキュリティ管理規程第12条の定めに基づき、社外のクラウドサービス（SaaS等）を業務に利用する際の審査および管理について定める。
+  </p>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）情報セキュリティ管理規程の原本は総務部書庫に保管されている。本ポータルには掲載しない。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. 審査の観点</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">新規のクラウドサービスは、次の5観点により審査する。</p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">観点</th>
+        <th class="border border-[#ccc] px-3 py-1.5">確認すること</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kansaten.map(([k, v]) => (
+        <tr>
+          <th class="w-40 border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left font-bold">{k}</th>
+          <td class="border border-[#ccc] px-3 py-1.5">{v}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. 申請と台帳</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>新規のクラウドサービスを利用しようとする部門は、情報システム部に申請する（様式自由。サービス名・用途・入力する情報のレベルを書く）。</li>
+    <li>情報システム部は、前項の審査を経て承認したサービスをクラウドサービス利用台帳に登録する。</li>
+    <li>部門は、金額にかかわらず、情報システム部および法務部の事前確認なしにクラウドサービスを契約してはならない（決裁権限表の注記に定めるとおりとする）。</li>
+  </ol>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. AIサービスの特則（2026年8月追加）</h2>
+  <p class="mt-2 leading-relaxed">
+    AI機能を含むクラウドサービスは、本基準の審査に加え、<a href="/company/ai-service-kijun/" class="text-[#00c] underline">AIサービス利用基準</a>の確認（入力が学習に利用されない契約か等）を経なければならない。
+  </p>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）AIサービスも本質はクラウドサービスである。別の生き物として扱わない。審査の入口は本基準の一本とし、AI固有の確認だけをAIサービス利用基準に委ねる。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <p class="mt-2 text-[12px] leading-relaxed">
+    2022年10月1日　制定。<br />
+    2026年8月10日　AIサービスの特則（第4項）を追加。AI独自の審査フローを新設せず、既存の本基準に接続した。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 「AIは既存の仕組みに乗っかる」という考え方は
+      <a href="/articles/002-ai-rules-starter/" class="text-[#00c] underline">「押さえるのは3点だけ」</a>と
+      <a href="/articles/015-joushisu-shitsumon/" class="text-[#00c] underline">「情シスに聞かれる質問」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>

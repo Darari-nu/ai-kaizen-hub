@@ -1,0 +1,93 @@
+---
+// 契約審査基準（秘密保持条項） — 契約管理規程第5条の委任を受けた基準(という設定)。
+// 2026年8月改定でAI利用の確認項目とモデル条項を追加。AI専用の契約類型は新設しない（乗っかる）。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const checklist = [
+  ['秘密情報の定義の範囲', '口頭・データも含むか。広すぎて自社の手足を縛らないか（開示予定のない情報まで秘密指定していないか）'],
+  ['目的外使用の禁止', '利用目的が具体的に特定されているか。「本取引の検討のため」等、目的の記載が契約書内で完結しているか'],
+  ['第三者開示の制限', '開示できる範囲（役員・従業員・弁護士等）が限定されているか。再委託先への開示に事前承諾が必要か'],
+  ['複製の制限', '複製が目的の範囲内に限定されているか。複製物も秘密情報として扱う旨があるか'],
+  ['返還・破棄', '契約終了時の返還または破棄の義務があるか。破棄の証明（破棄証明書等）を求められるか・求めるか'],
+  ['存続期間', '契約終了後の存続年数（3年または5年が通例）。無期限の場合は管理負担と釣り合うか'],
+  ['損害賠償', '違反時の賠償範囲。差止請求の定めがあるか。当社側の義務違反時の範囲も対等か'],
+];
+---
+
+<PortalDoc
+  title="契約審査基準（秘密保持条項）｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の契約審査基準。NDAの確認チェックリスト7項目と、AI利用に関するモデル条項つき。自社の雛形として流用できます。"
+  docTitle="契約審査基準（秘密保持条項）"
+  docNo="法基-001"
+  history={['2021年6月1日 制定（という設定）', '2026年8月10日 改定（AI利用に関する確認項目を追加）']}
+  shokan="法務部"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
+  <p class="mt-2 leading-relaxed">
+    この基準は、契約管理規程第5条の定めに基づき、秘密保持契約（以下「NDA」という。）および基本取引契約の秘密保持条項を審査する際の確認基準を定める。
+  </p>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）契約管理規程の原本は総務部書庫にて保管（社内限り）。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. NDA確認チェックリスト</h2>
+  <p class="mt-2 text-[12px]">
+    審査にあたっては、次の7項目を必ず確認する。項目に不足がある場合は、修正案を添えて相手方に提示する。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <tbody>
+      <tr class="border border-[#1b3a6b] bg-[#eef1f5]">
+        <th class="w-40 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">確認項目</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">確認の観点</th>
+      </tr>
+      {checklist.map(([item, point]) => (
+        <tr class="border border-[#1b3a6b]">
+          <th class="w-40 border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
+            {item}
+          </th>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{point}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. AI利用に関する確認（2026年8月追加）</h2>
+  <p class="mt-2 leading-relaxed">
+    前項の7項目に加え、次の事項を確認する。
+  </p>
+  <ul class="mt-2 list-disc space-y-1 pl-8 leading-relaxed">
+    <li>
+      相手方が当社の秘密情報をAIサービスに入力する場合の取扱いが定められているか（定めがない場合は、下記モデル条項の追加を求める）。
+    </li>
+  </ul>
+  <div class="mt-3 border-2 border-[#1b3a6b] bg-[#eef1f5] px-4 py-3">
+    <p class="text-[12px] font-bold text-[#1b3a6b]">【モデル条項】</p>
+    <p class="mt-1 text-[12px] leading-relaxed">
+      乙は、甲から開示された秘密情報を生成AI等のAIサービスに入力する場合、当該入力情報がサービス提供者の学習その他甲の意図しない目的に利用されないことを確認できるサービスに限り、これを行うことができる。
+    </p>
+  </div>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）AI利用の一律禁止条項は求めない。相手方の業務効率も当社製品の競争力である。当社側の入力条件は<a href="/company/ai-nyuryoku-kijun/" class="text-[#00c] underline">AI入力情報基準</a>による。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. 迷ったとき</h2>
+  <p class="mt-2 leading-relaxed">
+    本基準で判断がつかない条項は、法務部契約審査担当に照会する。審査依頼はたたき台（修正案または懸念箇所のメモ）の添付を原則とする。
+  </p>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）契約書のPDFだけ送って「見ておいて」は、順番が最後尾に回る。たたき台がある依頼から返事が来る。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <p class="mt-2 text-[12px] leading-relaxed">
+    2021年6月1日　制定。<br />
+    2026年8月10日　AI利用の確認項目とモデル条項を追加した。AI専用の契約類型は新設せず、既存のNDA審査に1項目を足すこととした。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 なぜAI専用の契約を作らず既存NDAに1項目足すのか——法務の押さえ方は
+      <a href="/articles/002-ai-rules-starter/" class="text-[#00c] underline">「AIルールはゼロから作るな」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>

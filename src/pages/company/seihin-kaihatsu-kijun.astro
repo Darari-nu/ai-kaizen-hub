@@ -1,0 +1,169 @@
+---
+// 製品開発基準（ステージゲート） — 開発管理規程第4条の委任を受けた基準(という設定)。
+// ISO 9001の設計・開発管理の写像。別表DでAI搭載製品の確認事項を既存DRに織り込む（第0原則「乗っかる」の実物）。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+// ステージゲート表: [ゲート, ステージ, 主な活動, ゲート通過条件, 必ず集まる部門]
+const gates = [
+  [
+    'DR0',
+    '起案',
+    '市場性・実現性の一次調査。競合・特許の概査',
+    '市場性・実現性の一次判断が妥当であること。通過をもって開発テーマとして登録する',
+    '開発・営業・経営企画',
+  ],
+  [
+    'DR1',
+    '企画',
+    '要求仕様の確定、原価企画、開発日程の立案。ソフトウェアはアーキテクチャを確定する',
+    '要求仕様・原価企画・開発日程が確定していること',
+    '開発・営業・調達・原価管理',
+  ],
+  [
+    'DR2',
+    '設計',
+    '詳細設計、設計検証（DV）、図面出図。ソフトウェアは実装を凍結する',
+    'DVが完了し、図面が出図されていること。通過後、直ちに金型・専用治具を発注する',
+    '開発・製造・品質保証・調達',
+  ],
+  [
+    'DR3',
+    '量産準備',
+    '量産試作、工程能力確認（PV）、ソフトウェア検証、顧客サンプル提出',
+    'PV完了・ソフトウェア検証完了・顧客サンプル承認の取得',
+    '開発・製造・品質保証・調達・営業',
+  ],
+  [
+    'DR4',
+    '出荷',
+    '出荷判定会議',
+    '品質・法規制適合・サービス体制の最終確認が完了していること',
+    '開発・製造・品質保証・営業・サービス',
+  ],
+];
+
+// 長納期品・ソフトウェアの合流: [対象, 着手, 凍結・申請, 完了]
+const milestones = [
+  ['金型・専用治具', 'DR2通過後、直ちに発注', 'DR2（図面出図をもって仕様凍結）', 'DR3（量産試作で確認）'],
+  ['専用設備・検査装置', 'DR1通過後に仕様検討、DR2通過後に発注', 'DR2（工程設計をもって仕様凍結）', 'DR3（PVで確認）'],
+  ['ソフトウェア', 'DR1（アーキテクチャ確定）', 'DR2（実装凍結）', 'DR3（検証完了）'],
+  ['認証取得（各国規格）', 'DR1（適用規格・要否の確定）', 'DR3（技術文書の提出・申請）', 'DR4（取得完了。出荷判定の前提）'],
+];
+
+// 別表D: AI搭載製品の追加確認事項
+const appendixD = [
+  ['DR0', '発売国・用途・技術の3点を整理する（AI搭載製品開発基準（AI基準-003）による）'],
+  ['DR1', '適用法規制の区分を確定する（EU域内で販売する場合は、EUのAI規制（EU AI Act）の区分）'],
+  ['DR2', '学習データの管理方法・性能評価方法を確定する'],
+  ['DR3', '適合性評価・表示・技術文書を整備する'],
+  ['DR4', '出荷判定の確認項目にAI規制適合を含める'],
+];
+---
+
+<PortalDoc
+  title="製品開発基準（ステージゲート）｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の製品開発基準。DR0〜DR4のステージゲート、金型・ソフトウェアの合流点、AI搭載製品の別表D。自社の雛形として流用できる実物サンプル。"
+  docTitle="製品開発基準（ステージゲート）"
+  docNo="開基-001"
+  history={['2015年4月1日 制定（という設定）', '2026年8月10日 改定（別表D: AI搭載製品の確認事項を追加）']}
+  shokan="開発本部"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
+  <p class="mt-2 leading-relaxed">
+    この基準は、開発管理規程第4条の定めに基づき、製品開発のステージおよびゲート審査（デザインレビュー。以下「DR」という。）を定める。ISO 9001の設計・開発の管理に対応する。開発管理規程の原本は総務部書庫にあり、本ポータルには掲載しない。
+  </p>
+  <p class="mt-2 leading-relaxed">
+    DRは、関係部門が一堂に会して次のステージへの移行を判定するマイルストーンである。持ち回り承認をもってDRに代えてはならない。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. ステージゲート表</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    製品開発は次の5ステージで進め、各ゲートのDRを通過しなければ次のステージに移行できない。
+  </p>
+  <div class="mt-3 overflow-x-auto">
+    <table class="w-full min-w-[640px] border-collapse text-[12px]">
+      <thead>
+        <tr>
+          <th class="w-12 border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">ゲート</th>
+          <th class="w-16 border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">ステージ</th>
+          <th class="border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">主な活動</th>
+          <th class="border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">ゲート通過条件</th>
+          <th class="w-36 border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">必ず集まる部門</th>
+        </tr>
+      </thead>
+      <tbody>
+        {gates.map(([dr, stage, act, cond, dept]) => (
+          <tr>
+            <th class="border border-[#ccc] bg-[#f5f5f0] px-2 py-1.5 text-left align-top font-bold">{dr}</th>
+            <td class="border border-[#ccc] bg-[#f5f5f0] px-2 py-1.5 align-top font-bold">{stage}</td>
+            <td class="border border-[#ccc] px-2 py-1.5 align-top">{act}</td>
+            <td class="border border-[#ccc] px-2 py-1.5 align-top">{cond}</td>
+            <td class="border border-[#ccc] px-2 py-1.5 align-top">{dept}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="mt-2 text-[11px] leading-relaxed text-[#666]">
+    （備考）金型・専用治具は最長納期品である。DR2通過後、直ちに発注しなければ量産日程の全体が遅延するため、DR2の開催日は金型の納期から逆算して設定する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. 長納期品・ソフトウェアの合流</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    納期の長いものとソフトウェアは、次のタイミングで本流に合流させる。着手・凍結・完了のDR番号を動かしてはならない。
+  </p>
+  <div class="mt-3 overflow-x-auto">
+    <table class="w-full min-w-[560px] border-collapse text-[12px]">
+      <thead>
+        <tr>
+          <th class="w-36 border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">対象</th>
+          <th class="border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">着手</th>
+          <th class="border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">凍結・申請</th>
+          <th class="border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">完了</th>
+        </tr>
+      </thead>
+      <tbody>
+        {milestones.map(([item, start, freeze, done]) => (
+          <tr>
+            <th class="border border-[#ccc] bg-[#f5f5f0] px-2 py-1.5 text-left align-top font-bold">{item}</th>
+            <td class="border border-[#ccc] px-2 py-1.5 align-top">{start}</td>
+            <td class="border border-[#ccc] px-2 py-1.5 align-top">{freeze}</td>
+            <td class="border border-[#ccc] px-2 py-1.5 align-top">{done}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. 別表D: AI搭載製品の確認事項（2026年8月追加）</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    AIを搭載する製品は、各DRで次の事項を追加確認する。詳細は<a href="/company/ai-product-kijun/" class="text-[#00c] underline">AI搭載製品開発基準（AI基準-003）</a>による。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <tbody>
+      {appendixD.map(([dr, item]) => (
+        <tr>
+          <th class="w-16 border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left align-top font-bold">{dr}</th>
+          <td class="border border-[#ccc] px-3 py-1.5 align-top">{item}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 text-[11px] leading-relaxed text-[#666]">
+    （備考）AI搭載製品のために別のゲートを新設しない。同じDRに1行ずつ足す。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <p class="mt-2 text-[12px] leading-relaxed">
+    2015年4月1日　制定。<br />
+    2026年8月10日　別表Dを追加（AI専用の開発フローを作らず、既存DRに織り込んだ）。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 「作る側」と「使う側」で聞かれることが違う理由は
+      <a href="/articles/025-tsukuru-tsukau/" class="text-[#00c] underline">「会社のAIは2方向」</a>、
+      法規制を発売国で絞る考え方は<a href="/articles/024-houkisei-chousa/" class="text-[#00c] underline">「全部の国を追ったら潰れます」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>
