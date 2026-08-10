@@ -74,3 +74,50 @@ surrealism / surrealist dreamlike scene, an office worker and a translucent glow
 ```
 surrealism / surrealist dreamlike scene, a small transparent machine on a desk showing its inner clockwork, a business card entering one side and a single glowing spreadsheet row emerging from the other, a curious cat watching beside it, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
 ```
+
+## ガバナンス連載023〜031用（2026-08-10追加。保存先は `public/images/articles/<番号>-<slug>.jpg`）
+
+**023 マネジメントサイクル総論**（カレンダーの観覧車／隠喩=作って終わりでなく回り続ける）
+```
+surrealism / surrealist dreamlike scene, a slowly turning ferris wheel built from calendar pages above a tiny office desk at night, one gondola glowing softly, an office worker calmly turning a small hand crank, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**024 法規制は発売国だけ**（世界地図を畳む／隠喩=見る範囲を絞り、一番厳しい所に物差しを立てる）
+```
+surrealism / surrealist dreamlike scene, a vast paper world map spread across an office floor, an office worker folding it down into one small square where only a few countries remain, one region glowing softly, a single tall measuring stick planted there, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**025 作る側と使う側**（ひとつの門から分かれる2本の廊下／隠喩=入口で道が分かれる）
+```
+surrealism / surrealist dreamlike scene, one small gate opening into two long corridors, one corridor lined with factory machines and the other lined with office desks, a signpost with two arrows where only one arrow glows, an office worker standing at the fork, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**026 動向ウォッチ**（望遠鏡頭の静かな見張り／隠喩=誰も教えてくれないから自分で見る）
+```
+surrealism / surrealist dreamlike scene, an office worker with a small telescope head standing alone on a tiny watchtower above a quiet sea of floating newspapers at night, one distant light on the horizon glowing softly, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**027 教育と形式指摘**（絵は光っているのに額縁だけ指される／隠喩=形式指摘は中身が通った合図）
+```
+surrealism / surrealist dreamlike scene, a presenter showing a softly glowing painting to a boardroom, the audience of suited figures with picture-frame heads all pointing politely at the frame corners instead of the painting, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**028 活用状況アンケート**（自分から差し出す1枚／隠喩=監視でなく自己申告で分かる）
+```
+surrealism / surrealist dreamlike scene, dusk office where many paper survey sheets drift gently into a small wooden mailbox, one office worker stepping forward holding up a single softly glowing sheet with both hands, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**029 運用チェック**（巨大チェックリストで2箇所だけ光る／隠喩=全部見ずに絞る）
+```
+surrealism / surrealist dreamlike scene, an enormous paper checklist scroll cascading down a staircase, an inspector with a magnifying glass head calmly circling only two glowing checkboxes among hundreds, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**030 審議・パブコメ**（円卓を回る書類と、歩いて回るひとり／隠喩=たらいまわしを止める聞き役）
+```
+surrealism / surrealist dreamlike scene, a ring of office desks where one document floats endlessly from desk to desk in a circle, a single calm office worker walking against the flow carrying a small glowing tray collecting handwritten notes, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
+
+**031 AIコンサル**（渡された完璧な紙を、手で書き直す／隠喩=正解の翻訳は自分の仕事）
+```
+surrealism / surrealist dreamlike scene, a tall consultant figure handing over a flawless crystal-clear document, a small office worker at a desk quietly rewriting it by fountain pen onto plain warm paper, the handwritten page glowing softly, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
