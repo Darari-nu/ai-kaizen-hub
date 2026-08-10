@@ -15,7 +15,14 @@ const articles = (await getCollection('articles'))
   <main class="mx-auto max-w-site px-5 py-14">
     <SectionLabel text="無料コンテンツ" />
     <h1 class="mt-4 font-display text-3xl font-black">記事一覧</h1>
-    <div class="mt-8">
+    <div class="mt-8 flex flex-wrap items-center gap-2" id="series-tabs">
+      <span class="mr-1 font-display text-xs tracking-[0.2em] text-nezu">しぼりこみ</span>
+      <button type="button" data-filter="" class="border border-ink bg-ink px-3 py-1.5 font-display text-sm font-bold text-paper">すべて</button>
+      <button type="button" data-filter="記録" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">記録</button>
+      <button type="button" data-filter="AIカイゼン" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">AIカイゼン</button>
+      <button type="button" data-filter="ガバナンス" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">ガバナンス</button>
+    </div>
+    <div class="mt-4" id="article-list">
       {
         articles.length === 0 ? (
           <p class="max-w-prose leading-relaxed text-nezu">
@@ -27,7 +34,7 @@ const articles = (await getCollection('articles'))
           </p>
         ) : (
           articles.map((a) => (
-            <article class="border-t border-rule py-5 last:border-b">
+            <article class="border-t border-rule py-5 last:border-b" data-series={a.data.series}>
               <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                 <span class="font-display text-sm text-nezu">
                   No.{String(a.data.number).padStart(3, '0')}
@@ -46,5 +53,24 @@ const articles = (await getCollection('articles'))
       }
     </div>
   </main>
+  <script is:inline>
+    (() => {
+      const tabs = Array.from(document.querySelectorAll('#series-tabs [data-filter]'));
+      const rows = Array.from(document.querySelectorAll('#article-list [data-series]'));
+      const on = ['border-ink', 'bg-ink', 'text-paper'];
+      const off = ['border-rule', 'text-nezu'];
+      const apply = (series) => {
+        rows.forEach((el) => {
+          el.style.display = !series || el.dataset.series === series ? '' : 'none';
+        });
+        tabs.forEach((b) => {
+          const active = (b.dataset.filter || '') === (series || '');
+          on.forEach((c) => b.classList.toggle(c, active));
+          off.forEach((c) => b.classList.toggle(c, !active));
+        });
+      };
+      tabs.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter || null)));
+    })();
+  </script>
   <Footer />
 </Base>

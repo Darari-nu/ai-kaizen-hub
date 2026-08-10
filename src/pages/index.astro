@@ -31,6 +31,12 @@ const comingSoon = [
   'チャットボットにお金払ってません？（AIカイゼン）',
 ];
 
+// 予告の文末（軸名）から絞り込み用のseriesを判定。無印は「すべて」のときだけ表示
+const axisOf = (t: string) => {
+  const m = t.match(/（(記録|AIカイゼン|カイゼン|ガバナンス)）$/);
+  return m ? (m[1] === 'カイゼン' ? 'AIカイゼン' : m[1]) : '';
+};
+
 const pains = [
   '「で、費用対効果は？」と聞かれて、導入する気が消える',
   '「あなたじゃなくて、もっと適した人が」で、くじける',
@@ -156,7 +162,7 @@ const faqs = [
           ぜんぶ無料で、置いておきます。
         </h2>
         <div class="mt-10 grid gap-7 sm:grid-cols-3">
-          <div class="group">
+          <a href="#article-list" data-series-link="記録" class="group block no-underline">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/kiroku.png"
@@ -166,8 +172,8 @@ const faqs = [
             </div>
             <p class="mt-4 font-display text-lg font-bold">記録<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">会社にAIを申請→導入→使い倒す実況</p>
-          </div>
-          <div class="group">
+          </a>
+          <a href="#article-list" data-series-link="AIカイゼン" class="group block no-underline">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/kaizen.png"
@@ -177,8 +183,8 @@ const faqs = [
             </div>
             <p class="mt-4 font-display text-lg font-bold">AIカイゼン<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">明日の業務がラクになる道具</p>
-          </div>
-          <div class="group">
+          </a>
+          <a href="#article-list" data-series-link="ガバナンス" class="group block no-underline">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/governance.png"
@@ -188,12 +194,12 @@ const faqs = [
             </div>
             <p class="mt-4 font-display text-lg font-bold">ガバナンス<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">元・全社AIガバナンス担当が訳す、AIの決まりごと</p>
-          </div>
+          </a>
         </div>
 
         {
           kaizenMenu.length > 0 && (
-            <div class="mt-14 border-2 border-ink">
+            <div class="mt-14 border-2 border-ink" id="kaizen-menu">
               <p class="border-b-2 border-ink bg-ink px-5 py-3 font-display text-sm font-bold tracking-[0.15em] text-paper">
                 AIカイゼン<span class="mx-2 text-shu">──</span>そのお金と手間、浮かせられるかもしれません
               </p>
@@ -223,10 +229,20 @@ const faqs = [
             </div>
           )
         }
-        <div class="mt-8">
+        <div class="mt-12 flex flex-wrap items-center gap-2" id="series-tabs">
+          <span class="mr-1 font-display text-xs tracking-[0.2em] text-nezu">しぼりこみ</span>
+          <button type="button" data-filter="" class="border border-ink bg-ink px-3 py-1.5 font-display text-sm font-bold text-paper">すべて</button>
+          <button type="button" data-filter="記録" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">記録</button>
+          <button type="button" data-filter="AIカイゼン" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">AIカイゼン</button>
+          <button type="button" data-filter="ガバナンス" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">ガバナンス</button>
+        </div>
+        <div class="mt-4" id="article-list">
           {
             articles.map((a) => (
-              <article class="group flex gap-7 border-t border-rule py-7 first:border-t-2 first:border-ink">
+              <article
+                class="group flex gap-7 border-t border-rule py-7 first:border-t-2 first:border-ink"
+                data-series={a.data.series}
+              >
                 {hasImage(a.data.ogImage) && (
                   <div class="hidden w-56 shrink-0 overflow-hidden sm:block">
                     <img
@@ -269,7 +285,7 @@ const faqs = [
           }
           {
             comingSoon.map((t, i) => (
-              <article class="border-t border-rule py-5">
+              <article class="border-t border-rule py-5" data-series={axisOf(t)}>
                 <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   <span class="font-display text-sm text-nezu">
                     No.{String(articles.length + i + 1).padStart(3, '0')}
@@ -286,6 +302,30 @@ const faqs = [
         </div>
       </div>
     </section>
+
+    <script is:inline>
+      (() => {
+        const tabs = Array.from(document.querySelectorAll('#series-tabs [data-filter]'));
+        const rows = Array.from(document.querySelectorAll('#article-list [data-series]'));
+        const cards = Array.from(document.querySelectorAll('[data-series-link]'));
+        const menuBox = document.getElementById('kaizen-menu');
+        const on = ['border-ink', 'bg-ink', 'text-paper'];
+        const off = ['border-rule', 'text-nezu'];
+        const apply = (series) => {
+          rows.forEach((el) => {
+            el.style.display = !series || el.dataset.series === series ? '' : 'none';
+          });
+          tabs.forEach((b) => {
+            const active = (b.dataset.filter || '') === (series || '');
+            on.forEach((c) => b.classList.toggle(c, active));
+            off.forEach((c) => b.classList.toggle(c, !active));
+          });
+          if (menuBox) menuBox.style.display = !series || series === 'AIカイゼン' ? '' : 'none';
+        };
+        tabs.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter || null)));
+        cards.forEach((c) => c.addEventListener('click', () => apply(c.dataset.seriesLink)));
+      })();
+    </script>
 
     <!-- 4. 書いてる人 -->
     <section>
