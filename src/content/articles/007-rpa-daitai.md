@@ -43,6 +43,14 @@ hook: 'RPAって高いですよね。実は、作れるものありますよ'
 
 ![同じ画面の全項目が自動入力され、下部に「発行番号 GJR-2026-43511 で登録されました」と表示されている](/images/articles/007-kaigiroku-auto.jpg)
 
+流れを1枚にすると、こうです。やることは3つしかありません。
+
+![自動入力後の画面に番号つきの説明: ①入力欄はぜんぶAIが埋めた（ぼくは見てるだけ） ②「発行」もAIが押す ③発行番号が取れたら完了。ここまで約20秒](/images/articles/007-kaigiroku-zukai.jpg)
+
+動いているところも撮りました。10秒だけ見てください。カテゴリが選ばれ、文字が入り、発行番号が出ます。
+
+<video src="/videos/007-kaigiroku-auto.mp4" controls muted playsinline preload="metadata" style="width:100%;border:1px solid #ddd;"></video>
+
 カテゴリから議事内容まで全部入って、発行番号まで取れています。ぼくがやったのは、起動だけです。
 
 ## 安定のコツ: AIに「要素の住所」を教える

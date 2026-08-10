@@ -1,0 +1,183 @@
+---
+// 出張旅費規程 — ダラリ重工業の社内規程(という設定)。1961年制定・2008年最終改定のまま
+// 据え置かれている「古い規程」の実物サンプル。日当額と推奨環境(IE11)が時を止めている。
+// 規程台帳の注記「日当額は現在の物価と乖離しているとの指摘が複数寄せられているが、
+// 改定時期は未定」と整合させること。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const teigi = [
+  ['出張', '役職員が業務のため、勤務地から片道50キロメートル以上の地に移動することをいう。'],
+  ['勤務地', '役職員が所属する事業所の所在地をいう。'],
+  ['日帰り出張', '出張のうち、宿泊を伴わないものをいう。'],
+  ['宿泊出張', '出張のうち、宿泊を伴うものをいう。'],
+  ['海外出張', '出張のうち、本邦外の地に赴くものをいう。'],
+];
+
+// 旅費表（2008年4月1日改定・現行）
+const nitto = [
+  ['日当（国内・日帰り）', '1,200円／日'],
+  ['日当（国内・宿泊）', '2,000円／日'],
+  ['宿泊料上限（一般）', '8,500円／泊'],
+  ['宿泊料上限（管理職）', '9,500円／泊'],
+  ['海外出張の旅費', '別に定める'],
+];
+
+const kaitei = [
+  ['1961年4月1日', '制定', '社規第1961-02号'],
+  ['1989年4月1日', '消費税の導入に伴い、旅費表および精算様式を改定', '—'],
+  ['2000年4月1日', '日当額を改定（国内・日帰り1,000円→1,200円）', '—'],
+  ['2008年4月1日', '宿泊料上限を改定（現行）。経費精算システムの導入に伴い精算手続を改定', '—'],
+];
+---
+
+<PortalDoc
+  title="出張旅費規程｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の出張旅費規程。1961年制定・2008年最終改定のまま据え置かれた条文体の実物サンプル。自社の雛形として流用できます。"
+  docTitle="出張旅費規程"
+  docNo="社規第1961-02号"
+  history={['1961年4月1日 制定', '2008年4月1日 最終改定']}
+  shokan="人事部"
+>
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第1章 総則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第1条（目的）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、ダラリ重工業株式会社（以下「当社」という。）の役職員が業務のため出張する場合の手続および旅費の支給に関する事項を定め、業務の円滑な遂行と経費の適正な支出を図ることを目的とする。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（適用範囲）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、当社のすべての役員および従業員（出向者、派遣社員および嘱託を含む。以下「役職員」という。）に適用する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　旅費の支給について労働協約または個別の契約に別段の定めのある場合は、その定めるところによる。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（定義）</h2>
+  <p class="mt-2 leading-relaxed">この規程において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {teigi.map(([word, def], i) => (
+      <li>
+        （{i + 1}）<b>{word}</b>　{def}
+      </li>
+    ))}
+  </ol>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第2章 出張の区分と旅費</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第4条（出張の区分）</h2>
+  <p class="mt-2 leading-relaxed">
+    出張は、日帰り出張、宿泊出張および海外出張に区分する。出張の要否および区分は、所属長が命令時に決定する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第5条（旅費の種類）</h2>
+  <p class="mt-2 leading-relaxed">出張に対して支給する旅費は、次の各号に掲げるとおりとする。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    <li>（1）<b>交通費</b>　出張の経路に要する運賃の実費</li>
+    <li>（2）<b>日当</b>　出張中の諸雑費に充てるための定額</li>
+    <li>（3）<b>宿泊料</b>　宿泊出張における宿泊に要する費用（上限額の範囲内の実費）</li>
+  </ol>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第6条（旅費表）</h2>
+  <p class="mt-2 leading-relaxed">日当および宿泊料の額は、次の表に定めるところによる。</p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">区分</th>
+        <th class="border border-[#ccc] px-3 py-1.5">金額</th>
+      </tr>
+    </thead>
+    <tbody>
+      {nitto.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）日当額は物価動向を踏まえ見直しを検討する（2008年4月）。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第3章 交通手段</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第7条（経路の原則）</h2>
+  <p class="mt-2 leading-relaxed">
+    出張の経路は、最も経済的かつ合理的な経路によらなければならない。所属長は、命令時に経路の妥当性を確認する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第8条（新幹線）</h2>
+  <p class="mt-2 leading-relaxed">
+    新幹線は、片道の移動距離がおおむね100キロメートル以上の場合に利用することができる。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第9条（航空機）</h2>
+  <p class="mt-2 leading-relaxed">
+    航空機の利用は、所属長の事前の承認を得なければならない。運賃は、割引運賃の利用に努める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第10条（グリーン車等）</h2>
+  <p class="mt-2 leading-relaxed">
+    グリーン車および航空機のビジネスクラスの利用は、役員に限る。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第11条（マイレージ等）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、出張に伴い付与されるマイレージその他のポイントを私的に取得してはならない。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第4章 精算</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第12条（精算）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、出張から帰着した日の翌日から起算して5営業日以内に、経費精算システムにより旅費を精算しなければならない。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）経費精算システムの推奨環境はInternet Explorer 11である。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第13条（領収書）</h2>
+  <p class="mt-2 leading-relaxed">
+    交通費および宿泊料の精算には、領収書を添付しなければならない。ただし、鉄道およびバスの運賃であって領収書の取得が困難なものは、この限りでない。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第14条（仮払い）</h2>
+  <p class="mt-2 leading-relaxed">
+    出張に多額の費用を要する場合は、所属長の承認を得て、概算額の仮払いを受けることができる。仮払金は、第12条の精算により過不足を清算する。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">附則</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>この規程は1961年4月1日から施行する。</li>
+    <li>この規程の改廃は、人事部の起案に基づき社長が決定する。</li>
+  </ol>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">年月日</th>
+        <th class="border border-[#ccc] px-3 py-1.5">内容</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kaitei.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 経費精算のような定型業務をAIでラクにする話は
+      <a href="/articles/016-excel-shukei/" class="text-[#00c] underline">「毎月のExcel手作業集計、引退させませんか」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>

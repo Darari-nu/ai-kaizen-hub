@@ -1,0 +1,187 @@
+---
+// 文書管理規程 — ダラリ重工業の社内規程(という設定)。1959年制定の最古参規程。
+// 第3章で全社の規程文書を「規程・基準・ガイドライン」の3層と定める＝
+// AI関連体系(/company/kitei-taikei/)の全社版の根拠。ファクシミリの一文は現存する時代の地層。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const teigi = [
+  ['文書', '業務上作成し、または受領した書面、図面および帳票をいい、電磁的記録を含む。'],
+  ['規程文書', '当社の組織および業務の運営に関する定めを記載した文書であって、第6条に定める体系に属するものをいう。'],
+  ['電磁的記録', '電子的方式、磁気的方式その他人の知覚によっては認識することができない方式で作られる記録であって、電子計算機による情報処理の用に供されるものをいう。'],
+];
+
+const nengen = [
+  ['永年', '定款、登記に関する文書、規程文書の原本'],
+  ['10年', '契約書、稟議書'],
+  ['5年', '一般の往復文書'],
+  ['3年', '会議資料'],
+  ['1年', '参考資料'],
+];
+
+const sanso = [
+  ['規程', '義務、体制および原則を定める文書', '社長'],
+  ['基準', '具体的な判断基準および手続を定める文書', '所管部門の長'],
+  ['ガイドライン', '推奨事項を定める文書', '所管部署限り'],
+];
+
+const kaitei = [
+  ['1959年4月1日', '制定', '社規第1959-01号'],
+  ['1997年10月1日', 'ファクシミリにより受信した文書の取扱いを追加', '社規第1959-01号の2'],
+  ['2005年4月1日', '個人情報保護法の全面施行に伴い、個人情報を含む文書の取扱いを個人情報保護規程に委任', '社規第1959-01号の3'],
+  ['2019年6月1日', '電磁的記録の定義を追加。規程文書の体系（規程・基準・ガイドラインの3層）を明文化', '社規第1959-01号の4'],
+];
+---
+
+<PortalDoc
+  title="文書管理規程｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の文書管理規程。1959年制定。保存年限表と、全社の規程文書を規程・基準・ガイドラインの3層とする体系の根拠条文。自社の雛形として流用できます。"
+  docTitle="文書管理規程"
+  docNo="社規第1959-01号"
+  history={['1959年4月1日 制定', '2019年6月1日 最終改定']}
+  shokan="総務部"
+>
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第1章 総則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第1条（目的）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、ダラリ重工業株式会社（以下「当社」という。）における文書の作成、保存および廃棄ならびに規程文書の体系に関する基本的事項を定め、もって文書の適正な管理と業務の円滑な運営に資することを目的とする。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（適用範囲）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、当社の業務上作成し、または受領したすべての文書に適用する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　個人情報を含む文書の取扱いについて個人情報保護規程に定めのある事項は、その定めるところによる。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（定義）</h2>
+  <p class="mt-2 leading-relaxed">この規程において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {teigi.map(([word, def], i) => (
+      <li>
+        （{i + 1}）<b>{word}</b>　{def}
+      </li>
+    ))}
+  </ol>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）ファクシミリにより受信した文書は、紙文書として扱う。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第2章 文書の分類と保存</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第4条（保存年限）</h2>
+  <p class="mt-2 leading-relaxed">
+    文書は、次の表の区分に従い保存し、保存年限を経過したものは、所管部門の確認を経て廃棄する。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">保存年限</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書の区分</th>
+      </tr>
+    </thead>
+    <tbody>
+      {nengen.map(([years, docs]) => (
+        <tr>
+          <th class="border border-[#ccc] bg-[#eef1f5] px-3 py-1.5 text-left font-bold text-[#1b3a6b]">{years}</th>
+          <td class="border border-[#ccc] px-3 py-1.5">{docs}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）保存年限は、当該文書の完結した日の属する年度の翌年度の初日から起算する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第5条（書庫の管理）</h2>
+  <p class="mt-2 leading-relaxed">
+    保存中の文書は、総務部書庫に保管する。書庫の鍵は総務部が管理する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　書庫の文書を持ち出すときは、持出簿に文書名、持出者および持出しの年月日を記載し、返却のときにその旨を記載しなければならない。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第3章 規程文書の体系</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第6条（規程文書の3層）</h2>
+  <p class="mt-2 leading-relaxed">
+    当社の規程文書は、規程、基準およびガイドラインの3層とし、その区分および制定改廃の決裁は次の表のとおりとする。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">階層</th>
+        <th class="border border-[#ccc] px-3 py-1.5">何を定める文書か</th>
+        <th class="border border-[#ccc] px-3 py-1.5">制定改廃の決裁</th>
+      </tr>
+    </thead>
+    <tbody>
+      {sanso.map(([name, what, who]) => (
+        <tr>
+          <th class="border border-[#ccc] bg-[#eef1f5] px-3 py-1.5 text-left font-bold text-[#1b3a6b]">{name}</th>
+          <td class="border border-[#ccc] px-3 py-1.5">{what}</td>
+          <td class="border border-[#ccc] px-3 py-1.5">{who}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 leading-relaxed">
+    2　変わりやすい事項ほど、軽く改定できる下層の文書に定めるものとする。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）本条をAI関連文書に適用した実例は、<a href="/company/kitei-taikei/" class="text-[#00c] underline">社内規程体系（AI関連）</a>を参照。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第7条（制定改廃の手続）</h2>
+  <p class="mt-2 leading-relaxed">
+    規程の制定改廃は、<a href="/company/ringi-kitei/" class="text-[#00c] underline">稟議規程</a>の定めるところにより、稟議による。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　基準およびガイドラインの制定改廃は、前条の決裁により行い、その都度、総務部に届け出なければならない。総務部は、届出を受けた規程文書を社内規程管理台帳に登載する。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第4章 電子化</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第8条（文書の電子化）</h2>
+  <p class="mt-2 leading-relaxed">
+    文書の電子化は、2019年度電子化計画に基づき、順次進める。進捗は別途報告する。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）計画の完了時期は、電子化の進捗を踏まえて定める。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">附則</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>この規程は1959年4月1日から施行する。</li>
+    <li>この規程の改定（2019年6月1日）は、同日から施行する。同日前に制定された規程文書は、第6条の体系に読み替えて適用する。</li>
+  </ol>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">年月日</th>
+        <th class="border border-[#ccc] px-3 py-1.5">内容</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kaitei.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 規程・基準・ガイドラインの棲み分けの実例は
+      <a href="/company/kitei-taikei/" class="text-[#00c] underline">社内規程体系（AI関連）</a>、
+      この体系の設計思想は<a href="/articles/032-kijun-kaitei/" class="text-[#00c] underline">「AIルールの改定、『大ごと』だと構えていませんか」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>

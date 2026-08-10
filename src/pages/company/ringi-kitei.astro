@@ -1,0 +1,157 @@
+---
+// 稟議規程 — ダラリ重工業の社内規程(という設定)。1965年制定の古参規程。
+// 決裁権限の詳細は職務権限規程・決裁権限表に委任し、この規程は手続の骨格だけを持つ。
+// 様式は /company/ai-kitei/ に合わせる（章立て条文体・である調・改定履歴表）。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const teigi = [
+  ['稟議', '決裁権限を有する者の決裁を、書面（電磁的記録を含む。以下同じ。）の回付により求める手続をいう。'],
+  ['起案者', '稟議書を作成し、稟議に付する者をいう。'],
+  ['決裁者', '職務権限規程および決裁権限表の定めるところにより、当該事項を決定する権限を有する者をいう。'],
+  ['合議', '決裁に先立ち、稟議書を関係部門に回付し、その意見を求めることをいう。'],
+];
+
+const ringiJiko = [
+  '新規の契約の締結',
+  '設備投資',
+  '規程の制定または改廃',
+  'その他決裁権限表に定める事項',
+];
+
+const kisaiJiko = [
+  '目的',
+  '金額および支出の内訳',
+  '期待される効果',
+  '代替案の検討の経過',
+  '関係部門の意見',
+];
+
+const kaitei = [
+  ['1965年4月1日', '制定', '社規第1965-03号'],
+  ['1998年6月1日', '稟議書の押印欄を12欄から8欄に削減。あわせて用字を現代仮名遣いに改めた', '社規第1965-03号の2'],
+  ['2015年10月1日', '電子決裁システムの導入に伴い、承認操作をもって押印とみなすこととした', '社規第1965-03号の3'],
+];
+---
+
+<PortalDoc
+  title="稟議規程｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の稟議規程。1965年制定・総則・稟議事項・手続・雑則の章立て条文体。自社の雛形として流用可。"
+  docTitle="稟議規程"
+  docNo="社規第1965-03号"
+  history={['1965年4月1日 制定', '2015年10月1日 最終改定']}
+  shokan="総務部"
+>
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第1章 総則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第1条（目的）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、ダラリ重工業株式会社（以下「当社」という。）における稟議の手続を定め、もって意思決定の適正および責任の明確化を図ることを目的とする。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（適用範囲）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、当社のすべての部門における稟議に適用する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（定義）</h2>
+  <p class="mt-2 leading-relaxed">この規程において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {teigi.map(([word, def], i) => (
+      <li>
+        （{i + 1}）<b>{word}</b>　{def}
+      </li>
+    ))}
+  </ol>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第2章 稟議事項</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第4条（稟議によるべき事項）</h2>
+  <p class="mt-2 leading-relaxed">次の各号に掲げる事項は、稟議によらなければならない。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {ringiJiko.map((k, i) => (
+      <li>（{i + 1}）{k}</li>
+    ))}
+  </ol>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第5条（決裁権限）</h2>
+  <p class="mt-2 leading-relaxed">
+    稟議事項の決裁者および決裁の区分は、職務権限規程および決裁権限表の定めるところによる。決裁権限表の抜粋は<a href="/company/intranet/" class="text-[#00c] underline">社内ポータル</a>に掲示する。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）決裁権限表の原本は総務部書庫に備え置く。抜粋と原本に相違がある場合は、原本による。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第3章 手続</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第6条（稟議書の記載事項）</h2>
+  <p class="mt-2 leading-relaxed">起案者は、稟議書に次の各号に掲げる事項を記載しなければならない。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {kisaiJiko.map((k, i) => (
+      <li>（{i + 1}）{k}</li>
+    ))}
+  </ol>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）金額は消費税抜きで記載する（1989年以降の慣行による。）。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第7条（合議）</h2>
+  <p class="mt-2 leading-relaxed">
+    稟議書は、関係部門を経由して決裁者に付議する。合議を受けた部門は、意見がある場合はこれを意見欄に付し、意見がない場合は速やかに次の部門に回付する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　合議を受けた者が長期に不在のときは、あらかじめ定めた代理者が回付する。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）回付の目安は1部門につき3営業日以内とする。ただし、目安である。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第8条（決裁後の措置）</h2>
+  <p class="mt-2 leading-relaxed">
+    起案者は、決裁の結果を関係部門に報告し、決裁を受けた内容に従い実施する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　決裁済みの稟議書は、文書管理規程の定めるところにより保管する。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第4章 雑則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第9条（改廃）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程の改廃は、稟議により社長が決定する。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">附則</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>この規程は1965年4月1日から施行する。</li>
+    <li>1998年改定において、稟議書の押印欄を12欄から8欄に削減した。</li>
+    <li>2015年改定において、電子決裁システムの承認操作をもって押印とみなすこととした。承認欄の数は従前のとおりとする。</li>
+  </ol>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">年月日</th>
+        <th class="border border-[#ccc] px-3 py-1.5">内容</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kaitei.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 稟議の通し方（費用対効果の書き方）は
+      <a href="/articles/005-hiyou-taikoka/" class="text-[#00c] underline">「『で、費用対効果は？』に一発で答える紙の作り方」</a>、
+      Claude Teamを通した実録は<a href="/articles/004-claude-team/" class="text-[#00c] underline">「Claude TeamをJTC企業に通すまでにやったこと」</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>

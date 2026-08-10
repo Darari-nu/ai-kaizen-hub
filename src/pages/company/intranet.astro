@@ -31,24 +31,35 @@ const policies = [
   ['職場方針（第2ライン）', '5Sを徹底する。挨拶をする。前年比3%。'],
 ];
 
-const rules = [
-  ['社内規程管理台帳（全32規程）', '/company/kitei-ichiran/', true],
-  ['社内規程体系（AI関連）', '/company/kitei-taikei/', true],
-  ['AI利用規程', '/company/ai-kitei/', true],
-  ['情報セキュリティ基準', '/company/joho-security-kijun/', true],
-  ['クラウドサービス利用基準', '/company/cloud-kijun/', true],
-  ['調達基準（サプライヤー評価）', '/company/chotatsu-kijun/', true],
-  ['契約審査基準（秘密保持条項）', '/company/keiyaku-kijun/', true],
-  ['製品開発基準（ステージゲート）', '/company/seihin-kaihatsu-kijun/', true],
-  ['AI入力情報基準', '/company/ai-nyuryoku-kijun/', true],
-  ['AIサービス利用基準', '/company/ai-service-kijun/', true],
-  ['AI搭載製品開発基準', '/company/ai-product-kijun/', true],
-  ['生成AI活用ガイドライン', '/company/ai-guideline/', true],
-  ['文書管理規程', '', false],
-  ['稟議規程', '', false],
-  ['出張旅費規程', '', false],
-  ['慶弔見舞金規程', '', false],
-  ['社印取扱規程', '', false],
+// 規程集はグループ表示（2026-08-10 darari指示「もうちょい見やすくw」）。
+// [グループ名, NEWバッジ, [[名前, href], ...]] hrefが空 = 準備中（点線）
+const ruleGroups: [string, boolean, [string, string][]][] = [
+  ['よく使う', false, [
+    ['📚 社内規程管理台帳（全32規程の一覧はこちら）', '/company/kitei-ichiran/'],
+    ['決裁権限表（抜粋）', '#kettai'],
+  ]],
+  ['規程（全文閲覧可）', false, [
+    ['稟議規程', '/company/ringi-kitei/'],
+    ['文書管理規程', '/company/bunsho-kitei/'],
+    ['情報セキュリティ管理規程', '/company/joho-security-kitei/'],
+    ['出張旅費規程', '/company/shucchou-kitei/'],
+    ['慶弔見舞金規程', '/company/keichou-kitei/'],
+  ]],
+  ['AI関連の体系', true, [
+    ['社内規程体系（AI関連）─まずこれ', '/company/kitei-taikei/'],
+    ['AI利用規程', '/company/ai-kitei/'],
+    ['生成AI活用ガイドライン（現場のコツ集）', '/company/ai-guideline/'],
+  ]],
+  ['基準（AIは既存基準の中にあります）', true, [
+    ['情報セキュリティ基準', '/company/joho-security-kijun/'],
+    ['クラウドサービス利用基準', '/company/cloud-kijun/'],
+    ['調達基準（サプライヤー評価）', '/company/chotatsu-kijun/'],
+    ['契約審査基準（秘密保持条項）', '/company/keiyaku-kijun/'],
+    ['製品開発基準（ステージゲート）', '/company/seihin-kaihatsu-kijun/'],
+  ]],
+  ['整備待ち', false, [
+    ['社印取扱規程', ''],
+  ]],
 ];
 ---
 
@@ -115,31 +126,35 @@ const rules = [
       </div>
 
       <div class="grid gap-4 md:grid-cols-2">
-        <!-- 規程集 -->
+        <!-- 規程集（グループ表示） -->
         <div class="border border-[#999] bg-white">
           <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
             ■ 社内規程集
           </div>
-          <ul class="divide-y divide-[#eee] px-3 py-1">
-            {
-              rules.map(([name, href, alive]) => (
-                <li class="flex items-baseline justify-between py-1.5">
-                  {alive ? (
-                    <a href={href} class="text-[#00c] underline">
-                      {name}
-                    </a>
-                  ) : (
-                    <span class="cursor-default text-[#00c] underline decoration-dotted">{name}</span>
-                  )}
-                  {alive ? (
-                    <span class="bg-[#c00] px-1.5 py-0.5 text-[10px] font-bold text-white">NEW</span>
-                  ) : (
-                    <span class="text-[10px] text-[#999]">PDF 準備中</span>
-                  )}
-                </li>
-              ))
-            }
-          </ul>
+          {
+            ruleGroups.map(([group, isNew, items]) => (
+              <div>
+                <div class="flex items-center gap-2 border-b border-[#eee] bg-[#f5f5f0] px-3 py-1 text-[11px] font-bold text-[#666]">
+                  {group}
+                  {isNew && <span class="bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span>}
+                </div>
+                <ul class="divide-y divide-[#f3f3ee] px-3 py-0.5">
+                  {items.map(([name, href]) => (
+                    <li class="flex items-baseline justify-between py-1">
+                      {href ? (
+                        <a href={href} class="text-[#00c] underline">
+                          {name}
+                        </a>
+                      ) : (
+                        <span class="cursor-default text-[#00c] underline decoration-dotted">{name}</span>
+                      )}
+                      {!href && <span class="text-[10px] text-[#999]">PDF 準備中</span>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
         </div>
 
         <!-- リンク集 -->
@@ -157,7 +172,7 @@ const rules = [
       </div>
 
       <!-- 決裁権限表 -->
-      <div class="border border-[#999] bg-white">
+      <div class="border border-[#999] bg-white" id="kettai">
         <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
           ■ 決裁権限表（抜粋）
         </div>

@@ -1,0 +1,175 @@
+---
+// 情報セキュリティ管理規程 — ダラリ重工業の社内規程(という設定)。5章15条の条文体。
+// 第8条(情報の区分及び取扱い)→情報セキュリティ基準(情セ基-001)、
+// 第12条(外部サービスの利用)→クラウドサービス利用基準(情セ基-002)に委任。
+// この2つの条番号は子の基準の「〜条の定めに基づき」と対応しているため、動かさないこと。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const teigi = [
+  ['情報資産', '当社が業務上取り扱う情報ならびに当該情報を記録し、または処理する文書、記録媒体および機器をいう。'],
+  ['機密情報', '第8条の規定により区分された情報のうち、社外秘以上の区分に該当するものをいう。'],
+  ['情報システム', '当社が業務のために使用するサーバー、ネットワーク、パソコンその他の機器およびソフトウェアをいう。'],
+  ['外部サービス', '社外の事業者が提供する情報処理サービス（クラウドサービスを含む。）であって、当社の情報を保存または処理するものをいう。'],
+];
+
+const kaitei = [
+  ['2003年10月1日', '制定', '社規第2003-05号'],
+  ['2010年6月1日', '出張先における持ち出しPCの紛失事案を受け、第10条（持ち出し・社外作業）を強化', '—'],
+  ['2022年10月1日', 'クラウドサービスの利用拡大に対応し、第12条（外部サービスの利用）を追加。同条の委任を受けてクラウドサービス利用基準（情セ基-002）を制定', '—'],
+  ['2024年4月1日', '全面見直し。テレワークの定着を踏まえ、条文の整理および用語の統一を実施', '—'],
+];
+---
+
+<PortalDoc
+  title="情報セキュリティ管理規程｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の情報セキュリティ管理規程。5章15条の条文体。情報区分は情報セキュリティ基準へ、外部サービスはクラウドサービス利用基準へ委任する親規程。自社の雛形として流用可。"
+  docTitle="情報セキュリティ管理規程"
+  docNo="社規第2003-05号"
+  history={['2003年10月1日 制定', '2024年4月1日 最終改定']}
+  shokan="情報システム部"
+>
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第1章 総則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第1条（目的）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、ダラリ重工業株式会社（以下「当社」という。）における情報資産の適切な管理に関する基本的事項を定め、情報の漏えい、改ざんおよび滅失を防止するとともに、情報を安心して活用できる環境を維持することを目的とする。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（適用範囲）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、当社のすべての役員および従業員（出向者、派遣社員および嘱託を含む。以下「役職員」という。）に適用する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　業務委託先が当社の情報資産を取り扱う場合は、契約においてこの規程に準じた取扱いを求める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（定義）</h2>
+  <p class="mt-2 leading-relaxed">この規程において、次の各号に掲げる用語の意義は、当該各号に定めるところによる。</p>
+  <ol class="mt-2 space-y-1 pl-6 leading-relaxed">
+    {teigi.map(([word, def], i) => (
+      <li>
+        （{i + 1}）<b>{word}</b>　{def}
+      </li>
+    ))}
+  </ol>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第2章 体制</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第4条（情報セキュリティ管理責任者）</h2>
+  <p class="mt-2 leading-relaxed">
+    当社に、情報セキュリティ管理責任者を置き、担当役員をもって充てる。情報セキュリティ管理責任者は、当社における情報セキュリティの管理を統括する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第5条（情報セキュリティ委員会）</h2>
+  <p class="mt-2 leading-relaxed">
+    情報セキュリティに関する重要な事項は、情報セキュリティ委員会において審議する。情報セキュリティ委員会は、情報セキュリティ管理責任者、総務部長、法務部長、情報システム部長および関係部門の長をもって構成し、事務局は情報システム部が務める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第6条（各部門の長の責務）</h2>
+  <p class="mt-2 leading-relaxed">
+    各部門の長は、所管する情報資産を把握し、第8条の区分の指定、取扱状況の確認および所属する役職員への教育の実施について責任を負う。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第7条（役職員の遵守義務）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、この規程およびこの規程に基づく基準を遵守し、情報資産を業務上の目的以外に利用してはならない。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第3章 情報の管理</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第8条（情報の区分及び取扱い）</h2>
+  <p class="mt-2 leading-relaxed">
+    当社が取り扱う情報は、その重要度に応じて区分し、区分に応じた取扱いをしなければならない。情報の区分および区分ごとの取扱いは、別に定める<a href="/company/joho-security-kijun/" class="text-[#00c] underline">情報セキュリティ基準</a>（情セ基-001）による。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　区分の指定がない情報の取扱いは、情報セキュリティ基準に定めるところによる。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第9条（アクセス管理）</h2>
+  <p class="mt-2 leading-relaxed">
+    情報システムの利用権限は、業務上必要な範囲に限って付与する。役職員は、自己のアカウントおよびパスワードを他人に使用させ、または他人のものを使用してはならない。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　情報システム部は、退職または異動により不要となった利用権限を速やかに削除する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第10条（持ち出し・社外作業）</h2>
+  <p class="mt-2 leading-relaxed">
+    機密情報を社外に持ち出すときは、所属部門の長の承認を得なければならない。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　社外で業務を行うときは、のぞき見、置き忘れおよび盗難の防止に必要な措置を講じなければならない。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第11条（教育）</h2>
+  <p class="mt-2 leading-relaxed">
+    各部門の長は、所属する役職員に対し、年1回以上、情報セキュリティに関する教育を実施する。教材は情報システム部が提供する。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第4章 外部サービス・事故対応</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第12条（外部サービスの利用）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、情報システム部の審査を経て承認された外部サービスでなければ、業務に利用してはならない。外部サービスの審査および管理の手続は、別に定める<a href="/company/cloud-kijun/" class="text-[#00c] underline">クラウドサービス利用基準</a>（情セ基-002）による。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　AIサービスの利用については、前項によるほか、<a href="/company/ai-kitei/" class="text-[#00c] underline">AI利用規程</a>および関連する基準の定めるところによる。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第13条（インシデント報告）</h2>
+  <p class="mt-2 leading-relaxed">
+    役職員は、情報の漏えいもしくはそのおそれ、またはこの規程もしくは基準に反する取扱い（誤操作によるものを含む。）を認知したときは、速やかに所属長および情報システム部に報告する。自主的な報告を行った者に対し、当社は報告を理由とする不利益な取扱いをしない。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第14条（点検・監査）</h2>
+  <p class="mt-2 leading-relaxed">
+    情報システム部は、教育の実施率、利用権限の棚卸しの状況その他の重要な項目に絞って、この規程および基準の運用状況を定期的に点検する。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　内部監査部門は、前項の点検とは独立に、情報セキュリティの状況を監査することができる。
+  </p>
+
+  <div class="mt-8 border-l-4 border-[#1b3a6b] bg-[#eef1f5] px-3 py-1 font-bold text-[#1b3a6b]">第5章 雑則</div>
+
+  <h2 class="mt-5 font-bold text-[#1b3a6b]">第15条（改廃）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程の改廃は、情報セキュリティ委員会の審議を経て社長が決定する。この規程に基づく基準の改廃は、所管部門の長が行うことができる。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）第8条および第12条の条番号は、情セ基-001および情セ基-002の「目的・位置づけ」から参照されている。条の追加・削除により番号を動かすときは、両基準の改定を同時に行うこと。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">附則</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>この規程は2003年10月1日から施行する。</li>
+    <li>2024年4月1日の改定規程は、同日から施行する。</li>
+  </ol>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">年月日</th>
+        <th class="border border-[#ccc] px-3 py-1.5">内容</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kaitei.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 第8条の情報区分をAI入力にどう読み替えるかは
+      <a href="/company/joho-security-kijun/" class="text-[#00c] underline">情報セキュリティ基準「4. AIサービスへの入力」</a>、
+      入力判断の実践は<a href="/articles/014-nyuuryoku-handan/" class="text-[#00c] underline">「迷ったら固有名詞を『A社』に変える」</a>を参照。
+    </div>
+  </Fragment>
+</PortalDoc>

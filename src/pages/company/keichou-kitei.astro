@@ -1,0 +1,98 @@
+---
+// 慶弔見舞金規程 — ダラリ重工業の社内規程(という設定)。1960年制定・2003年最終改定の
+// 古参規程。全4条＋別表の短い文書。AIとは接点がない(だから実在感が出る)。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const kingaku = [
+  ['結婚祝金', '本人が結婚したとき', '20,000円'],
+  ['出産祝金', '本人または配偶者が出産したとき', '10,000円'],
+  ['弔慰金', '配偶者、子または父母が死亡したとき', '30,000円'],
+  ['傷病見舞金', '業務外の傷病により連続して1ヶ月以上休業したとき', '10,000円'],
+  ['災害見舞金', '火災または天災により住居が全焼または全壊したとき', '50,000円'],
+];
+
+const kaitei = [
+  ['1960年4月1日', '制定', '社規第1960-04号'],
+  ['1985年4月1日', '別表の金額を改定', '社規第1960-04号の2'],
+  ['2003年4月1日', '別表の金額を改定し、慶弔届の様式を改めた（現行）', '社規第1960-04号の3'],
+];
+---
+
+<PortalDoc
+  title="慶弔見舞金規程｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の慶弔見舞金規程。1960年制定・全4条＋別表の短い規程。自社の雛形として流用できる。"
+  docTitle="慶弔見舞金規程"
+  docNo="社規第1960-04号"
+  history={['1960年4月1日 制定', '2003年4月1日 最終改定']}
+  shokan="総務部"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">第1条（目的）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、ダラリ重工業株式会社（以下「当社」という。）の従業員の慶弔に際し、当社が支給する祝金および見舞金（以下「慶弔見舞金」という。）に関する事項を定める。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第2条（適用範囲）</h2>
+  <p class="mt-2 leading-relaxed">
+    この規程は、当社の従業員に適用する。嘱託および臨時雇用者については、勤続1年以上の者に限り適用する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第3条（慶弔見舞金）</h2>
+  <p class="mt-2 leading-relaxed">
+    慶弔見舞金の種類、事由および金額は、次の表のとおりとする。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">種類</th>
+        <th class="border border-[#ccc] px-3 py-1.5">事由</th>
+        <th class="border border-[#ccc] px-3 py-1.5 text-right">金額</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kingaku.map(([shurui, jiyu, gaku]) => (
+        <tr>
+          <td class="border border-[#ccc] px-3 py-1.5 whitespace-nowrap">{shurui}</td>
+          <td class="border border-[#ccc] px-3 py-1.5">{jiyu}</td>
+          <td class="border border-[#ccc] px-3 py-1.5 text-right whitespace-nowrap">{gaku}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 leading-relaxed">
+    2　同一の事由が夫婦ともに当社の従業員である者に生じたときは、いずれか一方に支給する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">第4条（手続）</h2>
+  <p class="mt-2 leading-relaxed">
+    慶弔見舞金の支給を受けようとする者は、慶弔届（様式第1号）を所属長を経由して総務部に提出しなければならない。届出は、事由の発生からおおむね3ヶ月以内に行うものとする。
+  </p>
+  <p class="mt-1 text-[12px] text-[#666]">
+    （備考）弔慰の場合の電報および供花の手配は、所属長からの連絡により総務部が行う。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">附則</h2>
+  <ol class="mt-2 list-decimal space-y-1 pl-8 leading-relaxed">
+    <li>この規程は1960年4月1日から施行する。</li>
+    <li>この規程の改廃は、総務部の起案により社長が決定する。</li>
+  </ol>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="bg-[#f5f5f0] text-left">
+        <th class="border border-[#ccc] px-3 py-1.5">年月日</th>
+        <th class="border border-[#ccc] px-3 py-1.5">内容</th>
+        <th class="border border-[#ccc] px-3 py-1.5">文書番号</th>
+      </tr>
+    </thead>
+    <tbody>
+      {kaitei.map((row) => (
+        <tr>
+          {row.map((c) => (
+            <td class="border border-[#ccc] px-3 py-1.5">{c}</td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</PortalDoc>
