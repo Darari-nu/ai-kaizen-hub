@@ -121,3 +121,8 @@ surrealism / surrealist dreamlike scene, a ring of office desks where one docume
 ```
 surrealism / surrealist dreamlike scene, a tall consultant figure handing over a flawless crystal-clear document, a small office worker at a desk quietly rewriting it by fountain pen onto plain warm paper, the handwritten page glowing softly, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
 ```
+
+**032 基準改定**（巨大な石板の一語だけ直す／隠喩=改定は大事件でなく書き回し修正）
+```
+surrealism / surrealist dreamlike scene, an enormous stone tablet of rules towering in an office courtyard, a tiny office worker on a small ladder gently correcting a single word with a pencil, only that one corrected line glowing softly, thin ink lines --ar 16:9 --chaos 31 --sref https://s.mj.run/oRCXaN2Ky3k https://s.mj.run/J-yLghsMAL0 --stylize 1000 --p fdtv4ci --v 8.2
+```
