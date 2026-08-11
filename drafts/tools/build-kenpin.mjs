@@ -69,6 +69,10 @@ const NOTES = {
   '030-shingi': { status: 'new', note: '【新規・ガバナンス連載】審議・パブコメ。「なんかありますか？」と聞いて回る役がいれば回る。確認3点: ①「パブコメをぼくが引き取る→聞いて回る運用がここから始まった」の時系列にしました。実際は審議運用が先でパブコメは適用例なら直します ②たらいまわしの会話ディテール(「法務？いや技術も…」)は演出です ③読者が上司に言うセリフの一人称を「わたし」にしました。違和感あれば調整。' },
   '031-ai-consul': { status: 'new', note: '【新規・ガバナンス連載】AIコンサル。DeepSeek板挟みの核実話。⚠️会社特定対策: 市場名は「その市場」「現地に事業部門」にぼかし済み(残余リスク: 読者が中国売上大と推測する余地)。要目視。確認3点: ①「よその内情をペラペラ話すコンサルは、うちの内情もペラペラ話します」は一歩踏み込んだ一般論です。言い過ぎなら削ります ②「この件では有効に使えなかった」と限定しました。契約全体の実感と合いますか ③助言例「利用ルールを整備しましょう」等は創作気味。実際の言葉に近いものがあれば差し替えます。' },
   '032-kijun-kaitei': { status: 'new', note: '【新規・ガバナンス連載・これで10/10完走】基準改定編。「改定の大半は書き回し修正。だから軽く頻繁に回す」の正直路線。確認3点: ①失敗談が「構えていたら拍子抜けだった」だけで薄いです。「小さすぎて出すのを迷った修正」「改定タイミングを逃した話」等があれば足します ②「改定は結構あった」の頻度、年に何回くらいか目安ありますか(A2でずらして書きます) ③「手続きを重さで二段階に分ける」型は一般論として書きました。前職で実際にやっていたなら実話に昇格させます。' },
+
+  // --- Substack配信下書き（drafts/substack/。HP記事ではなくニュースレターの原稿） ---
+  'substack-tsuutatsu-1': { status: 'new', note: '【Substack創刊号】ダラリ重工業の社内通達という体で届く自己紹介+AI利用規程の案内。⚙️8/11更新: ①規程ページの全部改正(5条建て→17条)に合わせて「暫定版」を外し、条番号を第9・10・17条に修正 ②002のリンク文言を現タイトルに修正 ③「法務部の直しが7回」は規程ページ附則からの引用です。確認3点: ①「あなたの会社の闇が、ダラリ重工業の公式文書になります」の締めはこの強さでOKですか ②編集後記のクレカ四半期ネタ(004/005と同じずらし済み数字)でOKですか ③配信は第1号→第2号の順でいいですか(第2号側は入れ替え可の設計)' },
+  'substack-tsuutatsu-2': { status: 'new', note: '【Substack第2号】記事001の配信版。「個人なら翌日、会社だと半年後」の現状報告体。001と数字・固有名詞(Copilot Chat/DeepL/四半期/半年)の整合は確認済みです。確認2点: ①返信を促す問いかけ「おたくの会社では、AIはどこまで使えますか？」でいきますか ②編集後記の「時差なら、縮められる」の捉え直し、実感と合っていますか' },
 };
 
 const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
@@ -85,6 +89,23 @@ const articles = files.map((f) => {
   const meta = NOTES[slug] || { status: 'new', note: '' };
   return { slug, fm, raw, status: meta.status, note: meta.note, hero: embedImage(fm.ogImage) };
 });
+
+// Substack配信下書き（frontmatterなし。配信タイトル案の行をタイトルに使う）
+const SUBSTACK_DIR = join(ROOT, 'drafts/substack');
+if (existsSync(SUBSTACK_DIR)) {
+  for (const f of readdirSync(SUBSTACK_DIR).filter((f) => f.endsWith('.md')).sort()) {
+    const raw = readFileSync(join(SUBSTACK_DIR, f), 'utf8');
+    const title = (raw.match(/^配信タイトル案: (.+)$/m) || [, f.replace('.md', '')])[1];
+    const no = (f.match(/\d+/) || ['?'])[0];
+    const slug = `substack-tsuutatsu-${no}`;
+    const meta = NOTES[slug] || { status: 'new', note: '' };
+    articles.push({
+      slug,
+      fm: { title, series: 'Substack', number: `S-${no}` },
+      raw, status: meta.status, note: meta.note, hero: null,
+    });
+  }
+}
 
 const STATUS = {
   ok: { label: '✅ 検品ずみ', cls: 'st-ok' },
