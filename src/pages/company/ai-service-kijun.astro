@@ -5,6 +5,7 @@ import PortalDoc from '@/components/PortalDoc.astro';
 
 const services = [
   ['Copilot Chat（会社支給）', '可（申請不要）', '可（入力は学習に使用されない契約）'],
+  ['Claude Team（会社契約）', '可（申請不要）', '可（入力は学習に使用されない契約）'],
   ['ChatGPT（無料版）', '法務部への申請により可', '不可'],
   ['ChatGPT Enterprise', '導入検討中（AI活用推進室）', '導入後に可とする予定'],
   ['個人契約のAIサービス（私的アカウント）', '業務利用は不可', '不可'],
@@ -22,7 +23,7 @@ const shinsa = [
   description="架空企業ダラリ重工業のAIサービス利用基準。サービス区分表と新規利用申請の手続。自社の雛形として流用できます。"
   docTitle="ＡＩサービス利用基準"
   docNo="AI基準-002"
-  history={['2026年8月10日 制定（旧AI利用規程第2条から移設）']}
+  history={['2026年8月10日 制定（旧AI利用規程第2条から移設）', '2026年8月12日 改定（Claude Teamを追加）']}
   shokan="情報システム部・製造部AI活用推進室"
 >
   <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
@@ -81,7 +82,8 @@ const shinsa = [
   <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
   <p class="mt-2 text-[12px] leading-relaxed">
     2026年8月10日　制定。旧AI利用規程第2条の内容を、体系整備に伴い本基準へ移設し、申請手続と台帳の定めを追加した。<br />
-    2026年8月10日　クラウドサービス利用基準の特則として位置づけを明確化。
+    2026年8月10日　クラウドサービス利用基準の特則として位置づけを明確化。<br />
+    2026年8月12日　サービス区分表にClaude Team（会社契約）を追加した。
   </p>
 
   <Fragment slot="after">
