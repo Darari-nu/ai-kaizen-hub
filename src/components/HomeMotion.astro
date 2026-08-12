@@ -1,0 +1,192 @@
+---
+// トップページ専用のモーション演出（BRAND.md「モーション」2026-08-13改訂 準拠）。
+// 参考サイト群（Lusion/dogstudio/Locomotive等）から拝借するのは「動きの質」だけ:
+//   - Lenis: スクロール慣性（ホイールのみ。タッチはネイティブスクロールのまま）
+//   - IntersectionObserver + CSS: セクション入場リビール、同一視界内のスタガー
+//   - ヒーロー画像のスクロール連動の緩やかな視差
+//   - 罫線が左→右に引かれる演出（帳票の質感に合わせた、このサイトだけの語彙）
+// 禁止事項（WebGL/3D・カーソル追従・ページ全体ピン留め・連続アニメ）は使わない。
+// すべて prefers-reduced-motion で即全停止。JS無効でも全要素が見える（html.js ゲート）。
+---
+
+<script is:inline>document.documentElement.classList.add('js');</script>
+
+<style is:global>
+  :root {
+    /* 紙をめくるような減速カーブ。全モーション共通 */
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Lenis稼働中はネイティブのsmooth scrollと二重にしない */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  html.lenis {
+    scroll-behavior: auto !important;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* --- セクション入場リビール（data-reveal） --- */
+    html.js [data-reveal] {
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.8s var(--ease-editorial),
+        transform 0.8s var(--ease-editorial);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    html.js [data-reveal].is-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* --- 罫線が左→右に引かれる（border-t の代替描画） --- */
+    html.js .rule-draw {
+      position: relative;
+      border-top-color: transparent !important;
+    }
+    html.js .rule-draw::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      height: 1px;
+      width: 100%;
+      background: #e3e0d8;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 1s var(--ease-editorial);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    html.js .rule-draw.is-in::before {
+      transform: scaleX(1);
+    }
+
+    /* --- 小ラベルの朱線「──」が左から伸びる --- */
+    html.js [data-reveal] .bg-shu {
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.7s var(--ease-editorial);
+      transition-delay: calc(var(--reveal-delay, 0ms) + 200ms);
+    }
+    html.js [data-reveal].is-in .bg-shu {
+      transform: scaleX(1);
+    }
+
+    /* --- ヒーローの登場（ロード時に1回だけ。以降は動かない） --- */
+    html.js [data-hero-rise] {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: hero-rise 0.9s var(--ease-editorial) both;
+      animation-delay: var(--rise-delay, 0ms);
+    }
+    html.js [data-hero-fade] {
+      opacity: 0;
+      animation: hero-fade 1.3s ease-out both;
+      animation-delay: var(--rise-delay, 0ms);
+    }
+    /* 視差で下げても縁が見えないよう、あらかじめ僅かに拡大しておく */
+    html.js .hero-media img {
+      transform: scale(1.05);
+    }
+
+    /* --- 上質なホバー: 色・線の変化はすべて滑らかに（操作への応答なので短め） --- */
+    main a,
+    main button,
+    footer a {
+      transition-property: color, background-color, border-color, text-decoration-color, opacity;
+      transition-duration: 0.25s;
+      transition-timing-function: ease;
+    }
+  }
+
+  @keyframes hero-rise {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes hero-fade {
+    to {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import Lenis from 'lenis';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // --- セクション入場リビール ---
+  const targets = Array.from(
+    document.querySelectorAll<HTMLElement>('[data-reveal], .rule-draw')
+  );
+  const showAll = () => targets.forEach((el) => el.classList.add('is-in'));
+
+  if (reduced.matches || !('IntersectionObserver' in window)) {
+    showAll();
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        // 同じタイミングで視界に入った要素は、上から順に80ms刻みでずらす（スタガー）
+        const incoming = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        incoming.forEach((entry, i) => {
+          const el = entry.target as HTMLElement;
+          const fixed = el.getAttribute('data-reveal-delay');
+          el.style.setProperty('--reveal-delay', `${fixed ?? Math.min(i * 80, 480)}ms`);
+          el.classList.add('is-in');
+          io.unobserve(el);
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+    );
+    targets.forEach((el) => io.observe(el));
+    reduced.addEventListener('change', () => {
+      if (reduced.matches) {
+        showAll();
+        io.disconnect();
+      }
+    });
+  }
+
+  // --- スクロール慣性（Lenis）＋アンカー移動＋ヒーロー視差 ---
+  if (!reduced.matches) {
+    const lenis = new Lenis({ lerp: 0.11 });
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+    requestAnimationFrame(raf);
+
+    // ページ内アンカーはLenisの慣性で移動（絞り込みタブのクリック処理とは独立に動く）
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (ev) => {
+        const href = a.getAttribute('href') || '';
+        const target = href.length > 1 ? document.querySelector(href) : null;
+        if (!target) return;
+        ev.preventDefault();
+        lenis.scrollTo(target as HTMLElement, { duration: 1.1 });
+        history.pushState(null, '', href);
+      });
+    });
+
+    // ヒーロー画像の緩やかな視差（ヒーローが視界内のときだけ更新）
+    const media = document.querySelector<HTMLImageElement>('.hero-media img');
+    const hero = media ? media.closest('section') : null;
+    if (media && hero) {
+      lenis.on('scroll', ({ scroll }: { scroll: number }) => {
+        if (scroll <= hero.offsetHeight) {
+          media.style.transform = `translate3d(0, ${(scroll * 0.12).toFixed(1)}px, 0) scale(1.05)`;
+        }
+      });
+    }
+
+    reduced.addEventListener('change', () => {
+      if (reduced.matches) lenis.destroy();
+    });
+  }
+</script>

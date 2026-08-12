@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Edit(/.claude/skills/kitei-seibi/**)"
+      "Edit(/.claude/skills/kitei-seibi/**)",
+      "WebFetch(domain:darari-nu.github.io)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }

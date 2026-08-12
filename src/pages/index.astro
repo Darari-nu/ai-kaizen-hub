@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 import Footer from '@/components/Footer.astro';
+import HomeMotion from '@/components/HomeMotion.astro';
 import SectionLabel from '@/components/SectionLabel.astro';
 import SubstackEmbed from '@/components/SubstackEmbed.astro';
 import { SITE } from '@/config';
@@ -69,11 +70,12 @@ const faqs = [
 
 <Base>
   <main>
+    <HomeMotion />
     <!-- 1. ヒーロー（ダーク没入。イラストの夜に飛び込み、下の紙白へ抜ける） -->
     <section class="relative overflow-hidden bg-dusk text-paper">
       {
         heroImage && (
-          <div class="absolute inset-0 lg:left-[42%]">
+          <div class="hero-media absolute inset-0 lg:left-[42%]" data-hero-fade>
             <img
               src={`/${heroImage}`}
               alt=""
@@ -94,20 +96,22 @@ const faqs = [
           >
         </div>
         <div class="max-w-xl pb-28 pt-16 sm:pt-24 lg:pb-40 lg:pt-32">
-          <p class="text-xs tracking-[0.3em] text-paper/60">
+          <p class="text-xs tracking-[0.3em] text-paper/60" data-hero-rise style="--rise-delay:120ms">
             会社員のための、AI導入の実況
           </p>
           <h1
             class="mt-5 font-display text-4xl font-black leading-tight tracking-tight sm:text-5xl"
+            data-hero-rise
+            style="--rise-delay:260ms"
           >
             申請から使い倒すまで、<br /><span class="text-shu">ぜんぶ</span>見せます。
           </h1>
-          <p class="mt-7 max-w-prose leading-relaxed text-paper/85">
+          <p class="mt-7 max-w-prose leading-relaxed text-paper/85" data-hero-rise style="--rise-delay:400ms">
             「うちの会社じゃ無理」って思ってませんか？——その稟議、通せます。
             製造業の中の人・だらリーヌが、会社にAIを申請して、導入して、使い倒すまでを、
             先にぼくが失敗した記録ごと公開します。読むのは無料。むずかしい言葉は、その場でかみくだきます。
           </p>
-          <div class="mt-10 flex flex-wrap items-center gap-5">
+          <div class="mt-10 flex flex-wrap items-center gap-5" data-hero-rise style="--rise-delay:540ms">
             <a
               href="#articles"
               class="bg-paper px-7 py-3.5 font-bold text-ink no-underline shadow-[5px_5px_0_#C73E2E] transition-all duration-100 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#C73E2E] active:translate-x-1 active:translate-y-1 active:shadow-none"
@@ -120,7 +124,7 @@ const faqs = [
             >
           </div>
         </div>
-        <p class="pb-6 text-right text-[11px] tracking-[0.3em] text-paper/50">
+        <p class="pb-6 text-right text-[11px] tracking-[0.3em] text-paper/50" data-hero-fade style="--rise-delay:800ms">
           申請は、通せる。
         </p>
       </div>
@@ -129,8 +133,8 @@ const faqs = [
     <!-- 2. ペイン -->
     <section class="bg-kinari">
       <div class="mx-auto max-w-site px-5 py-20">
-        <SectionLabel text="よくある壁" />
-        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
+        <SectionLabel text="よくある壁" data-reveal />
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl" data-reveal>
           こんな壁に、ぶつかってません？
         </h2>
         <ul class="mt-10 max-w-2xl">
@@ -139,8 +143,9 @@ const faqs = [
               <li
                 class:list={[
                   'flex items-baseline gap-6 border-rule py-5 leading-relaxed',
-                  i > 0 && 'border-t',
+                  i > 0 && 'border-t rule-draw',
                 ]}
+                data-reveal
               >
                 <span class="font-display text-4xl font-extrabold text-ink/15">0{i + 1}</span>
                 <span class="text-lg">{p}</span>
@@ -148,7 +153,7 @@ const faqs = [
             ))
           }
         </ul>
-        <p class="mt-6 max-w-prose leading-relaxed">
+        <p class="mt-6 max-w-prose leading-relaxed" data-reveal>
           ぜんぶ、ぼくが実際に食らった壁です。だからこのサイトには、突破した手順だけを置いていきます。
         </p>
       </div>
@@ -157,39 +162,39 @@ const faqs = [
     <!-- 3. 無料コンテンツ -->
     <section id="articles">
       <div class="mx-auto max-w-site px-5 py-20">
-        <SectionLabel text="無料コンテンツ" />
-        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
+        <SectionLabel text="無料コンテンツ" data-reveal />
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl" data-reveal>
           ぜんぶ無料で、置いておきます。
         </h2>
         <div class="mt-10 grid gap-7 sm:grid-cols-3">
-          <a href="#article-list" data-series-link="記録" class="group block no-underline">
+          <a href="#article-list" data-series-link="記録" class="group block no-underline" data-reveal data-reveal-delay="0">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/kiroku.png"
                 alt=""
-                class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
               />
             </div>
             <p class="mt-4 font-display text-lg font-bold">記録<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">会社にAIを申請→導入→使い倒す実況</p>
           </a>
-          <a href="#article-list" data-series-link="AIカイゼン" class="group block no-underline">
+          <a href="#article-list" data-series-link="AIカイゼン" class="group block no-underline" data-reveal data-reveal-delay="130">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/kaizen.png"
                 alt=""
-                class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
               />
             </div>
             <p class="mt-4 font-display text-lg font-bold">AIカイゼン<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">明日の業務がラクになる道具</p>
           </a>
-          <a href="#article-list" data-series-link="ガバナンス" class="group block no-underline">
+          <a href="#article-list" data-series-link="ガバナンス" class="group block no-underline" data-reveal data-reveal-delay="260">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/governance.png"
                 alt=""
-                class="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
               />
             </div>
             <p class="mt-4 font-display text-lg font-bold">ガバナンス<span class="ml-2 text-shu">──</span></p>
@@ -199,7 +204,7 @@ const faqs = [
 
         {
           kaizenMenu.length > 0 && (
-            <div class="mt-14 border-2 border-ink" id="kaizen-menu">
+            <div class="mt-14 border-2 border-ink" id="kaizen-menu" data-reveal>
               <p class="border-b-2 border-ink bg-ink px-5 py-3 font-display text-sm font-bold tracking-[0.15em] text-paper">
                 AIカイゼン<span class="mx-2 text-shu">──</span>そのお金と手間、浮かせられるかもしれません
               </p>
@@ -229,7 +234,7 @@ const faqs = [
             </div>
           )
         }
-        <div class="mt-12 flex flex-wrap items-center gap-2" id="series-tabs">
+        <div class="mt-12 flex flex-wrap items-center gap-2" id="series-tabs" data-reveal>
           <span class="mr-1 font-display text-xs tracking-[0.2em] text-nezu">しぼりこみ</span>
           <button type="button" data-filter="" class="border border-ink bg-ink px-3 py-1.5 font-display text-sm font-bold text-paper">すべて</button>
           <button type="button" data-filter="記録" class="border border-rule px-3 py-1.5 font-display text-sm font-bold text-nezu hover:border-ink hover:text-ink">記録</button>
@@ -242,6 +247,7 @@ const faqs = [
               <article
                 class="group flex gap-7 border-t border-rule py-7 first:border-t-2 first:border-ink"
                 data-series={a.data.series}
+                data-reveal
               >
                 {hasImage(a.data.ogImage) && (
                   <div class="hidden w-56 shrink-0 overflow-hidden sm:block">
@@ -249,7 +255,7 @@ const faqs = [
                       src={a.data.ogImage}
                       alt=""
                       class:list={[
-                        'aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.04]',
+                        'aspect-video w-full object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]',
                         a.data.draft && 'opacity-60',
                       ]}
                     />
@@ -285,7 +291,7 @@ const faqs = [
           }
           {
             comingSoon.map((t, i) => (
-              <article class="border-t border-rule py-5" data-series={axisOf(t)}>
+              <article class="border-t border-rule py-5" data-series={axisOf(t)} data-reveal>
                 <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   <span class="font-display text-sm text-nezu">
                     No.{String(articles.length + i + 1).padStart(3, '0')}
@@ -330,8 +336,8 @@ const faqs = [
     <!-- 4. 書いてる人 -->
     <section>
       <div class="mx-auto max-w-site px-5 py-20">
-        <SectionLabel text="書いてる人" />
-        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
+        <SectionLabel text="書いてる人" data-reveal />
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl" data-reveal>
           書いてるのは、だらリーヌ。
         </h2>
         <dl class="mt-8 max-w-prose">
@@ -340,8 +346,9 @@ const faqs = [
               <div
                 class:list={[
                   'flex flex-col gap-1 border-rule py-4 sm:flex-row sm:gap-6',
-                  i > 0 && 'border-t',
+                  i > 0 && 'border-t rule-draw',
                 ]}
+                data-reveal
               >
                 <dt class="shrink-0 font-display font-bold sm:w-48">{t}</dt>
                 <dd class="leading-relaxed text-nezu">{d}</dd>
@@ -349,7 +356,7 @@ const faqs = [
             ))
           }
         </dl>
-        <p class="mt-6 max-w-prose leading-relaxed">
+        <p class="mt-6 max-w-prose leading-relaxed" data-reveal>
           肩書きで信じてもらうつもりはないんです。実際に通した記録を読んで、「これならうちでもいける」と思ってもらうのがこのサイトの仕事です。
           くわしくは<a
             href="/about/"
@@ -362,11 +369,11 @@ const faqs = [
     <!-- 5. なぜ無料か -->
     <section class="bg-kinari">
       <div class="mx-auto max-w-site px-5 py-20">
-        <SectionLabel text="たいせつなこと" />
-        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
+        <SectionLabel text="たいせつなこと" data-reveal />
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl" data-reveal>
           なぜ、ぜんぶ無料なのか。
         </h2>
-        <p class="mt-6 max-w-prose leading-relaxed">
+        <p class="mt-6 max-w-prose leading-relaxed" data-reveal>
           「怪しくない？」——ですよね。理由はシンプルで、ぼくには本業があるからです。
           ここで売り込む必要がないんです。読んで「使えた」と思ったら、Substackで読者になってくれたら、それで十分。
           その代わり、中身は本気で書きます。
@@ -377,16 +384,16 @@ const faqs = [
     <!-- 6. 登録CTA(ダークバンド。ヒーローと呼応) -->
     <section id="register" class="bg-dusk text-paper">
       <div class="mx-auto max-w-site px-5 py-20">
-        <span class="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] text-paper/60"
+        <span class="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] text-paper/60" data-reveal
           ><span class="inline-block h-px w-6 bg-shu"></span>ニュースレター</span
         >
-        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl" data-reveal>
           続きは、受信箱に届きます。
         </h2>
-        <p class="mt-4 max-w-prose leading-relaxed text-paper/85">
+        <p class="mt-4 max-w-prose leading-relaxed text-paper/85" data-reveal>
           新しい記事と、会社にAIを通す実況の続きを、Substackで配信しています。登録は無料。メールアドレスだけです。
         </p>
-        <div class="mt-7">
+        <div class="mt-7" data-reveal>
           <SubstackEmbed />
         </div>
       </div>
@@ -395,14 +402,17 @@ const faqs = [
     <!-- 7. FAQ -->
     <section>
       <div class="mx-auto max-w-site px-5 py-20">
-        <SectionLabel text="はじめての方へ" />
-        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl">
+        <SectionLabel text="はじめての方へ" data-reveal />
+        <h2 class="mt-5 font-display text-3xl font-extrabold leading-snug sm:text-4xl" data-reveal>
           よくある質問
         </h2>
         <div class="mt-8 max-w-prose">
           {
             faqs.map((f, i) => (
-              <details class:list={['group border-rule py-4', i > 0 && 'border-t']}>
+              <details
+                class:list={['group border-rule py-4', i > 0 && 'border-t rule-draw']}
+                data-reveal
+              >
                 <summary class="flex cursor-pointer list-none items-baseline gap-4 font-bold">
                   <span class="font-display text-sm text-nezu">Q</span>
                   {f.q}

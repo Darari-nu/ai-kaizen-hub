@@ -1,11 +1,13 @@
 ---
 // セクション頭の小ラベル。枠なし・字間広めの静かな表示。
+// data-reveal 等のモーション用属性を外から渡せるよう、残りのpropsは素通しする。
 interface Props {
   text: string;
+  [key: string]: unknown;
 }
-const { text } = Astro.props;
+const { text, ...rest } = Astro.props;
 ---
 
-<span class="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] text-nezu"
+<span {...rest} class="inline-flex items-center gap-2 text-[11px] tracking-[0.3em] text-nezu"
   ><span class="inline-block h-px w-6 bg-shu"></span>{text}</span
 >
