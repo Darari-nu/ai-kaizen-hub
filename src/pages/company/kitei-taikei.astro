@@ -13,10 +13,11 @@ const docs = [
   ['規程', 'AI利用規程', '/company/ai-kitei/', '社規第2026-08号の2'],
   ['基準', '情報セキュリティ基準', '/company/joho-security-kijun/', '情セ基-001'],
   ['基準', 'クラウドサービス利用基準', '/company/cloud-kijun/', '情セ基-002'],
+  ['基準', '個人情報取扱基準', '/company/kojin-joho-kijun/', '個保基-001'],
   ['基準', '調達基準（サプライヤー評価）', '/company/chotatsu-kijun/', '調基-001'],
   ['基準', '契約審査基準（秘密保持条項）', '/company/keiyaku-kijun/', '法基-001'],
   ['基準', '製品開発基準（ステージゲート）', '/company/seihin-kaihatsu-kijun/', '開基-001'],
-  ['基準（AI特則）', 'AI入力情報基準 ＝情セ基-001の特則', '/company/ai-nyuryoku-kijun/', 'AI基準-001'],
+  ['基準（AI特則）', 'AI入力情報基準 ＝情セ基-001の特則（個保基-001を参照）', '/company/ai-nyuryoku-kijun/', 'AI基準-001'],
   ['基準（AI特則）', 'AIサービス利用基準 ＝情セ基-002の特則', '/company/ai-service-kijun/', 'AI基準-002'],
   ['基準（AI特則）', 'AI搭載製品開発基準 ＝開基-001の別表D詳細', '/company/ai-product-kijun/', 'AI基準-003'],
   ['ガイドライン', '生成AI活用ガイドライン', '/company/ai-guideline/', 'AIガイドライン-001'],
@@ -25,6 +26,7 @@ const docs = [
 // AIの論点→乗っかる先（AI独自文書を増やさないための対応マップ）
 const noru = [
   ['AIに入れていい情報か迷った', '情報セキュリティ基準（情セ基-001）「4. AIサービスへの入力」', '/company/joho-security-kijun/'],
+  ['個人情報をAIに入れていいか', 'AI入力情報基準（AI基準-001）判断表 ※レベルは個人情報取扱基準（個保基-001）による', '/company/ai-nyuryoku-kijun/'],
   ['このAIサービスを使っていいか', 'クラウドサービス利用基準（情セ基-002）「4. AIサービスの特則」', '/company/cloud-kijun/'],
   ['サプライヤーのAI利用が気になる', '調達基準（調基-001）評価シート「情報管理」の項', '/company/chotatsu-kijun/'],
   ['NDAにAIの定めを入れたい', '契約審査基準（法基-001）「3. AI利用に関する確認」', '/company/keiyaku-kijun/'],
@@ -43,10 +45,10 @@ const related = [
 
 <PortalDoc
   title="社内規程体系（AI関連）｜DARARIポータル（架空）"
-  description="架空企業ダラリ重工業のAI関連文書の体系。規程・基準・ガイドラインの棲み分け（拘束力・決裁・改定頻度）を一覧できます。"
+  description="架空企業ダラリ重工業のAI関連文書の体系。規程・基準・ガイドラインの棲み分け（拘束力・決裁・改定頻度）の一覧。自社の体系設計の雛形として流用してください。"
   docTitle="社内規程体系（ＡＩ関連）"
   docNo="総務部管理・体系図2026-03"
-  history={['2026年8月10日 整備']}
+  history={['2026年8月10日 整備', '2026年8月12日 個人情報取扱基準（個保基-001）を追加']}
   shokan="総務部・製造部AI活用推進室"
 >
   <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 3層の棲み分け</h2>
@@ -149,7 +151,7 @@ const related = [
     <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
       💡 なぜ3層に分けるのか（改定を軽く回す設計思想）は
       <a href="/articles/032-kijun-kaitei/" class="text-[#00c] underline">「AIルールの改定、『大ごと』だと構えていませんか」</a>、
-      年間で回す仕組みの全体は<a href="/articles/023-governance-cycle/" class="text-[#00c] underline">「年間サイクルに乗せて回す」</a>で解説されています。
+      年間で回す仕組みの全体は<a href="/articles/023-governance-cycle/" class="text-[#00c] underline">「年間サイクルに乗せて回す」</a>で解説している。
     </div>
   </Fragment>
 </PortalDoc>

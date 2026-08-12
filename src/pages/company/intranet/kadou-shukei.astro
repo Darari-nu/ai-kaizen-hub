@@ -1,0 +1,196 @@
+---
+// 設備稼働集計（月次） — ダラリ重工業の社内イントラ(という設定のパロディページ)。
+// 記事016「Excel手作業集計の自動化」の実例として使う実機。
+// 設定: 各課がExcelで手集計・転記していた月次集計を、2026年8月からAIスクリプトで自動集計に切り替えた。
+// JTC様式美: 灰色背景・表組み・▲表記のマイナス・脅し文句の注意書き・様式番号。
+import Base from '@/layouts/Base.astro';
+
+// 2026年7月度（確定値）。手集計時代の最終回。数値は揺らぎをつける（キリのいい数字を並べない）。
+// [装置名, 担当課, 稼働率%, 前月差pt, エラー件数, 不良率%, 備考]
+const july: [string, string, string, string, string, string, string][] = [
+  ['NC旋盤 1号機', '製造一課', '84.2', '+0.8', '7', '0.38', ''],
+  ['NC旋盤 2号機', '製造一課', '71.6', '▲3.1', '19', '1.24', 'チョコ停多発。原因調査中（3ヶ月連続）'],
+  ['マシニングセンタ 3号機', '製造一課', '91.3', '+1.2', '2', '0.11', ''],
+  ['組立 第1ライン', '製造二課', '78.9', '▲0.4', '11', '0.67', '部品欠品による手待ちあり'],
+  ['組立 第2ライン', '製造二課', '82.5', '+2.6', '8', '0.52', ''],
+  ['画像検査装置', '品質保証部', '88.1', '+0.5', '14', '—', '過検出増。照明劣化の疑い'],
+];
+
+// 2026年8月度（速報値・自動集計）。8/11時点。
+const augSokuho: [string, string, string, string][] = [
+  ['NC旋盤 1号機', '85.6', '3', '0.31'],
+  ['NC旋盤 2号機', '74.2', '8', '1.08'],
+  ['マシニングセンタ 3号機', '90.8', '1', '0.09'],
+  ['組立 第1ライン', '80.3', '4', '0.55'],
+  ['組立 第2ライン', '84.1', '2', '0.48'],
+  ['画像検査装置', '87.4', '6', '—'],
+];
+
+// 集計方法の履歴。8月からの切替をここで明示する。
+const rireki: [string, string, string, string, boolean][] = [
+  ['2026年8月度〜', 'AIスクリプトによる自動集計（毎朝7:00更新）', '約3分', 'AI活用推進室', true],
+  ['2026年7月度', '各課がExcelで手集計し、本ページへ転記', '約1日半', '各課', false],
+  ['2026年6月度', '各課がExcelで手集計し、本ページへ転記', '約2日（転記ミス1件、月次会議で指摘）', '各課', false],
+  ['2026年5月度', '各課がExcelで手集計し、本ページへ転記', '約1日半', '各課', false],
+];
+---
+
+<Base
+  title="設備稼働集計（架空企業の社内システム）"
+  description="架空企業ダラリ重工業の設備稼働集計ページ（という設定）。各課のExcel手集計をAIスクリプトの自動集計に切り替えた、記事の実例です。数値はすべて架空です。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内システム（という設定）です。装置も数値もすべて架空です。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">設備稼働集計（月次）</p>
+        <p class="text-[11px] text-white/80">SETSUBI-KADO v1.1.0 ｜ ログイン中: AI活用推進室 さん</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a>
+        &gt; 業務システム &gt; 設備稼働集計
+      </p>
+
+      <div class="mb-4 border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
+        【お知らせ】2026年8月度より、本集計は各課によるExcel手集計・転記から、<b>AIスクリプトによる自動集計</b>に切り替わりました（担当: AI活用推進室）。従来様式「設備稼働月報（様式S-3）」の提出は<b class="text-[#c00]">不要</b>です。<br />
+        【注意】本ページの数値の社外持出は禁止です。転載には生産技術課（内線 3100）の承認を得てください。<br />
+        【お願い】「速報値が朝礼と数字が違う」との問い合わせが増えています。速報値は毎朝7:00時点の値です。
+      </div>
+
+      <!-- 7月度 確定値（手集計時代の最終回） -->
+      <div class="border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">2026年7月度　設備稼働集計（確定値）</p>
+        <div class="overflow-x-auto p-3">
+          <table class="w-full border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#eef1f5] text-left">
+                <th class="border border-[#ccc] px-2 py-1.5">装置名</th>
+                <th class="border border-[#ccc] px-2 py-1.5">担当課</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">稼働率(%)</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">前月差(pt)</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">エラー件数(件)</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">不良率(%)</th>
+                <th class="border border-[#ccc] px-2 py-1.5">備考</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                july.map(([name, ka, kado, sa, err, furyo, biko]) => (
+                  <tr>
+                    <td class="border border-[#ccc] px-2 py-1.5">{name}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5">{ka}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-right">{kado}</td>
+                    <td class:list={['border border-[#ccc] px-2 py-1.5 text-right', sa.startsWith('▲') && 'text-[#c00]']}>{sa}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-right">{err}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-right">{furyo}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-[11px]">{biko}</td>
+                  </tr>
+                ))
+              }
+              <tr class="bg-[#f5f5f0] font-bold">
+                <td class="border border-[#ccc] px-2 py-1.5" colspan="2">全体（稼働率・不良率は平均）</td>
+                <td class="border border-[#ccc] px-2 py-1.5 text-right">82.8</td>
+                <td class="border border-[#ccc] px-2 py-1.5 text-right">+0.3</td>
+                <td class="border border-[#ccc] px-2 py-1.5 text-right">61</td>
+                <td class="border border-[#ccc] px-2 py-1.5 text-right">0.58</td>
+                <td class="border border-[#ccc] px-2 py-1.5"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="px-3 pb-3 text-[11px] text-[#888]">
+          ※ 稼働率＝実稼働時間÷計画稼働時間×100（計画停止・休日を除く）。不良率＝不良数÷生産数×100。
+          エラー件数＝設備アラームのうちオペレーター対応を要した件数。画像検査装置は生産設備でないため不良率欄は「—」。<br />
+          ※ 7月度までは各課のExcel手集計による値です（集計方法の履歴は下表参照）。
+        </p>
+      </div>
+
+      <!-- 8月度 速報値（自動集計） -->
+      <div class="mt-6 border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">
+          2026年8月度　速報値（8月11日 7:00時点）
+          <span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[10px]">自動集計</span>
+        </p>
+        <div class="overflow-x-auto p-3">
+          <table class="w-full border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#eef1f5] text-left">
+                <th class="border border-[#ccc] px-2 py-1.5">装置名</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">稼働率(%)</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">エラー件数(件)</th>
+                <th class="border border-[#ccc] px-2 py-1.5 text-right">不良率(%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                augSokuho.map(([name, kado, err, furyo]) => (
+                  <tr>
+                    <td class="border border-[#ccc] px-2 py-1.5">{name}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-right">{kado}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-right">{err}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 text-right">{furyo}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="px-3 pb-3 text-[11px] text-[#888]">
+          ※ 速報値は毎朝7:00にAIスクリプトが日報から自動集計して更新します。確定値は月初5営業日目に掲載します。<br />
+          ※ 手集計時代は月に1回の掲載でした。速報の毎朝更新は自動化により初めて可能になったものです。
+        </p>
+      </div>
+
+      <!-- 集計方法の履歴 -->
+      <div class="mt-6 border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">集計方法の履歴</p>
+        <div class="overflow-x-auto p-3">
+          <table class="w-full border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#eef1f5] text-left">
+                <th class="border border-[#ccc] px-2 py-1.5">対象月</th>
+                <th class="border border-[#ccc] px-2 py-1.5">集計方法</th>
+                <th class="border border-[#ccc] px-2 py-1.5">所要時間</th>
+                <th class="border border-[#ccc] px-2 py-1.5">担当</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                rireki.map(([tsuki, houhou, jikan, tanto, isNew]) => (
+                  <tr>
+                    <td class="border border-[#ccc] px-2 py-1.5 whitespace-nowrap">
+                      {tsuki}
+                      {isNew && <span class="ml-1 bg-[#c00] px-1 py-0.5 text-[9px] font-bold text-white">NEW</span>}
+                    </td>
+                    <td class="border border-[#ccc] px-2 py-1.5">{houhou}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5">{jikan}</td>
+                    <td class="border border-[#ccc] px-2 py-1.5 whitespace-nowrap">{tanto}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">
+        本ページは毎朝7:00に自動更新されます。手動更新ボタンはありません（押す必要がなくなったためです）。<br />
+        グラフでの閲覧を希望する場合は、生産技術課（内線 3100）まで。
+      </p>
+
+      <p class="mt-4 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータルへ戻る</a> ｜
+        <a href="/company/intranet/kaigiroku/" class="text-[#00c] underline">会議録発行システム</a>
+      </p>
+    </div>
+  </div>
+</Base>

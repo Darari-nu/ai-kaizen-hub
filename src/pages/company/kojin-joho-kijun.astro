@@ -1,0 +1,120 @@
+---
+// 個人情報取扱基準 — 個人情報保護規程の委任を受けた基準(という設定)。
+// 2026-08-12 darari検品指摘「名刺1枚と健康情報が同じ扱いはおかしい」を受け、レベル1〜5の区分で新設。
+// AI入力の可否は本基準では定めず、AI入力情報基準(AI基準-001)の判断表に委ねる(第0原則「乗っかる」)。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+const levels = [
+  ['レベル1', '業務上の連絡先', '氏名／会社のメールアドレス・電話番号／所属・役職（名刺に書いてある範囲の情報）'],
+  ['レベル2', '私的な連絡先・属性', '自宅住所／私用の電話番号・メールアドレス／生年月日'],
+  ['レベル3', '社内の人事情報', '人事評価／給与・賞与／懲戒歴など、本人の不利益になりうる情報'],
+  ['レベル4', '特定個人情報', 'マイナンバー／マイナンバーが記載された書類'],
+  ['レベル5', '要配慮個人情報・家族の情報', '健康診断結果・病歴・障害／信条／家族の氏名・勤務先・続柄など、本人以外に影響が及ぶ情報'],
+];
+
+const gensoku = [
+  ['レベル1', '業務上必要な範囲で可', '可'],
+  ['レベル2', '本人の同意を得て可', '会社契約のサービスに限り可'],
+  ['レベル3', '不可（法令に基づく場合を除く）', '人事部が指定するシステムに限る'],
+  ['レベル4', '不可（法令に基づく場合を除く）', '総務部が指定するシステムに限る'],
+  ['レベル5', '不可（法令に基づく場合を除く）', '所管部門が指定するシステムに限る'],
+];
+---
+
+<PortalDoc
+  title="個人情報取扱基準｜DARARIポータル（架空）"
+  description="架空企業ダラリ重工業の個人情報取扱基準。名刺相当のレベル1から要配慮個人情報のレベル5までの区分表と取扱い原則。自社の雛形として流用してください。"
+  docTitle="個人情報取扱基準"
+  docNo="個保基-001"
+  history={['2026年8月12日 制定（個人情報のレベル区分を新設）']}
+  shokan="総務部"
+>
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
+  <p class="mt-2 leading-relaxed">
+    この基準は、個人情報保護規程第7条の定めに基づき、当社が取り扱う個人情報のレベル区分および取扱いを定める。
+  </p>
+  <p class="mt-1 leading-relaxed">
+    2　AIサービスへの入力の可否は、本基準では定めない。本基準のレベル区分を<a
+      href="/company/ai-nyuryoku-kijun/"
+      class="text-[#00c] underline">AI入力情報基準（AI基準-001）</a
+    >の判断表に当てはめて判断する。
+  </p>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）個人情報保護規程は本ポータルからは閲覧できない（原本は総務部書庫。2019年度電子化計画により順次電子化を進める）。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. 個人情報のレベル区分</h2>
+  <p class="mt-2 text-[12px]">
+    個人情報は、次の5レベルのいずれかに区分する。「個人情報」と一括りにすると、名刺1枚と健康診断結果が同じ扱いになり、現場が判断できないため、レベルで区分する。複数のレベルに該当する場合は、高いほうのレベルによる。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="border border-[#1b3a6b] bg-[#eef1f5]">
+        <th class="w-20 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">レベル</th>
+        <th class="w-44 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">区分</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">該当する情報の例</th>
+      </tr>
+    </thead>
+    <tbody>
+      {levels.map(([lv, name, rei]) => (
+        <tr class="border border-[#1b3a6b]">
+          <th class="border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
+            {lv}
+          </th>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top font-bold">{name}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{rei}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）レベル5は、個人情報保護法にいう「要配慮個人情報」に対応する。家族の情報は法の要配慮個人情報には当たらないが、本人以外に影響が及ぶため、当社では同等に扱う。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. レベルごとの取扱い原則</h2>
+  <p class="mt-2 text-[12px]">
+    レベルごとの取扱いの目安は下表による。個別の案件で判断に迷う場合は、総務部に照会する。
+  </p>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <thead>
+      <tr class="border border-[#1b3a6b] bg-[#eef1f5]">
+        <th class="w-20 border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">レベル</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">社外への提供</th>
+        <th class="border border-[#1b3a6b] px-2 py-1.5 text-left font-bold text-[#1b3a6b]">クラウド保存</th>
+      </tr>
+    </thead>
+    <tbody>
+      {gensoku.map(([lv, teikyou, cloud]) => (
+        <tr class="border border-[#1b3a6b]">
+          <th class="border border-[#1b3a6b] bg-[#eef1f5] px-2 py-1.5 text-left align-top font-bold text-[#1b3a6b]">
+            {lv}
+          </th>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{teikyou}</td>
+          <td class="border border-[#1b3a6b] px-2 py-1.5 align-top">{cloud}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="mt-2 text-[12px] text-[#666]">
+    （備考）クラウド保存の可否の審査は<a href="/company/cloud-kijun/" class="text-[#00c] underline"
+      >クラウドサービス利用基準（情セ基-002）</a
+    >による。AIサービスへの入力は1.の2のとおり<a href="/company/ai-nyuryoku-kijun/" class="text-[#00c] underline"
+      >AI入力情報基準</a
+    >の判断表による。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <p class="mt-2 text-[12px] leading-relaxed">
+    2026年8月12日　制定。従来「個人情報は一律禁止」に近い運用となっていたものを改め、名刺相当（レベル1）から要配慮個人情報（レベル5）までのレベル区分を新設した。AI入力情報基準の全部改定（同日）と対をなす。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 「個人情報だから一律禁止」をやめてレベルで刻む考え方は
+      <a href="/articles/021-level-kitei/" class="text-[#00c] underline">「レベル規程の書き方」</a>、
+      AIに入れる場面での判断は<a href="/articles/014-nyuuryoku-handan/" class="text-[#00c] underline"
+        >「会議録、そのままAIに入れてません？」</a
+      >で解説している。
+    </div>
+  </Fragment>
+</PortalDoc>
