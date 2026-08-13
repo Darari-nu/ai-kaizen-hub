@@ -12,6 +12,16 @@ const articles = (await getCollection('articles')).sort(
   (a, b) => a.data.number - b.data.number
 );
 
+// トップに全記事は並べない（darari指摘 2026-08-13「記事が延々と続く」）。
+// 公開済みは全部・準備中(draft)は各軸3本まで。のこりは /articles/ の一覧へ流す
+const draftQuota: Record<string, number> = {};
+const topArticles = articles.filter((a) => {
+  if (!a.data.draft) return true;
+  draftQuota[a.data.series] = (draftQuota[a.data.series] ?? 0) + 1;
+  return draftQuota[a.data.series] <= 3;
+});
+const restCount = articles.length - topArticles.length;
+
 // 挿絵がまだ無い記事（書きたて）は画像枠ごと出さない。壊れ画像を出さないための存在チェック
 const hasImage = (p: string | undefined) =>
   !!p && fs.existsSync(new URL(`../../public${p}`, import.meta.url));
@@ -243,7 +253,7 @@ const faqs = [
         </div>
         <div class="mt-4" id="article-list">
           {
-            articles.map((a) => (
+            topArticles.map((a) => (
               <article
                 class="group flex gap-7 border-t border-rule py-7 first:border-t-2 first:border-ink"
                 data-series={a.data.series}
@@ -306,6 +316,18 @@ const faqs = [
           }
           <div class="border-t border-rule"></div>
         </div>
+        {
+          restCount > 0 && (
+            <div class="mt-10" data-reveal>
+              <a
+                href="/articles/"
+                class="inline-block border border-ink px-7 py-3.5 font-display font-bold no-underline hover:bg-ink hover:text-paper"
+              >
+                準備中もふくめて、記事一覧へ<span class="ml-3 text-shu">──</span>のこり{restCount}本
+              </a>
+            </div>
+          )
+        }
       </div>
     </section>
 
