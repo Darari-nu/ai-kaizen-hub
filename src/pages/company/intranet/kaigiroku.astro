@@ -33,6 +33,7 @@ import Base from '@/layouts/Base.astro';
       <div class="mb-4 border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
         【注意】60分間操作がない場合、入力内容は<b class="text-[#c00]">すべて失われます</b>。こまめに一時保存してください。<br />
         【注意】戻るボタンは使用しないでください。入力内容がすべて失われます。<br />
+        【注意】分類1〜3の選択を誤った会議録は<b class="text-[#c00]">差戻し</b>となります。選択基準は操作マニュアル付録Aを参照してください。<br />
         【お知らせ】操作方法は<a href="/company/intranet/kaigiroku-manual/" class="text-[#00c] underline">操作マニュアル（第7版・全87ページ）</a>を参照してください。
       </div>
 
@@ -44,6 +45,9 @@ import Base from '@/layouts/Base.astro';
               {
                 [
                   ['category', 'カテゴリ', 'select', ['（選択してください）', '定例会議', '臨時会議', '打合せ', '連絡会', 'その他']],
+                  ['bunrui1', '分類1', 'select', ['--', '1', '2', '3', '4', '9']],
+                  ['bunrui2', '分類2', 'select', ['--', 'A', 'B', 'C']],
+                  ['bunrui3', '分類3', 'select', ['--', '1', '2', '3']],
                   ['dest', '宛先（回覧先）', 'select', ['（選択してください）', '部内のみ', '製造本部 全体', '関係部署（個別指定）', '全社']],
                   ['approver', '承認者', 'text', '例: 製造部長'],
                   ['genre', 'ジャンル', 'select', ['（選択してください）', '生産', '品質', '安全', '改善', '教育', 'その他']],
