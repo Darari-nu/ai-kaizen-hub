@@ -3,7 +3,11 @@
     "allow": [
       "Edit(/.claude/skills/kitei-seibi/**)",
       "WebFetch(domain:darari-nu.github.io)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260813-1530_Brain教材チャットボット.md)"
+    ],
+    "additionalDirectories": [
+      "/Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP"
     ]
   }
 }
