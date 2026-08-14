@@ -5,7 +5,7 @@ pubDate: 2026-08-05
 series: '記録'
 number: 1
 ogImage: '/images/articles/001-jtc-ai-jijou.jpg'
-draft: true
+draft: false
 ---
 
 SNSを開けば、「AIすごい」の大合唱。

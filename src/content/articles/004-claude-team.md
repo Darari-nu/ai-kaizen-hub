@@ -5,7 +5,7 @@ pubDate: 2026-08-06
 series: '記録'
 number: 4
 ogImage: '/images/articles/004-claude-team.jpg'
-draft: true
+draft: false
 ---
 
 会社でAIを使いたいだけなのに、なぜか話がどんどん大きくなる。

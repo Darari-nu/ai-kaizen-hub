@@ -5,7 +5,7 @@ pubDate: 2026-08-05
 series: 'ガバナンス'
 number: 2
 ogImage: '/images/articles/002-ai-rules-starter.jpg'
-draft: true
+draft: false
 ---
 
 「うちの会社、AIのルールってあるんだっけ？」

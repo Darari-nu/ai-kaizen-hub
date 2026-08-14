@@ -5,7 +5,7 @@ pubDate: 2026-08-06
 series: 'ガバナンス'
 number: 5
 ogImage: '/images/articles/005-hiyou-taikoka.jpg'
-draft: true
+draft: false
 ---
 
 「で、費用対効果は？」
