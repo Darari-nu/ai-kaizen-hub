@@ -41,6 +41,11 @@ Substackの記事も「会社員のためのAIカイゼン」に全振り。
 
 ※音楽（Dara Sound Work）レーンは真逆の文体（です・ます調／1文1行／太字禁止／売り込まない）。混ぜないこと。
 
+**機械検査はHooksで自動実行**（2026-08-15導入）: 記事・Substack原稿をWrite/Editすると直後に
+`scripts/bunshou-check.mjs` がNGルール台帳 `drafts/添削の学び/ng-rules.json` と照合し、
+直し方つきで書き直しを求める。セッション終了時もNGが残ると完了できない。
+darariから文章の指摘が来たら、正規表現で拾えるものは台帳に追加する（`bunshou-kaizen-loop` 手順5）。
+
 **記事の固定フォーマット**（8ブロック構成＋機械検査＋公開手順）は `src/content/articles/_template.md`。
 新規記事は必ずこの型で書き、失敗談は `asset_ledger_from_raw_logs_20260712.md` に裏付けがあるものだけ使う。
 公開フロー: 執筆 → grep機械検査 → darari本人検品 → `draft: false` → push。

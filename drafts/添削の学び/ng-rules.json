@@ -1,0 +1,96 @@
+{
+  "_使い方": "機械検査のNGワード台帳。scripts/bunshou-check.mjs が読む。ルール追加は bunshou-kaizen-loop 手順5（機械で守れるものは機械に落とす）で行う。good（直し方）は必須。patternはJavaScript正規表現。severity: error=書き直すまで完了不可 / warn=比喩か文字通りか等、文脈判断つきで警告。scope: all=記事+Substack / articles=src/content/articles のみ / substack=drafts/substack のみ。idは振り直さない（欠番可）",
+  "rules": [
+    {
+      "id": "NG-001",
+      "label": "一人称は「ぼく」のみ",
+      "pattern": "私は|私が|私の|私も|私たち|私達|僕は|僕が|僕の|僕も|僕たち|僕ら",
+      "severity": "error",
+      "scope": "all",
+      "good": [
+        "一人称はひらがなの「ぼく」。文ごと読み直して自然に直す"
+      ],
+      "source": "CLAUDE.md文体ルール・_template.md機械検査"
+    },
+    {
+      "id": "NG-002",
+      "label": "保険表現の禁止",
+      "pattern": "一概には|一概に言え|状況によっては|場合もあります",
+      "severity": "error",
+      "scope": "all",
+      "good": [
+        "保険をかけずに言い切る。根拠か具体例をセットで付ける（RULES.md D7）",
+        "会社ごとに判断が分かれる話は「うちの会社では、この条件なら〜と判断しています」と自分の判断として書く（RULES.md D6）"
+      ],
+      "source": "_template.md機械検査・RULES.md D4"
+    },
+    {
+      "id": "NG-003",
+      "label": "※記号注釈の禁止",
+      "pattern": "※",
+      "severity": "error",
+      "scope": "all",
+      "good": [
+        "注釈に逃がさず地の文で言い換える。例: 「PoC、つまりお試し導入のことです。」"
+      ],
+      "source": "8/5裁定「見にくい」（RULES.md G）"
+    },
+    {
+      "id": "NG-004",
+      "label": "——挟み込み注釈（——注——で両側から挟む形）の禁止",
+      "pattern": "(?:――|——)[^―—\n]{1,30}(?:――|——)",
+      "severity": "error",
+      "scope": "all",
+      "good": [
+        "挟み込みをやめて2つの文に分ける",
+        "見出しの「## まとめ——xxx」や「セリフ」——受けの形（片側だけ）は検品済み記事で使われており可"
+      ],
+      "source": "8/5裁定（RULES.md G）。挟み込み形のみ禁止"
+    },
+    {
+      "id": "NG-005",
+      "label": "定番比喩（ほぼ確実に比喩）",
+      "pattern": "羅針盤|潤滑油|車の両輪|土台|スパイス",
+      "severity": "error",
+      "scope": "all",
+      "good": [
+        "比喩に頼らず、何がどう役立つのかを具体語でそのまま書く"
+      ],
+      "source": "CLAUDE.md文体ルール（定番比喩の禁止）"
+    },
+    {
+      "id": "NG-006",
+      "label": "定番比喩（文字通りの意味なら可）",
+      "pattern": "地図|筋トレ|DNA|エンジン|レシピ|柱",
+      "severity": "warn",
+      "scope": "all",
+      "good": [
+        "比喩として使っているなら文ごと書き直す（具体的な役割・効果を書く）",
+        "機械のエンジン・実際の地図など文字通りの意味なら残してよい"
+      ],
+      "source": "CLAUDE.md文体ルール（定番比喩の禁止）"
+    },
+    {
+      "id": "NG-007",
+      "label": "会社が特定される表現",
+      "pattern": "AI倫理チーム",
+      "severity": "error",
+      "scope": "all",
+      "good": [
+        "「AI管理チーム」などの一般名に置き換え、前後の文も自然に直す（RULES.md A1）"
+      ],
+      "source": "darari明示禁止（004・8/7）"
+    },
+    {
+      "id": "NG-008",
+      "label": "Substackの通達ごっこ演出",
+      "pattern": "通達第[0-9０-９]{1,3}号|社内各位",
+      "severity": "error",
+      "scope": "substack",
+      "good": [
+        "号数ナンバリング・辞令演出をやめ、サイトに公開済みの記事をそのまま届ける形にする"
+      ],
+      "source": "8/15創刊号ボツ「１号とかわけわからん」（RULES.md G）"
+    }
+  ]
+}

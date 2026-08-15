@@ -5,10 +5,34 @@
       "WebFetch(domain:darari-nu.github.io)",
       "Bash(echo \"exit: $?\")",
       "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260813-1530_Brain教材チャットボット.md)",
-      "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260814-0847_Brain教材第2期_Bot実装へ.md)"
+      "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260814-0847_Brain教材第2期_Bot実装へ.md)",
+      "Bash(node scripts/bunshou-check.mjs:*)"
     ],
     "additionalDirectories": [
       "/Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/bunshou-check.mjs\" --hook"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/bunshou-check.mjs\" --stop"
+          }
+        ]
+      }
     ]
   }
 }
