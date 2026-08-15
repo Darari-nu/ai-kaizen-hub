@@ -219,13 +219,19 @@
 </style>
 
 <script>
+  // 条件レンダリング(/company/ 配下のみ表示)でも、Astroはこのscriptを全ページに
+  // バンドルする。本体が無いページで動くと null 参照で落ち、同じバンドルの
+  // 他スクリプト(トップのモーション等)まで巻き込むため、要素が無ければ何もしない
+  const panel = document.getElementById('djb-panel');
+  if (panel) initChatWidget(panel);
+
+  function initChatWidget(panel: HTMLElement) {
   const API_BASE =
     location.hostname === 'localhost' || location.hostname === '127.0.0.1'
       ? 'http://localhost:8787'
       : 'https://api.darari-nu.com';
   const AVATAR = '/images/chatbot/avatar.png';
 
-  const panel = document.getElementById('djb-panel')!;
   const log = document.getElementById('djb-log')!;
   const form = document.getElementById('djb-form') as HTMLFormElement;
   const input = document.getElementById('djb-input') as HTMLInputElement;
@@ -339,4 +345,5 @@
       input.focus();
     }
   });
+  }
 </script>
