@@ -92,4 +92,4 @@
 ## この資料庫でやらないこと
 
 記事本文の執筆・文体の判断・検品・ブランドの裁定はここに入れない。
-それらの正本は `CLAUDE.md` / `BRAND.md` / `drafts/添削の学び/RULES.md` / `drafts/ネタ帳.md`。
+それらの正本は `CLAUDE.md` / `BRAND.md` / `10_drafts/添削の学び/RULES.md` / `10_drafts/ネタ帳.md`。

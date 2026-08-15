@@ -5,6 +5,6 @@ dist/
 design-v2.png
 .playwright-mcp/
 # Bot教材スクショ: モザイク処理が済むまで公開リポに入れない（プロジェクトID等が写っている）
-drafts/bot/スクショ_GeminiAPIキー取得/
+10_drafts/bot/スクショ_GeminiAPIキー取得/
 # アバター素材の原本（公開するのは加工済み public/images/chatbot/ のみ）
 /#010.png

@@ -120,4 +120,4 @@ for f in src/pages/company/*kijun*.astro; do grep -L 'に基づき\|の特則\|�
 - 規程: `/company/ai-kitei/`（AI利用規程・5章17条）。情報セキュリティ管理規程等は**名前参照のみ**（原本は総務部書庫、の体）
 - 基準: `/company/ai-nyuryoku-kijun/`・`/company/ai-service-kijun/`・`/company/ai-product-kijun/`ほか
 - ガイドライン: `/company/ai-guideline/`
-- 増築したら: kitei-taikei の一覧表＋intranetの規程集＋`drafts/架空会社設定.md`の3点を必ず同期する
+- 増築したら: kitei-taikei の一覧表＋intranetの規程集＋`10_drafts/架空会社設定.md`の3点を必ず同期する

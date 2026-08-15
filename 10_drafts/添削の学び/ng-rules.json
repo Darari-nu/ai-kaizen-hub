@@ -1,5 +1,5 @@
 {
-  "_使い方": "機械検査のNGワード台帳。scripts/bunshou-check.mjs が読む。ルール追加は bunshou-kaizen-loop 手順5（機械で守れるものは機械に落とす）で行う。good（直し方）は必須。patternはJavaScript正規表現。severity: error=書き直すまで完了不可 / warn=比喩か文字通りか等、文脈判断つきで警告。scope: all=記事+Substack / articles=src/content/articles のみ / substack=drafts/substack のみ。idは振り直さない（欠番可）",
+  "_使い方": "機械検査のNGワード台帳。scripts/bunshou-check.mjs が読む。ルール追加は bunshou-kaizen-loop 手順5（機械で守れるものは機械に落とす）で行う。good（直し方）は必須。patternはJavaScript正規表現。severity: error=書き直すまで完了不可 / warn=比喩か文字通りか等、文脈判断つきで警告。scope: all=記事+Substack / articles=src/content/articles のみ / substack=10_drafts/substack のみ。idは振り直さない（欠番可）",
   "rules": [
     {
       "id": "NG-001",

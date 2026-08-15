@@ -36,7 +36,7 @@ const heroImage = ['jpg', 'png', 'webp']
   .map((ext) => `images/hero.${ext}`)
   .find((p) => fs.existsSync(new URL(`../../public/${p}`, import.meta.url)));
 
-// 今後の予告（3軸: 記録・カイゼン・ガバナンス。公開されたらMarkdownに置き換わる。ネタ元: drafts/ネタ帳.md）
+// 今後の予告（3軸: 記録・カイゼン・ガバナンス。公開されたらMarkdownに置き換わる。ネタ元: 10_drafts/ネタ帳.md）
 const comingSoon = [
   '「国もやれって言ってますよ」——AI基本計画を稟議の武器にする（ガバナンス）',
   'チャットボットにお金払ってません？（AIカイゼン）',

@@ -21,7 +21,7 @@ darariは会社PC・スマホ・自宅PCを行き来する。だから**検品�
 
 ```bash
 cd /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP
-node drafts/tools/build-kenpin.mjs      # → /tmp/kenpin.html を生成
+node 10_drafts/tools/build-kenpin.mjs      # → /tmp/kenpin.html を生成
 ```
 
 そのあとArtifactツールで再発行する。パラメータは固定:
