@@ -1,5 +1,6 @@
 ---
 import { SITE } from '@/config';
+import ChatWidget from '@/components/ChatWidget.astro';
 
 interface Props {
   title?: string;
@@ -13,6 +14,8 @@ const {
   ogImage = '/images/og-default.jpg',
 } = Astro.props;
 const pageTitle = title ? `${title}｜${SITE.name}` : `${SITE.name}｜${SITE.tagline}`;
+// 社内チャットボットはダラリ重工業の世界（/company/配下）だけに出す
+const showChatWidget = Astro.url.pathname.startsWith('/company');
 const canonical = new URL(Astro.url.pathname, SITE.url).href;
 const ogImageUrl = new URL(ogImage, SITE.url).href;
 ---
@@ -43,6 +46,7 @@ const ogImageUrl = new URL(ogImage, SITE.url).href;
   </head>
   <body class="bg-paper font-body text-ink antialiased">
     <slot />
+    {showChatWidget && <ChatWidget />}
   </body>
 </html>
 

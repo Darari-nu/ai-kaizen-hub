@@ -4,7 +4,8 @@
       "Edit(/.claude/skills/kitei-seibi/**)",
       "WebFetch(domain:darari-nu.github.io)",
       "Bash(echo \"exit: $?\")",
-      "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260813-1530_Brain教材チャットボット.md)"
+      "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260813-1530_Brain教材チャットボット.md)",
+      "Bash(rm /Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP/20260814-0847_Brain教材第2期_Bot実装へ.md)"
     ],
     "additionalDirectories": [
       "/Users/watanabehidetaka/.claude/handoffs/260805_Darari-nu_HP"

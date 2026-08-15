@@ -1,0 +1,342 @@
+---
+// ダラリ重工業 社内チャットボット「総務AI相談窓口」のフローティングウィジェット。
+// /company/ 配下のみ表示（Base.astroで出し分け）。APIはCloudflare Worker側（別リポ
+// 260814_darari-jukogyo-bot）。このリポにはAPIキーを置かない方針を守るため画面だけ持つ。
+---
+
+<div id="djb-widget">
+  <button id="djb-open" aria-label="総務AI相談窓口を開く" title="総務AI相談窓口">
+    <img src="/images/chatbot/avatar.png" alt="" width="56" height="56" />
+  </button>
+
+  <div id="djb-panel" hidden>
+    <div id="djb-resize" title="ドラッグでサイズ変更" aria-hidden="true"></div>
+    <div class="djb-header">
+      <img src="/images/chatbot/avatar.png" alt="" width="28" height="28" />
+      <div>
+        <p class="djb-title">総務AI相談窓口</p>
+        <p class="djb-sub">当社規程にもとづき回答します（1日3問まで）</p>
+      </div>
+      <button id="djb-close" aria-label="閉じる">×</button>
+    </div>
+    <div id="djb-log" aria-live="polite"></div>
+    <form id="djb-form">
+      <input
+        id="djb-input"
+        type="text"
+        maxlength="500"
+        placeholder="例: 社外秘をAIに入力していい？"
+        autocomplete="off"
+      />
+      <button id="djb-send" type="submit">送信</button>
+    </form>
+    <p class="djb-note">
+      架空会社の架空規程です。法的助言ではありません。会話は保存されません。
+    </p>
+  </div>
+</div>
+
+<style>
+  #djb-widget {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 9999;
+    font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;
+  }
+  #djb-open {
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    border: 2px solid #1b3a6b;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease;
+  }
+  #djb-open:hover {
+    transform: scale(1.06);
+  }
+  #djb-open img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+  /* display:flex が hidden属性(display:none)を上書きして閉じなくなるので明示する */
+  #djb-panel[hidden] {
+    display: none;
+  }
+  #djb-panel {
+    position: fixed;
+    right: 16px;
+    bottom: 92px;
+    display: flex;
+    flex-direction: column;
+    width: min(360px, calc(100vw - 32px));
+    height: min(480px, calc(100vh - 120px));
+    border: 1px solid #999;
+    background: #f2f1ed;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  }
+  /* パネルは右下固定なので、左上の角から広げる */
+  #djb-resize {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    cursor: nwse-resize;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.9) 0 2px,
+      transparent 2px 5px,
+      rgba(255, 255, 255, 0.9) 5px 7px,
+      transparent 7px
+    );
+    z-index: 1;
+    touch-action: none;
+  }
+  .djb-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: linear-gradient(#3a5f9e, #1b3a6b);
+    color: #fff;
+  }
+  .djb-header img {
+    border-radius: 50%;
+    background: #fff;
+  }
+  .djb-title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .djb-sub {
+    margin: 0;
+    font-size: 10px;
+    opacity: 0.85;
+  }
+  #djb-close {
+    margin-left: auto;
+    border: 0;
+    background: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  #djb-log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  #djb-log :global(.djb-msg) {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  #djb-log :global(.djb-msg img) {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    background: #fff;
+    flex-shrink: 0;
+  }
+  #djb-log :global(.djb-bubble) {
+    max-width: 85%;
+    padding: 6px 9px;
+    border: 1px solid #ccc;
+    background: #fff;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  #djb-log :global(.djb-bubble strong) {
+    font-weight: bold;
+  }
+  #djb-log :global(.djb-bubble .djb-h) {
+    display: block;
+    margin-top: 4px;
+    padding-left: 4px;
+    border-left: 3px solid #1b3a6b;
+    font-weight: bold;
+  }
+  #djb-log :global(.djb-bubble a) {
+    color: #00c;
+    text-decoration: underline;
+    word-break: break-all;
+  }
+  #djb-log :global(.djb-bubble hr) {
+    margin: 6px 0;
+    border: 0;
+    border-top: 1px dashed #ccc;
+  }
+  #djb-log :global(.djb-user) {
+    justify-content: flex-end;
+  }
+  #djb-log :global(.djb-user .djb-bubble) {
+    border-color: #1b3a6b;
+    background: #e4eaf5;
+  }
+  #djb-form {
+    display: flex;
+    gap: 6px;
+    padding: 8px;
+    border-top: 1px solid #ccc;
+    background: #e9e7e2;
+  }
+  #djb-input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #999;
+    font-size: 13px;
+  }
+  #djb-send {
+    padding: 6px 12px;
+    border: 1px solid #1b3a6b;
+    background: #1b3a6b;
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  #djb-send:disabled {
+    opacity: 0.5;
+    cursor: wait;
+  }
+  .djb-note {
+    margin: 0;
+    padding: 4px 8px 6px;
+    background: #e9e7e2;
+    font-size: 9.5px;
+    color: #777;
+  }
+</style>
+
+<script>
+  const API_BASE =
+    location.hostname === 'localhost' || location.hostname === '127.0.0.1'
+      ? 'http://localhost:8787'
+      : 'https://api.darari-nu.com';
+  const AVATAR = '/images/chatbot/avatar.png';
+
+  const panel = document.getElementById('djb-panel')!;
+  const log = document.getElementById('djb-log')!;
+  const form = document.getElementById('djb-form') as HTMLFormElement;
+  const input = document.getElementById('djb-input') as HTMLInputElement;
+  const send = document.getElementById('djb-send') as HTMLButtonElement;
+
+  // 会話履歴はメモリのみ（サーバ無記憶方針と対）。直近8件だけAPIへ送る
+  const history: { role: 'user' | 'assistant'; content: string }[] = [];
+
+  // Geminiの回答はMarkdownで来る。最低限だけHTML化する（必ず全文エスケープしてから変換）
+  function renderMarkdown(text: string): string {
+    const esc = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    return esc
+      .replace(/^#{1,6}\s*(.+)$/gm, '<span class="djb-h">$1</span>')
+      .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/^\s*[-*]\s+(.+)$/gm, '・$1')
+      .replace(/^---+\s*$/gm, '<hr>')
+      .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+      .replace(/\n{3,}/g, '\n\n');
+  }
+
+  function addMsg(role: 'user' | 'assistant', text: string) {
+    const row = document.createElement('div');
+    row.className = role === 'user' ? 'djb-msg djb-user' : 'djb-msg';
+    if (role === 'assistant') {
+      const icon = document.createElement('img');
+      icon.src = AVATAR;
+      icon.alt = '';
+      row.appendChild(icon);
+    }
+    const bubble = document.createElement('div');
+    bubble.className = 'djb-bubble';
+    if (role === 'assistant') {
+      bubble.innerHTML = renderMarkdown(text);
+    } else {
+      bubble.textContent = text;
+    }
+    row.appendChild(bubble);
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+    return bubble;
+  }
+
+  document.getElementById('djb-open')!.addEventListener('click', () => {
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden && log.childElementCount === 0) {
+      addMsg(
+        'assistant',
+        'お疲れさまです。総務AI相談窓口です。\n当社規程についてのご質問をどうぞ（1日3問まで）。',
+      );
+    }
+    if (!panel.hidden) input.focus();
+  });
+  document.getElementById('djb-close')!.addEventListener('click', () => {
+    panel.hidden = true;
+  });
+
+  // 左上の角をドラッグでリサイズ（パネルは右下アンカーなので左上方向に広がる）
+  const grip = document.getElementById('djb-resize')!;
+  grip.addEventListener('pointerdown', (e) => {
+    e.preventDefault();
+    grip.setPointerCapture(e.pointerId);
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startW = panel.offsetWidth;
+    const startH = panel.offsetHeight;
+    const onMove = (ev: PointerEvent) => {
+      const w = Math.min(Math.max(startW + (startX - ev.clientX), 300), window.innerWidth - 32);
+      const h = Math.min(Math.max(startH + (startY - ev.clientY), 360), window.innerHeight - 110);
+      panel.style.width = `${w}px`;
+      panel.style.height = `${h}px`;
+    };
+    const onUp = () => {
+      grip.removeEventListener('pointermove', onMove);
+      grip.removeEventListener('pointerup', onUp);
+    };
+    grip.addEventListener('pointermove', onMove);
+    grip.addEventListener('pointerup', onUp);
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if (!q || send.disabled) return;
+    input.value = '';
+    addMsg('user', q);
+    history.push({ role: 'user', content: q });
+    send.disabled = true;
+    const typing = addMsg('assistant', '（規程を確認しています…）');
+    try {
+      const res = await fetch(`${API_BASE}/chat`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ messages: history.slice(-8) }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        typing.textContent = data.message || '窓口でエラーが発生しました。';
+        return;
+      }
+      typing.innerHTML = renderMarkdown(data.reply);
+      history.push({ role: 'assistant', content: data.reply });
+    } catch {
+      typing.textContent =
+        'ただいま社内システムに接続できません。時間をおいてお試しください。';
+    } finally {
+      send.disabled = false;
+      input.focus();
+    }
+  });
+</script>
