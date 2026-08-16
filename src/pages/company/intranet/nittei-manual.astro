@@ -1,0 +1,273 @@
+---
+// 開発日程作成システム 操作マニュアル — 「画面は不親切・マニュアルには全部書いてある」の後半を担う実物。
+// 「このマニュアルをAIに読ませて大日程を作らせる」記事の正典。週番号の換算・部門コード表・
+// エラーコード表など、システム画面に表示されない情報はすべてここにある(逆に言うとここにしかない)。
+// 様式美: 会議録マニュアル(第7版・87ページ)と同じ構成。こちらは第9版・全113ページの体。
+import Base from '@/layouts/Base.astro';
+
+const kaitei = [
+  ['第9版', '2026.07.01', '「描画」ボタンの配色を変更（視認性向上のため）'],
+  ['第8版', '2025.12.10', 'エラーコードE-08（行数上限）を追加'],
+  ['第7版', '2025.04.01', '組織名の変更に伴う修正'],
+  ['第6版', '2024.09.01', '週番号の数え方の例を差し替え（旧例の年度が古くなったため）'],
+  ['第5版', '2023.04.01', '組織名の変更に伴う修正'],
+  ['第4版', '2022.10.01', '誤字の修正（7箇所）'],
+  ['第3版', '2021.04.01', '表紙のロゴを変更'],
+  ['第2版', '2019.10.15', '中日程・小日程を「準備中」に変更'],
+  ['初版', '2009.04.01', '制定'],
+];
+
+const mokuji = [
+  ['第1章', 'はじめに', '3'],
+  ['第2章', '用語の定義', '5'],
+  ['第3章', 'システムの起動（対応ブラウザ）', '9'],
+  ['第4章', '案件情報の入力', '14'],
+  ['第5章', '週番号の数え方', '22'],
+  ['第6章', '工程行の入力', '30'],
+  ['第7章', '整合チェックとエラーコード', '48'],
+  ['第8章', '描画と登録', '60'],
+  ['第9章', '印刷（A3横・白黒）', '70'],
+  ['第10章', 'トラブルシューティング', '78'],
+  ['付録A', '部門コード表', '96'],
+  ['付録B', 'テーマ番号の形式', '102'],
+  ['付録C', 'エラーコード一覧（再掲）', '106'],
+];
+
+const depts = [
+  ['D1', '開発設計部門'],
+  ['D2', '開発企画部門'],
+  ['D3', '調達部門'],
+  ['D4', '製造部門'],
+  ['D5', '生産技術部門'],
+  ['Q1', '品質保証部門'],
+  ['E1', '営業部門'],
+  ['K1', '経理・原価管理部門'],
+  ['S1', 'サービス部門'],
+  ['Z9', 'その他（事前に開発管理課へ照会のこと）'],
+];
+
+const ecodes = [
+  ['E-00', '適合（エラーなし）', '—'],
+  ['E-01', '部門コードが未入力', '付録Aのコードを選択する'],
+  ['E-02', '必須項目（工程名・製品名・工程行）が未入力', '該当項目を入力する'],
+  ['E-03', '開始週または期間が不正', '1〜26の整数。開始週＋期間−1が26以内であること（第5章）'],
+  ['E-04', '基準日が未指定または月曜日でない', '月曜日の日付を指定する（第4章4.2）'],
+  ['E-05', 'テーマ番号の形式が不正', '付録Bの形式で入力する'],
+  ['E-06', 'ゲート（DR）の設定が不正', 'ゲート行の期間は1週。DRの開始週は番号順に後ろへ並べる'],
+  ['E-07', '計画種別が利用不可', '「1」（大日程）を選択する（中・小日程は準備中）'],
+  ['E-08', '行数が上限（20行）を超過', '超過分は別紙で作成し合冊する（第6章6.9）'],
+];
+---
+
+<Base
+  title="開発日程作成システム 操作マニュアル 第9版（架空）"
+  description="架空企業ダラリ重工業の開発日程作成システム操作マニュアル（という設定のページ）。週番号の数え方・部門コード表・エラーコード表。画面に表示されない情報はすべてここにあります。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] leading-relaxed text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業のマニュアル（という設定）です。全113ページある体（てい）ですが、実在するのはこのページだけです。
+    </div>
+
+    <div class="mx-auto max-w-3xl px-4 py-8">
+      <!-- 表紙 -->
+      <div class="border-2 border-[#1b3a6b] bg-white p-8 text-center">
+        <p class="text-[11px]">社内限（社外持出禁止）</p>
+        <p class="mt-8 text-2xl font-bold tracking-widest">開発日程作成システム</p>
+        <p class="mt-2 text-xl font-bold tracking-widest">操作マニュアル</p>
+        <p class="mt-6 text-sm">第9版（全113ページ）</p>
+        <p class="mt-10 text-sm">ダラリ重工業株式会社　開発本部 開発管理課</p>
+        <p class="text-[11px] text-[#666]">文書番号: DHI-KK-M-031-09</p>
+      </div>
+
+      <!-- 改訂履歴 -->
+      <div class="mt-6 border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">改訂履歴</p>
+        <table class="w-full border-collapse text-[12px]">
+          <tbody>
+            {kaitei.map(([v, d, naiyo]) => (
+              <tr class="border-b border-[#ddd]">
+                <td class="w-20 border-r border-[#ddd] px-3 py-1.5">{v}</td>
+                <td class="w-28 border-r border-[#ddd] px-3 py-1.5">{d}</td>
+                <td class="px-3 py-1.5">{naiyo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 目次 -->
+      <div class="mt-6 border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">目次</p>
+        <table class="w-full border-collapse text-[12px]">
+          <tbody>
+            {mokuji.map(([sho, title, page]) => (
+              <tr class="border-b border-dotted border-[#ccc]">
+                <td class="w-20 px-3 py-1.5">{sho}</td>
+                <td class="px-3 py-1.5">{title}</td>
+                <td class="w-16 px-3 py-1.5 text-right">{page}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 本文（抜粋の体） -->
+      <div class="mt-6 space-y-6 border-2 border-[#1b3a6b] bg-white p-6">
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第1章　はじめに</h2>
+          <p class="mt-2">
+            本マニュアルは、開発日程作成システム（以下「本システム」という）の操作方法について定めるものである。
+            本システムは、製品開発基準（開基-001）に定めるステージゲートの日程管理を目的として、2009年に導入された。
+            画面上にコードの意味・入力方法の説明は表示されないため、操作にあたっては必ず本マニュアルを参照すること。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第2章　用語の定義</h2>
+          <ol class="mt-2 list-decimal space-y-1 pl-8">
+            <li>「大日程」とは、DR0からDR4までの全体を26週以内で表した計画をいう。</li>
+            <li>「基準日」とは、計画の第1週の初日となる月曜日をいう。</li>
+            <li>「週番号」とは、基準日の属する週を第1週として数えた通し番号をいう。</li>
+            <li>「工程」とは、部門が担当する連続した作業のまとまりをいう。</li>
+            <li>「ゲート」とは、製品開発基準（開基-001）に定めるDR（デザインレビュー）をいう。</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第4章　案件情報の入力</h2>
+          <p class="mt-2">4.1　テーマ番号を入力する。形式は付録Bによる。</p>
+          <p>4.2　基準日には<b>月曜日</b>の日付を指定する。月曜日以外を指定した場合、整合チェックでE-04となる。基準日が月曜日に限定されているのは、週次進捗会議（毎週月曜開催）と週の起点を一致させるためである。</p>
+          <p>4.3　製品名を入力する。略称ではなく正式名称を用いること。</p>
+          <p>4.4　計画種別は「1」（大日程）を選択する。「2」（中日程）および「3」（小日程）は準備中である（2019年10月より）。</p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第5章　週番号の数え方</h2>
+          <p class="mt-2">
+            5.1　日程は日付ではなく週番号で入力する。基準日の属する週が第1週である。
+          </p>
+          <p>5.2　日付から週番号への換算は次による。</p>
+          <p class="pl-6 font-bold">週番号 ＝ （対象日 − 基準日）÷ 7 の商 ＋ 1（小数点以下切捨て）</p>
+          <p class="mt-2">5.3　換算例（基準日が2026年9月7日（月）の場合）:</p>
+          <table class="mt-2 w-full border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#f5f5f0] text-left">
+                <th class="border border-[#ddd] px-3 py-1">対象日</th>
+                <th class="border border-[#ddd] px-3 py-1">計算</th>
+                <th class="border border-[#ddd] px-3 py-1">週番号</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="border border-[#ddd] px-3 py-1">2026年9月7日〜13日</td><td class="border border-[#ddd] px-3 py-1">(0〜6)÷7＝0　→　0＋1</td><td class="border border-[#ddd] px-3 py-1">第1週</td></tr>
+              <tr><td class="border border-[#ddd] px-3 py-1">2026年10月5日（月）</td><td class="border border-[#ddd] px-3 py-1">28÷7＝4　→　4＋1</td><td class="border border-[#ddd] px-3 py-1">第5週</td></tr>
+              <tr><td class="border border-[#ddd] px-3 py-1">2026年12月14日（月）</td><td class="border border-[#ddd] px-3 py-1">98÷7＝14　→　14＋1</td><td class="border border-[#ddd] px-3 py-1">第15週</td></tr>
+              <tr><td class="border border-[#ddd] px-3 py-1">2027年3月1日（月）</td><td class="border border-[#ddd] px-3 py-1">175÷7＝25　→　25＋1</td><td class="border border-[#ddd] px-3 py-1">第26週</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-2 text-[11px] text-[#666]">
+            （備考）第26週を超える計画は本システムでは作成できない。26週を超える場合は基準日を後ろにずらすか、計画を分割すること。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第6章　工程行の入力</h2>
+          <p class="mt-2">6.1　「行追加」を押下し、工程行を追加する（最大20行。超過は6.9による）。</p>
+          <p>6.2　工程名を入力する。工程名は「動詞止め」を推奨する（例:「詳細設計を行う」ではなく「詳細設計」）。</p>
+          <p>6.3　部門はコードで選択する。コードの意味は付録Aによる（画面には表示されない）。</p>
+          <p>6.4　担当者は姓のみを入力する（同姓者がいる場合は姓＋名の頭文字）。</p>
+          <p>6.5　開始週・期間は週番号（第5章）で入力する。</p>
+          <p>6.6　通常の工程行は、ゲートを「なし」のままとする。</p>
+          <p>6.7　DR（ゲート）は<b>独立した1行</b>として入力する。ゲート行の期間は1週とする（E-06）。工程行のゲート列に設定してはならない。</p>
+          <p>6.8　DRの開催週は、製品開発基準（開基-001）の子基準（ＤＲ審査要領）の準備期間を考慮して設定する。</p>
+          <p>6.9　20行を超える場合は、超過分を別紙（Excel様式N-2）で作成し、印刷のうえ合冊する。</p>
+          <p class="mt-2 text-[11px] text-[#666]">
+            （参考）標準的な大日程の行構成: DR0（第1週）→ 企画工程（D2）→ DR1 → 設計工程（D1）→ DR2 → 金型手配（D3）・量産試作（D4）・検証（Q1）→ DR3 → 量産準備（D5）→ DR4。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第7章　整合チェックとエラーコード</h2>
+          <p class="mt-2">7.1　入力完了後、「整合チェック」を押下する。</p>
+          <p>7.2　エラーがある場合、エラーコード（E-01〜E-08）が表示される。意味と対処は付録Cによる。</p>
+          <p>7.3　DRの開始週は、DR番号の順（DR0→DR4）に後ろへ並んでいなければならない（E-06）。</p>
+          <p>7.4　すべて適合の場合、「E-00」が表示される。</p>
+          <p>7.5　<b>整合チェック後に入力を変更した場合、チェック結果は無効となる。</b>再度チェックを実施すること。</p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">第8章　描画と登録</h2>
+          <p class="mt-2">8.1　「描画」を押下すると、大日程計画表（ガントチャート）が描画される。</p>
+          <p>8.2　<b>入力を変更しても計画表は自動では更新されない。</b>変更のたびに「描画」を押下すること。</p>
+          <p>8.3　登録は、整合チェック（E-00）の実施後にのみ行える。手順は次のとおり: 整合チェック → 描画（目視確認） → 登録。</p>
+          <p>8.4　登録すると登録番号（NT-で始まる番号）が表示される。控えのうえ、次回DRの5営業日前までに計画表の写しを事務局（開発管理課）へ送付すること。</p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">付録A　部門コード表</h2>
+          <table class="mt-2 w-full border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#f5f5f0] text-left">
+                <th class="w-24 border border-[#ddd] px-3 py-1">コード</th>
+                <th class="border border-[#ddd] px-3 py-1">部門</th>
+              </tr>
+            </thead>
+            <tbody>
+              {depts.map(([code, name]) => (
+                <tr>
+                  <td class="border border-[#ddd] px-3 py-1 font-bold">{code}</td>
+                  <td class="border border-[#ddd] px-3 py-1">{name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p class="mt-2 text-[11px] text-[#666]">
+            （備考）コードの由来は旧・開発管理システム（1998年導入・2008年廃止）の部門体系による。現在の組織名との対応は毎年の組織改編で乖離が進んでいるが、コードの変更は行わない（過去データとの互換性のため）。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">付録B　テーマ番号の形式</h2>
+          <p class="mt-2">
+            テーマ番号は「T-西暦4桁-連番3桁」の形式とする（例: T-2026-042）。
+            テーマ番号は、DR0（起案審査）の通過をもって開発管理課が発番する。
+            DR0通過前の構想段階では、本システムは使用せず、紙の様式N-1（構想日程）を用いること。
+          </p>
+        </section>
+
+        <section>
+          <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold">付録C　エラーコード一覧</h2>
+          <table class="mt-2 w-full border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#f5f5f0] text-left">
+                <th class="w-20 border border-[#ddd] px-3 py-1">コード</th>
+                <th class="border border-[#ddd] px-3 py-1">意味</th>
+                <th class="border border-[#ddd] px-3 py-1">対処</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ecodes.map(([code, imi, taisho]) => (
+                <tr>
+                  <td class="border border-[#ddd] px-3 py-1 font-bold">{code}</td>
+                  <td class="border border-[#ddd] px-3 py-1">{imi}</td>
+                  <td class="border border-[#ddd] px-3 py-1">{taisho}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <p class="border-t border-[#ccc] pt-3 text-center text-[11px] text-[#666]">
+          （以下、113ページまで続く体）　─　22・48・96 / 113　─
+        </p>
+      </div>
+
+      <p class="mt-4 text-[11px]">
+        <a href="/company/intranet/nittei/" class="text-[#00c] underline">開発日程作成システムへ戻る</a> ｜
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータルへ戻る</a>
+      </p>
+    </div>
+  </div>
+</Base>
