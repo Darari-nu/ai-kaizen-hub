@@ -1,0 +1,209 @@
+---
+// 文書管理システム — ダラリ重工業の社内システム(という設定のパロディページ)。
+// 実用を兼ねる: /company/ 配下に実在する規程・基準・ガイドラインを文書番号つきで
+// 検索・絞り込みできる台帳。書庫扱いの規程・紙の様式類も台帳には載せる(様式美)。
+// 絞り込みはクライアントサイド(DBなし方針)。ブラウザ自動化記事の検索デモ標的にもなる。
+import Base from '@/layouts/Base.astro';
+
+// [文書番号, 文書名, 種別, 所管, 最終改定, 状態] 状態: 'link:URL' | 閲覧不可の理由
+const docs: [string, string, string, string, string, string][] = [
+  // 閲覧可（実在ページ）
+  ['社規第1959-01号', '文書管理規程', '規程', '総務部', '2019年', 'link:/company/bunsho-kitei/'],
+  ['社規第1960-04号', '慶弔見舞金規程', '規程', '総務部', '2003年', 'link:/company/keichou-kitei/'],
+  ['社規第1961-02号', '出張旅費規程', '規程', '人事部', '2008年', 'link:/company/shucchou-kitei/'],
+  ['社規第1965-03号', '稟議規程', '規程', '総務部', '2015年', 'link:/company/ringi-kitei/'],
+  ['社規第2003-05号', '情報セキュリティ管理規程', '規程', '情報システム部', '2024年', 'link:/company/joho-security-kitei/'],
+  ['社規第2026-08号の2', 'ＡＩ利用規程', '規程', 'AI活用推進室・情報システム部', '2026年', 'link:/company/ai-kitei/'],
+  ['情セ基-001', '情報セキュリティ基準', '基準', '情報システム部', '2026年', 'link:/company/joho-security-kijun/'],
+  ['情セ基-002', 'クラウドサービス利用基準', '基準', '情報システム部', '2026年', 'link:/company/cloud-kijun/'],
+  ['個保基-001', '個人情報取扱基準', '基準', '総務部', '2026年', 'link:/company/kojin-joho-kijun/'],
+  ['調基-001', '調達基準（サプライヤー評価）', '基準', '調達部', '2026年', 'link:/company/chotatsu-kijun/'],
+  ['法基-001', '契約審査基準（秘密保持条項）', '基準', '法務部', '2026年', 'link:/company/keiyaku-kijun/'],
+  ['開基-001', '製品開発基準（ステージゲート）', '基準', '開発本部', '2026年', 'link:/company/seihin-kaihatsu-kijun/'],
+  ['開基-001-0', 'ＤＲ0審査要領（起案）', '基準', '開発本部', '2026年', 'link:/company/seihin-kaihatsu-kijun-dr0/'],
+  ['開基-001-1', 'ＤＲ1審査要領（企画）', '基準', '開発本部', '2026年', 'link:/company/seihin-kaihatsu-kijun-dr1/'],
+  ['開基-001-2', 'ＤＲ2審査要領（設計）', '基準', '開発本部', '2026年', 'link:/company/seihin-kaihatsu-kijun-dr2/'],
+  ['開基-001-3', 'ＤＲ3審査要領（量産準備）', '基準', '開発本部', '2026年', 'link:/company/seihin-kaihatsu-kijun-dr3/'],
+  ['開基-001-4', 'ＤＲ4審査要領（出荷判定）', '基準', '開発本部', '2026年', 'link:/company/seihin-kaihatsu-kijun-dr4/'],
+  ['AI基準-001', 'ＡＩ入力情報基準', '基準', 'AI活用推進室', '2026年', 'link:/company/ai-nyuryoku-kijun/'],
+  ['AI基準-002', 'ＡＩサービス利用基準', '基準', '情報システム部・AI活用推進室', '2026年', 'link:/company/ai-service-kijun/'],
+  ['AI基準-003', 'ＡＩ搭載製品開発基準', '基準', '開発本部・法務部', '2026年', 'link:/company/ai-product-kijun/'],
+  ['AIガイドライン-001', '生成ＡＩ活用ガイドライン（現場のコツ集）', 'ガイドライン', 'AI活用推進室', '2026年', 'link:/company/ai-guideline/'],
+  ['体系図2026-03', '社内規程体系（ＡＩ関連）', '体系・台帳', '総務部', '2026年', 'link:/company/kitei-taikei/'],
+  ['総務部台帳-001', '社内規程管理台帳（全32規程）', '体系・台帳', '総務部', '2026年', 'link:/company/kitei-ichiran/'],
+  // 書庫（read onlyの世界観。台帳には載る）
+  ['社規第1962-01号', '取締役会規程', '規程', '経営企画室', '2018年', '書庫（役員限り）'],
+  ['社規第1963-01号', '組織規程', '規程', '経営企画室', '2024年', '書庫（紙）'],
+  ['社規第1963-02号', '業務分掌規程', '規程', '経営企画室', '2021年', '書庫（紙）'],
+  ['社規第1963-03号', '職務権限規程', '規程', '経営企画室', '2022年', '書庫（抜粋を決裁権限表として掲示）'],
+  ['社規第1958-01号', '就業規則', '規程', '人事部', '2025年', '書庫（各職場に備付け）'],
+  ['社規第1958-02号', '給与規程', '規程', '人事部', '2024年', '書庫（人事部限り）'],
+  ['社規第1966-01号', '退職金規程', '規程', '人事部', '2012年', '書庫（人事部限り）'],
+  ['社規第1974-01号', '人事考課規程', '規程', '人事部', '2020年', '書庫（人事部限り）'],
+  ['社規第1992-01号', '育児・介護休業規程', '規程', '人事部', '2025年', '書庫（各職場に備付け）'],
+  ['社規第1972-01号', '安全衛生管理規程', '規程', '安全衛生室', '2026年', '書庫（各職場に備付け）'],
+  ['社規第2000-01号', 'ハラスメント防止規程', '規程', '人事部', '2023年', '書庫（各職場に備付け）'],
+  ['社規第1958-03号', '社印取扱規程', '規程', '総務部', '1997年', '書庫（紙）※電子化は整備待ち'],
+  ['社規第1970-01号', '車両管理規程', '規程', '総務部', '2016年', '書庫（紙）'],
+  ['社規第2006-01号', '内部通報規程', '規程', '総務部', '2022年', '書庫（各職場に備付け）'],
+  ['社規第2005-01号', '個人情報保護規程', '規程', '総務部', '2022年', '書庫（紙）'],
+  ['社規第1958-04号', '経理規程', '規程', '経理部', '2023年', '書庫（経理部限り）'],
+  ['社規第1968-01号', '予算管理規程', '規程', '経理部', '2019年', '書庫（経理部限り）'],
+  ['社規第1969-01号', '原価計算規程', '規程', '経理部', '2017年', '書庫（経理部限り）'],
+  ['社規第1964-01号', '固定資産管理規程', '規程', '経理部', '2011年', '書庫（紙）'],
+  ['社規第1983-01号', '与信管理規程', '規程', '経理部', '2020年', '書庫（経理部限り）'],
+  ['社規第1967-01号', '調達管理規程', '規程', '調達部', '2018年', '書庫（紙）'],
+  ['社規第1981-01号', '契約管理規程', '規程', '法務部', '2021年', '書庫（法務部限り）'],
+  ['社規第1975-01号', '開発管理規程', '規程', '開発本部', '2019年', '書庫（紙）※開基-001の委任元'],
+  ['社規第1971-01号', '品質管理規程', '規程', '品質保証部', '2024年', '書庫（各職場に備付け）'],
+  ['社規第1988-01号', '輸出管理規程', '規程', '法務部', '2025年', '書庫（法務部限り）'],
+  ['社規第2004-01号', 'コンプライアンス規程', '規程', '法務部', '2021年', '書庫（各職場に備付け）'],
+  ['社規第2009-01号', 'リスク管理規程', '規程', '経営企画室', '2020年', '書庫（紙）'],
+  ['社規第2012-01号', '事業継続（ＢＣＰ）規程', '規程', '経営企画室', '2024年', '書庫（紙）'],
+  // 様式（紙文化の様式美）
+  ['様式G-7', '会議録修正申請書', '様式', '総務部', '2011年', '書庫（紙）※総務部で配布'],
+  ['様式K-2', '打刻修正申請書', '様式', '人事部 勤労課', '2014年', '書庫（紙）※各職場に備付け'],
+  ['様式K-4', '休日出勤申請書', '様式', '人事部 勤労課', '2014年', '書庫（紙）※事前提出'],
+  ['様式E-1', '領収書貼付台紙', '様式', '経理部', '2007年', '書庫（紙）※のり付け推奨・ホチキス不可'],
+];
+
+const kinds = ['すべて', '規程', '基準', 'ガイドライン', '体系・台帳', '様式'];
+---
+
+<Base
+  title="文書管理システム（架空企業の社内システム）"
+  description="架空企業ダラリ重工業の文書管理システム（という設定のページ）。社内規程・基準・ガイドライン・様式を文書番号つきで検索できます。閲覧可の文書は全文が読めます。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内システム（という設定）です。閲覧可の文書は実際に読めます。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">文書管理システム</p>
+        <p class="text-[11px] text-white/80">DARARI-BUNSHO v3.2 ｜ ログイン中: AI活用推進室 さん</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a>
+        &gt; 業務システム &gt; 文書管理システム
+      </p>
+
+      <div class="mb-4 border border-[#1b3a6b] bg-[#eef7ee] px-3 py-2 text-[11px] leading-relaxed">
+        ✅ VPN接続を確認しました: 社内ネットワークからのアクセスと判定されました。<br />
+        ✅ 利用申請: 承認済み（申請番号 BN-2019-00847。7年前のものが有効でした）。<br />
+        ⚠️ 操作研修の受講記録が確認できませんでしたが、閲覧を許可します（研修は毎年4月に開催予定→毎年延期されています）。
+      </div>
+
+      <!-- 検索 -->
+      <div class="border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">文書検索</p>
+        <div class="flex flex-wrap items-center gap-3 px-4 py-3">
+          <label class="text-[12px]">
+            種別:
+            <select id="bunsho-kind" class="ml-1 border border-[#999] bg-white px-2 py-1">
+              {kinds.map((k) => <option>{k}</option>)}
+            </select>
+          </label>
+          <label class="text-[12px]">
+            キーワード:
+            <input id="bunsho-q" type="text" placeholder="例: AI ／ 経費 ／ 開基" class="ml-1 w-52 border border-[#999] bg-white px-2 py-1" />
+          </label>
+          <label class="text-[12px]">
+            <input type="checkbox" id="bunsho-viewable" class="mr-1" />閲覧可のみ
+          </label>
+          <span id="bunsho-count" class="text-[11px] text-[#666]"></span>
+        </div>
+      </div>
+
+      <!-- 一覧 -->
+      <div class="mt-4 overflow-x-auto border border-[#999] bg-white">
+        <table class="w-full min-w-[640px] border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">文書番号</th>
+              <th class="border border-[#ddd] px-3 py-1.5">文書名</th>
+              <th class="border border-[#ddd] px-3 py-1.5">種別</th>
+              <th class="border border-[#ddd] px-3 py-1.5">所管</th>
+              <th class="border border-[#ddd] px-3 py-1.5">最終改定</th>
+              <th class="border border-[#ddd] px-3 py-1.5">状態</th>
+            </tr>
+          </thead>
+          <tbody id="bunsho-rows">
+            {
+              docs.map(([no, name, kind, shokan, kaitei, status]) => (
+                <tr data-kind={kind} data-viewable={status.startsWith('link:') ? '1' : '0'}>
+                  <td class="border border-[#ddd] px-3 py-1.5 whitespace-nowrap">{no}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5">
+                    {status.startsWith('link:') ? (
+                      <a href={status.slice(5)} class="text-[#00c] underline">
+                        {name}
+                      </a>
+                    ) : (
+                      <span class="cursor-default text-[#00c] underline decoration-dotted">{name}</span>
+                    )}
+                  </td>
+                  <td class="border border-[#ddd] px-3 py-1.5 whitespace-nowrap">{kind}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5">{shokan}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5 whitespace-nowrap">{kaitei}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5 text-[11px]">
+                    {status.startsWith('link:') ? <span class="font-bold text-[#1b3a6b]">閲覧可</span> : <span class="text-[#888]">{status}</span>}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-3 text-[11px] leading-relaxed text-[#888]">
+        ※ 「書庫（紙）」の文書は総務部書庫（本館2階・平日9:00〜16:00・昼休みを除く）で閲覧できます。持出しは所属長の承認が必要です。<br />
+        ※ 電子化のご要望は情報システム部まで（2019年より要望受付中）。
+      </p>
+
+      <p class="mt-4 text-[11px] text-[#666]">
+        推奨環境: Internet Explorer 11 ／ 文書の追加・改定は<a href="/company/bunsho-kitei/" class="text-[#00c] underline">文書管理規程（社規第1959-01号）</a>による ｜ 総務部 文書課 内線 2200
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 掟: 本体が無いページでは何もしない（存在ガード。非null断定は禁止）
+    const rows = document.getElementById('bunsho-rows');
+    if (rows) initBunsho(rows);
+
+    function initBunsho(rows: HTMLElement) {
+      const kindSel = document.getElementById('bunsho-kind') as HTMLSelectElement | null;
+      const qInput = document.getElementById('bunsho-q') as HTMLInputElement | null;
+      const viewableChk = document.getElementById('bunsho-viewable') as HTMLInputElement | null;
+      const count = document.getElementById('bunsho-count');
+
+      const apply = () => {
+        const kind = kindSel?.value || 'すべて';
+        const q = (qInput?.value || '').trim().toLowerCase();
+        const onlyViewable = viewableChk?.checked || false;
+        let shown = 0;
+        rows.querySelectorAll('tr').forEach((tr) => {
+          const okKind = kind === 'すべて' || tr.getAttribute('data-kind') === kind;
+          const okView = !onlyViewable || tr.getAttribute('data-viewable') === '1';
+          const okQ = !q || (tr.textContent || '').toLowerCase().includes(q);
+          const show = okKind && okView && okQ;
+          (tr as HTMLElement).style.display = show ? '' : 'none';
+          if (show) shown++;
+        });
+        if (count) count.textContent = `${shown}件`;
+      };
+
+      kindSel?.addEventListener('change', apply);
+      qInput?.addEventListener('input', apply);
+      viewableChk?.addEventListener('change', apply);
+      apply();
+    }
+  </script>
+</Base>

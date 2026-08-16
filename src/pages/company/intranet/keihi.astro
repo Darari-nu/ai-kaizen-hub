@@ -1,0 +1,274 @@
+---
+// 経費精算システム — ダラリ重工業の社内システム(という設定のパロディページ)。
+// 明細追加→一覧→申請が実際に動く。保存はlocalStorage。ブラウザ自動化記事の実機候補。
+// 様式美: IE 11推奨・領収書は台紙に糊付け・締切は毎月25日（今月こそ）。
+import Base from '@/layouts/Base.astro';
+---
+
+<Base
+  title="経費精算システム（架空企業の社内システム）"
+  description="架空企業ダラリ重工業の経費精算システム（という設定のページ）。明細入力・申請が実際に動きます。領収書は台紙に糊付けのうえ経理部へ。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内システム（という設定）です。実際に入力して遊べます（保存はお使いのブラウザ内のみ）。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">経費精算システム</p>
+        <p class="text-[11px] text-white/80">DARARI-KEIHI v0.9β ｜ ログイン中: AI活用推進室 さん</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a>
+        &gt; 業務システム &gt; 経費精算システム
+      </p>
+
+      <div class="mb-4 border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
+        【重要】今月の締切は<b class="text-[#c00]">25日 17:00</b>です（経理部。今月こそ厳守をお願いします）。<br />
+        【注意】領収書の<b>原本</b>を「領収書貼付台紙（様式E-1）」にのりで貼付し、申請番号を記入のうえ経理部へ持参してください。スマホ撮影画像は受け付けていません。<br />
+        【注意】本システムは Internet Explorer 11 で動作確認しています。他のブラウザでは表示が崩れる場合があります（が、動きます）。<br />
+        【参考】有料AIサービスの利用料は、<a href="/company/ai-service-kijun/" class="text-[#00c] underline">AIサービス利用基準（AI基準-002）</a>の事前申請が完了しているものに限り精算できます。
+      </div>
+
+      <!-- 明細入力 -->
+      <div class="border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">経費明細 入力</p>
+        <form id="keihi-form" class="p-4">
+          <table class="w-full border-collapse">
+            <tbody>
+              <tr class="border-b border-[#ddd]">
+                <th class="w-40 bg-[#eef1f5] px-3 py-2 text-left font-normal">利用日<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2"><input id="keihi-date" type="date" class="border border-[#999] bg-white px-2 py-1" /></td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">費目<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2">
+                  <select id="keihi-himoku" class="border border-[#999] bg-white px-2 py-1">
+                    <option>（選択してください）</option>
+                    <option>旅費交通費（近距離）</option>
+                    <option>旅費交通費（出張・要出張旅費規程）</option>
+                    <option>会議費（1人3,000円まで）</option>
+                    <option>消耗品費</option>
+                    <option>書籍・資料代</option>
+                    <option>AI利用料（要事前申請）</option>
+                    <option>通信費</option>
+                    <option>その他（摘要に理由を必ず記載）</option>
+                  </select>
+                </td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">金額（円）<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2"><input id="keihi-amount" type="number" min="1" placeholder="例: 1980" class="w-40 border border-[#999] bg-white px-2 py-1" /></td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">摘要<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2"><input id="keihi-tekiyou" type="text" placeholder="例: Claude Pro 月額（事前申請 AI-2026-012）" class="w-full border border-[#999] bg-white px-2 py-1" /></td>
+              </tr>
+              <tr>
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">領収書</th>
+                <td class="px-3 py-2 text-[11px] text-[#666]">
+                  <label><input type="checkbox" id="keihi-ryoushuu" class="mr-1" />原本を様式E-1に貼付して持参します（誓約）</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-4 flex items-center gap-3">
+            <button type="submit" id="keihi-add" class="border border-[#1b3a6b] bg-gradient-to-b from-[#4a6fae] to-[#1b3a6b] px-6 py-1.5 font-bold text-white">明細追加</button>
+            <span id="keihi-msg" class="text-[11px] text-[#c00]"></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- 明細一覧 -->
+      <div class="mt-4 border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ 未申請の明細</p>
+        <table class="w-full border-collapse text-[12px]" id="keihi-table">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">利用日</th>
+              <th class="border border-[#ddd] px-3 py-1.5">費目</th>
+              <th class="border border-[#ddd] px-3 py-1.5">摘要</th>
+              <th class="border border-[#ddd] px-3 py-1.5 text-right">金額</th>
+              <th class="border border-[#ddd] px-3 py-1.5"></th>
+            </tr>
+          </thead>
+          <tbody id="keihi-rows"></tbody>
+          <tfoot>
+            <tr class="bg-[#f5f5f0] font-bold">
+              <td class="border border-[#ddd] px-3 py-1.5" colspan="3">合計</td>
+              <td class="border border-[#ddd] px-3 py-1.5 text-right" id="keihi-total">0円</td>
+              <td class="border border-[#ddd]"></td>
+            </tr>
+          </tfoot>
+        </table>
+        <div class="flex items-center gap-3 px-3 py-3">
+          <button type="button" id="keihi-submit" class="border border-[#1b3a6b] bg-gradient-to-b from-[#4a6fae] to-[#1b3a6b] px-6 py-1.5 font-bold text-white">申請</button>
+          <span class="text-[11px] text-[#666]">承認ルート: 課長 → 部長 → 経理部（クレジットカード払いは四半期に一回の経理部承認です）</span>
+        </div>
+        <p id="keihi-result" class="mx-3 mb-3 hidden border px-3 py-2 text-[12px] font-bold"></p>
+      </div>
+
+      <!-- 申請履歴 -->
+      <div class="mt-4 border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ 申請履歴</p>
+        <table class="w-full border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">申請番号</th>
+              <th class="border border-[#ddd] px-3 py-1.5">申請日</th>
+              <th class="border border-[#ddd] px-3 py-1.5 text-right">金額</th>
+              <th class="border border-[#ddd] px-3 py-1.5">状態</th>
+            </tr>
+          </thead>
+          <tbody id="keihi-history">
+            <tr><td class="border border-[#ddd] px-3 py-1.5 text-[#888]" colspan="4">（申請履歴はありません）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">
+        推奨環境: Internet Explorer 11 ／ 解像度 1024×768 以上 ｜ 経理部 内線 2500
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 掟: 本体が無いページでは何もしない（存在ガード。非null断定は禁止）
+    const rowsEl = document.getElementById('keihi-rows');
+    if (rowsEl) initKeihi(rowsEl);
+
+    function initKeihi(rowsEl: HTMLElement) {
+      type Line = { d: string; h: string; t: string; a: number };
+      type Store = { lines: Line[]; history: { no: string; date: string; total: number; status: string }[] };
+      const KEY = 'darari-keihi';
+
+      const load = (): Store => {
+        try {
+          const raw = localStorage.getItem(KEY);
+          if (raw) return JSON.parse(raw) as Store;
+        } catch {
+          /* 壊れた保存は無視 */
+        }
+        return { lines: [], history: [] };
+      };
+      const save = (s: Store) => localStorage.setItem(KEY, JSON.stringify(s));
+      const yen = (n: number) => n.toLocaleString('ja-JP') + '円';
+
+      function render() {
+        const s = load();
+        rowsEl.innerHTML = '';
+        if (s.lines.length === 0) {
+          rowsEl.innerHTML =
+            '<tr><td class="border border-[#ddd] px-3 py-1.5 text-[#888]" colspan="5">（明細がありません。上のフォームから追加してください）</td></tr>';
+        }
+        s.lines.forEach((l, idx) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML =
+            `<td class="border border-[#ddd] px-3 py-1.5">${l.d}</td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5">${l.h}</td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5"></td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5 text-right">${yen(l.a)}</td>` +
+            `<td class="border border-[#ddd] px-2 py-1.5 text-center"><button type="button" data-del="${idx}" class="border border-[#999] bg-[#eee] px-2 text-[10px]">削除</button></td>`;
+          // 摘要はユーザー入力なのでtextContentで入れる（HTML化しない）
+          const tds = tr.querySelectorAll('td');
+          if (tds[2]) tds[2].textContent = l.t;
+          rowsEl.appendChild(tr);
+        });
+        const totalEl = document.getElementById('keihi-total');
+        if (totalEl) totalEl.textContent = yen(s.lines.reduce((sum, l) => sum + l.a, 0));
+
+        rowsEl.querySelectorAll('[data-del]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const s2 = load();
+            s2.lines.splice(Number(btn.getAttribute('data-del')), 1);
+            save(s2);
+            render();
+          });
+        });
+
+        const hist = document.getElementById('keihi-history');
+        if (hist) {
+          if (s.history.length === 0) {
+            hist.innerHTML =
+              '<tr><td class="border border-[#ddd] px-3 py-1.5 text-[#888]" colspan="4">（申請履歴はありません）</td></tr>';
+          } else {
+            hist.innerHTML = s.history
+              .map(
+                (h) =>
+                  `<tr><td class="border border-[#ddd] px-3 py-1.5">${h.no}</td>` +
+                  `<td class="border border-[#ddd] px-3 py-1.5">${h.date}</td>` +
+                  `<td class="border border-[#ddd] px-3 py-1.5 text-right">${yen(h.total)}</td>` +
+                  `<td class="border border-[#ddd] px-3 py-1.5">${h.status}</td></tr>`
+              )
+              .join('');
+          }
+        }
+      }
+
+      const form = document.getElementById('keihi-form') as HTMLFormElement | null;
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const date = (document.getElementById('keihi-date') as HTMLInputElement | null)?.value;
+        const himoku = (document.getElementById('keihi-himoku') as HTMLSelectElement | null)?.value;
+        const amount = Number((document.getElementById('keihi-amount') as HTMLInputElement | null)?.value);
+        const tekiyou = (document.getElementById('keihi-tekiyou') as HTMLInputElement | null)?.value?.trim();
+        const msg = document.getElementById('keihi-msg');
+        if (!msg) return;
+        if (!date || !himoku || himoku === '（選択してください）' || !amount || amount <= 0 || !tekiyou) {
+          msg.textContent = '未入力の必須項目があります（利用日・費目・金額・摘要）。';
+          return;
+        }
+        if (himoku === '会議費（1人3,000円まで）' && amount > 3000) {
+          msg.textContent = '会議費は1人3,000円までです。超える場合は「その他」を選び、摘要に人数と理由を記載してください。';
+          return;
+        }
+        msg.textContent = '';
+        const s = load();
+        s.lines.push({ d: date, h: himoku, t: tekiyou, a: amount });
+        save(s);
+        const amountEl = document.getElementById('keihi-amount') as HTMLInputElement | null;
+        if (amountEl) amountEl.value = '';
+        const tekiyouEl = document.getElementById('keihi-tekiyou') as HTMLInputElement | null;
+        if (tekiyouEl) tekiyouEl.value = '';
+        render();
+      });
+
+      document.getElementById('keihi-submit')?.addEventListener('click', () => {
+        const s = load();
+        const result = document.getElementById('keihi-result');
+        if (!result) return;
+        result.classList.remove('hidden');
+        if (s.lines.length === 0) {
+          result.textContent = '明細がありません。追加してから申請してください。';
+          result.className = 'mx-3 mb-3 border border-[#c00] bg-[#fdeaea] px-3 py-2 text-[12px] font-bold text-[#c00]';
+          return;
+        }
+        const check = document.getElementById('keihi-ryoushuu') as HTMLInputElement | null;
+        if (check && !check.checked) {
+          result.textContent = '差戻し: 領収書貼付の誓約チェックがありません。原本の糊付けをお忘れなく（様式E-1）。';
+          result.className = 'mx-3 mb-3 border border-[#c00] bg-[#fdeaea] px-3 py-2 text-[12px] font-bold text-[#c00]';
+          return;
+        }
+        const total = s.lines.reduce((sum, l) => sum + l.a, 0);
+        const no = 'KH-2026-' + String(Math.floor(Math.random() * 90000) + 10000);
+        const t = new Date();
+        const date = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+        s.history.unshift({ no, date, total, status: '承認待ち（部長出張中のため2〜3週間）' });
+        s.lines = [];
+        save(s);
+        result.textContent = `申請番号 ${no} で申請されました（合計 ${total.toLocaleString('ja-JP')}円）。領収書台紙に申請番号を記入し、経理部へ持参してください。`;
+        result.className = 'mx-3 mb-3 border border-[#1b3a6b] bg-[#eef7ee] px-3 py-2 text-[12px] font-bold';
+        render();
+      });
+
+      render();
+    }
+  </script>
+</Base>

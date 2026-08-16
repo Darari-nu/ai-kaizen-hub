@@ -1,0 +1,207 @@
+---
+// DR審査要領（開基-001の子基準・DR0〜DR4の5冊） — 製品開発基準からの分冊(という設定)。
+// 「変わりやすいものほど軽い文書に置く」の実物: 親(開基-001)はステージゲートの骨格だけを持ち、
+// 各DRの確認項目・手続はこの子基準に置いて所管部門長の決裁で回す。
+// 1ファイルの動的ルートで5冊を生成する(内容はDATAに集約。kitei-seibiスキルの基準の型)。
+import PortalDoc from '@/components/PortalDoc.astro';
+
+export function getStaticPaths() {
+  return ['0', '1', '2', '3', '4'].map((n) => ({ params: { n } }));
+}
+
+const { n } = Astro.params;
+
+type DrData = {
+  stage: string;
+  aim: string;
+  pass: string;
+  checks: [string, string, string][]; // [確認項目, 確認資料, 判定の目安]
+  aiCheck: string;
+  bikou?: string;
+};
+
+const DATA: Record<string, DrData> = {
+  '0': {
+    stage: '起案',
+    aim: '開発テーマとして着手する価値があるかを判定する。作り込みの深さを求めず、一次判断の妥当性を審査する。',
+    pass: '通過をもって開発テーマとして登録し、開発管理課がテーマ番号を発番する。',
+    checks: [
+      ['市場性', '起案書（様式D-0）・営業ヒアリング記録', '想定顧客と市場規模の一次調査があること。精緻な予測は求めない'],
+      ['実現性', '技術検討メモ', '自社技術（または調達可能な技術）で成立する見通しがあること'],
+      ['競合・特許の概査', '概査報告（先行技術・他社製品）', '明白な障害特許・圧倒的先行者がいないこと。詳細調査はDR1までの宿題でよい'],
+      ['開発体制の見込み', '起案書（様式D-0）', '主担当部門と概算工数の見込みがあること'],
+    ],
+    aiCheck: 'AIを搭載する見込みのある製品は、発売国・用途・技術の3点を起案書に整理する（AI搭載製品開発基準（AI基準-003）の3質問）。',
+    bikou: '（備考）DR0で落とすことは失敗ではない。作り始めてから止める方が高くつく。',
+  },
+  '1': {
+    stage: '企画',
+    aim: '何を・いくらで・いつまでに作るかが確定しているかを審査する。以後の変更は原則としてDRの再審議を要する。',
+    pass: '要求仕様・原価企画・開発日程の3点が確定していること。',
+    checks: [
+      ['要求仕様の確定', '要求仕様書', '顧客要求・法規制要求・社内標準を織り込み、未確定項目が残っていないこと'],
+      ['原価企画', '原価企画書', '目標原価と成立見通しがあること。成行原価との差異に対策があること'],
+      ['開発日程', '開発日程表', 'DR2〜DR4の開催予定日があること。DR2は金型納期から逆算して設定されていること'],
+      ['ソフトウェアのアーキテクチャ確定', 'アーキテクチャ設計書', '実装言語・構成・外部依存が確定していること（実装はDR2まで）'],
+      ['適用規格・認証の要否確定', '規格調査表', '発売国ごとの適用規格・認証要否が確定していること'],
+    ],
+    aiCheck: 'AI搭載製品は、適用法規制の区分を確定する（EU域内で販売する場合はEUのAI規制（EU AI Act）の区分。AI基準-003による）。',
+  },
+  '2': {
+    stage: '設計',
+    aim: '設計が検証済みで、量産の長納期品（金型・専用治具）を発注してよいかを審査する。本DRの通過は発注の引き金である。',
+    pass: 'DV（設計検証）が完了し、図面が出図されていること。通過後、直ちに金型・専用治具を発注する。',
+    checks: [
+      ['詳細設計・DVの完了', 'DV報告書', '設計検証の全項目が完了し、未達項目に対策と再検証計画があること'],
+      ['図面出図', '出図一覧', '量産部品の図面が出図済みであること。手配漏れがないこと'],
+      ['金型・専用治具の発注準備', '見積書・発注仕様書', '仕様凍結済みで、通過後直ちに発注できる状態であること'],
+      ['工程設計', '工程設計書（QC工程表案）', '量産工程の構想が確定し、専用設備の仕様検討が完了していること'],
+      ['ソフトウェアの実装凍結', '凍結宣言・残課題一覧', '機能追加を停止し、以後は不具合修正のみとすること'],
+    ],
+    aiCheck: 'AI搭載製品は、学習データの管理方法・性能評価方法を確定する（AI基準-003による）。',
+    bikou: '（備考）金型は最長納期品である。本DRの遅延は量産開始日の遅延に直結する。',
+  },
+  '3': {
+    stage: '量産準備',
+    aim: '量産工程で品質が作り込めているか、顧客が量産品を承認しているかを審査する。',
+    pass: 'PV（工程能力確認）完了・ソフトウェア検証完了・顧客サンプル承認の3点が揃っていること。',
+    checks: [
+      ['量産試作・PVの完了', 'PV報告書（工程能力指数を含む）', '量産工程・量産金型で試作し、重要特性の工程能力が基準を満たすこと'],
+      ['ソフトウェア検証の完了', '検証報告書', '凍結版に対する検証が完了し、既知の不具合に処置方針があること'],
+      ['顧客サンプル承認', '顧客承認書', '量産品と同一条件のサンプルで承認を得ていること'],
+      ['認証の申請', '申請控・技術文書', '必要な認証の技術文書を提出し、申請済みであること（取得はDR4まで）'],
+      ['量産体制', 'QC工程表・作業標準・教育記録', '作業標準が整備され、作業者教育が完了していること'],
+    ],
+    aiCheck: 'AI搭載製品は、適合性評価・表示・技術文書を整備する（AI基準-003による）。',
+  },
+  '4': {
+    stage: '出荷',
+    aim: '出荷判定会議。品質・法規制適合・サービス体制の3点を最終確認し、出荷開始を判定する。',
+    pass: '品質・法規制適合・サービス体制の最終確認が完了していること。通過をもって出荷を開始し、初期流動管理に移行する。',
+    checks: [
+      ['品質の最終確認', '出荷判定資料・初期流動管理計画', '未解決の重要品質問題がないこと。初期流動管理の体制・期間が定まっていること'],
+      ['法規制適合の最終確認', '認証書・適合宣言書', '必要な認証をすべて取得済みであること（申請中での出荷は不可）'],
+      ['サービス体制', 'サービス準備報告', '補用品・修理体制・取扱説明書が出荷開始に間に合っていること'],
+      ['生産・販売計画の整合', '生産計画・受注状況', '初期ロットの生産計画と受注が整合していること'],
+    ],
+    aiCheck: 'AI搭載製品は、出荷判定の確認項目にAI規制適合を含める（AI基準-003による）。',
+    bikou: '（備考）出荷判定は「間に合わせる会議」ではない。揃っていなければ日程より品質を取り、差戻しとする。',
+  },
+};
+
+const d = DATA[n ?? ''];
+if (!d) throw new Error(`unknown DR number: ${n}`);
+
+const drName = `DR${n}`;
+const allDr = ['0', '1', '2', '3', '4'];
+---
+
+<PortalDoc
+  title={`${drName}審査要領（${d.stage}）｜DARARIポータル（架空）`}
+  description={`架空企業ダラリ重工業の${drName}審査要領（開基-001の子基準）。${d.stage}ステージのゲート審査の確認項目・手続。自社のデザインレビュー雛形として流用できる実物サンプル。`}
+  docTitle={`ＤＲ${n}審査要領（${d.stage}）`}
+  docNo={`開基-001-${n}`}
+  history={['2026年8月17日 制定（開基-001から審査要領を分冊）']}
+  shokan="開発本部"
+>
+  <p class="mt-4 text-center text-[11px] text-[#888]">
+    {
+      allDr.map((i, idx) => (
+        <Fragment>
+          {idx > 0 && ' ｜ '}
+          {i === n ? (
+            <b class="text-[#1b3a6b]">DR{i}</b>
+          ) : (
+            <a href={`/company/seihin-kaihatsu-kijun-dr${i}/`} class="text-[#00c] underline">
+              DR{i}
+            </a>
+          )}
+        </Fragment>
+      ))
+    }
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">1. 目的・位置づけ</h2>
+  <p class="mt-2 leading-relaxed">
+    この基準は、製品開発基準（開基-001）「2. ステージゲート表」の定めに基づき、{drName}（{d.stage}）のゲート審査の要領を定める。開基-001の子基準であり、ステージゲートの骨格・部門構成は開基-001による。
+  </p>
+  <p class="mt-2 leading-relaxed">{d.aim}</p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">2. 審査チェック表</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">通過条件: {d.pass}</p>
+  <div class="mt-3 overflow-x-auto">
+    <table class="w-full min-w-[560px] border-collapse text-[12px]">
+      <thead>
+        <tr>
+          <th class="w-44 border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">確認項目</th>
+          <th class="w-48 border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">確認資料</th>
+          <th class="border border-[#ccc] bg-[#1b3a6b] px-2 py-1.5 text-left font-bold text-white">判定の目安</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          d.checks.map(([item, doc, guide]) => (
+            <tr>
+              <th class="border border-[#ccc] bg-[#f5f5f0] px-2 py-1.5 text-left align-top font-bold">{item}</th>
+              <td class="border border-[#ccc] px-2 py-1.5 align-top">{doc}</td>
+              <td class="border border-[#ccc] px-2 py-1.5 align-top">{guide}</td>
+            </tr>
+          ))
+        }
+        <tr>
+          <th class="border border-[#ccc] bg-[#eef7ee] px-2 py-1.5 text-left align-top font-bold">ＡＩ搭載製品の追加確認</th>
+          <td class="border border-[#ccc] bg-[#eef7ee] px-2 py-1.5 align-top">
+            <a href="/company/ai-product-kijun/" class="text-[#00c] underline">AI基準-003</a>
+          </td>
+          <td class="border border-[#ccc] bg-[#eef7ee] px-2 py-1.5 align-top">{d.aiCheck}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  {d.bikou && <p class="mt-2 text-[11px] leading-relaxed text-[#666]">{d.bikou}</p>}
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">3. 判定区分</h2>
+  <table class="mt-3 w-full border-collapse text-[12px]">
+    <tbody>
+      <tr>
+        <th class="w-32 border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left align-top font-bold">合格</th>
+        <td class="border border-[#ccc] px-3 py-1.5">次のステージへの移行を認める。</td>
+      </tr>
+      <tr>
+        <th class="border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left align-top font-bold">条件付合格</th>
+        <td class="border border-[#ccc] px-3 py-1.5">宿題（担当・期限つき）を付して移行を認める。宿題の完了は次回DRの冒頭で確認する。</td>
+      </tr>
+      <tr>
+        <th class="border border-[#ccc] bg-[#f5f5f0] px-3 py-1.5 text-left align-top font-bold">差戻し</th>
+        <td class="border border-[#ccc] px-3 py-1.5">移行を認めない。再審査の期日をその場で定める。</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    判定は議長（開発本部長またはその指名する主査）が決する。持ち回り承認をもってDRに代えてはならない（開基-001の定めによる）。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">4. 手続</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    （1）開催通知は開催日の5営業日前までに、事務局（開発本部 開発管理課）が関係部門に発する。<br />
+    （2）審査資料は開催日の2営業日前までに配布する。当日配布の資料は審査対象としない。<br />
+    （3）議事録は<a href="/company/intranet/kaigiroku/" class="text-[#00c] underline">会議録発行システム</a>により当日中に発行し、判定区分と宿題（担当・期限）を必ず記載する。
+  </p>
+
+  <h2 class="mt-6 font-bold text-[#1b3a6b]">5. 迷ったとき</h2>
+  <p class="mt-2 leading-relaxed text-[12px]">
+    この要領の解釈・適用に迷ったときは、開発本部 開発管理課（内線 4100）に照会する。照会先はここ一つとする。
+  </p>
+
+  <h2 class="mt-8 font-bold text-[#1b3a6b]">改定履歴</h2>
+  <p class="mt-2 text-[12px] leading-relaxed">
+    2026年8月17日　制定（開基-001「2. ステージゲート表」から各DRの審査要領を分冊。改定決裁を所管部門長に委譲し、確認項目の見直しを四半期で回せるようにした）。
+  </p>
+
+  <Fragment slot="after">
+    <div class="mt-4 border border-[#1b3a6b] bg-white px-4 py-3 text-[12px]">
+      💡 親基準は<a href="/company/seihin-kaihatsu-kijun/" class="text-[#00c] underline">製品開発基準（開基-001）</a>。
+      「変わりやすいものほど軽い文書に置く」考え方は<a href="/company/kitei-taikei/" class="text-[#00c] underline">社内規程体系</a>で解説されています。
+    </div>
+  </Fragment>
+</PortalDoc>

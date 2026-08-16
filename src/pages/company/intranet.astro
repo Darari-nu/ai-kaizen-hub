@@ -1,18 +1,51 @@
 ---
 // DARARIポータル — ダラリ重工業の社内イントラネット(という設定のパロディページ)。
 // 2000年代の社内ポータル様式美: 灰色背景・青リンク・表組み・過剰な「重要」マーク。
+import { getCollection } from 'astro:content';
 import Base from '@/layouts/Base.astro';
 
-const notices = [
-  ['2026.08.10', '重要', '総務部', '既存基準へのAI項目追加について（情報セキュリティ・クラウド・調達・契約・製品開発の各基準を改定）'],
-  ['2026.08.10', '通達', '総務部', 'AI関連規程の体系整備について（規程・基準・ガイドラインの制定）'],
-  ['2026.08.04', '重要', '総務部', 'ノー残業デーの徹底について（再周知）（再々周知）'],
-  ['2026.08.01', '通達', '情報システム部', 'AI利用規程（暫定版）の制定について'],
-  ['2026.07.28', 'お願い', '経理部', '経費精算の締切厳守について（今月こそ）'],
-  ['2026.07.15', '通達', '総務部', '夏季休業期間中の入退館について'],
-  ['2026.07.01', '回覧', '広報・IR室', '社内報「だらり」7月号を掲載しました'],
-  ['2026.06.20', '重要', '品質保証部', '検査記録の記入漏れ防止について（月例）'],
+type Notice = {
+  date: string;
+  tag: string;
+  dept: string;
+  text: string;
+  href?: string; // リンク先。無し = 読めない社内文書(点線)
+  openBot?: boolean; // true = クリックでAI相談窓口ウィジェットを開く
+};
+
+// 記事連動: 公開済み記事(draft:false)を「社外掲載の回覧」として自動でお知らせに流す。
+// 新規記事を公開するたび、このポータルの通達が勝手に増える(=増築は記事駆動、の運用)。
+const trunc = (s: string, n = 26) => (s.length > n ? s.slice(0, n) + '…' : s);
+const published = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+const articleNotices: Notice[] = published.map((a) => ({
+  date: a.data.pubDate.toISOString().slice(0, 10).replaceAll('-', '.'),
+  tag: '回覧',
+  dept: '広報・IR室',
+  text: `社外掲載: 「${trunc(a.data.title)}」（当社を題材とした記事の公開について）`,
+  href: `/articles/${a.slug}/`,
+}));
+
+const manualNotices: Notice[] = [
+  { date: '2026.08.17', tag: '重要', dept: '情報システム部', text: '勤怠管理システムの復旧について（7年ぶり。月次申請は本日よりシステムで受け付けます）', href: '/company/intranet/kintai/' },
+  { date: '2026.08.17', tag: '通達', dept: '経理部', text: '経費精算システムの利用開始について（領収書は引き続き紙で提出してください）', href: '/company/intranet/keihi/' },
+  { date: '2026.08.17', tag: '通達', dept: '開発本部', text: '製品開発基準の分冊化について（ＤＲ0〜ＤＲ4審査要領を子基準として制定）', href: '/company/seihin-kaihatsu-kijun/' },
+  { date: '2026.08.15', tag: '重要', dept: '総務部', text: 'AI相談窓口（総務課）の開設について（24時間対応・回答は社内規程に基づきます）', openBot: true },
+  { date: '2026.08.10', tag: '重要', dept: '総務部', text: '既存基準へのAI項目追加について（情報セキュリティ・クラウド・調達・契約・製品開発の各基準を改定）', href: '/company/kitei-taikei/' },
+  { date: '2026.08.10', tag: '通達', dept: '総務部', text: 'AI関連規程の体系整備について（規程・基準・ガイドラインの制定）', href: '/company/kitei-taikei/' },
+  { date: '2026.08.04', tag: '重要', dept: '総務部', text: 'ノー残業デーの徹底について（再周知）（再々周知）' },
+  { date: '2026.08.01', tag: '通達', dept: '情報システム部', text: 'AI利用規程（暫定版）の制定について', href: '/company/ai-kitei/' },
+  { date: '2026.07.28', tag: 'お願い', dept: '経理部', text: '経費精算の締切厳守について（今月こそ）' },
+  { date: '2026.07.15', tag: '通達', dept: '総務部', text: '夏季休業期間中の入退館について' },
+  { date: '2026.07.01', tag: '回覧', dept: '広報・IR室', text: '社内報「だらり」7月号を掲載しました' },
+  { date: '2026.06.20', tag: '重要', dept: '品質保証部', text: '検査記録の記入漏れ防止について（月例）' },
 ];
+
+// 日付降順でマージ(YYYY.MM.DD形式なので文字列比較でよい)
+const notices: Notice[] = [...manualNotices, ...articleNotices]
+  .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1))
+  .slice(0, 14);
 
 const kettai = [
   ['10万円未満', '課長', '即日〜3営業日'],
@@ -57,16 +90,24 @@ const ruleGroups: [string, boolean, [string, string][]][] = [
     ['調達基準（サプライヤー評価）', '/company/chotatsu-kijun/'],
     ['契約審査基準（秘密保持条項）', '/company/keiyaku-kijun/'],
     ['製品開発基準（ステージゲート）', '/company/seihin-kaihatsu-kijun/'],
+    ['└ ＤＲ審査要領（DR0〜DR4・開基-001の子基準）', '/company/seihin-kaihatsu-kijun-dr0/'],
   ]],
   ['整備待ち', false, [
     ['社印取扱規程', ''],
   ]],
 ];
+
+// 社員限定の回覧資料(入社=Substack登録の演出)。存在を約束しすぎない=「順次回覧」表記
+const kairan = [
+  ['稟議実録「AI導入編」（差し戻し2回の記録つき）', ''],
+  ['規程ひな形・編集可能版（自社用に流用可）', ''],
+  ['決裁権限表（全文・運用注記つき）', ''],
+];
 ---
 
 <Base
   title="DARARIポータル（架空企業の社内サイト）"
-  description="架空企業ダラリ重工業の社内ポータル（という設定のページ）。通達・規程・決裁権限表・方針の階層が閲覧できます。"
+  description="架空企業ダラリ重工業の社内ポータル（という設定のページ）。通達・規程・AI相談窓口・決裁権限表・方針の階層が閲覧できます。"
 >
   <div
     class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
@@ -85,6 +126,19 @@ const ruleGroups: [string, boolean, [string, string][]][] = [
       </div>
     </div>
 
+    <!-- ポータル内検索(動かないのが様式美) -->
+    <div class="border-b border-[#999] bg-[#e8e5de] px-4 py-1.5">
+      <div class="mx-auto flex max-w-4xl flex-wrap items-center gap-2">
+        <input
+          disabled
+          placeholder="ポータル内検索"
+          class="w-40 border border-[#999] bg-[#f5f5f0] px-2 py-0.5 text-[11px]"
+        />
+        <button disabled class="border border-[#999] bg-[#ddd] px-2 py-0.5 text-[11px] text-[#888]">検索</button>
+        <span class="text-[10px] text-[#888]">※検索機能は2019年のリニューアル以降、復旧の目処が立っていません。お探しの規程はAI相談窓口へ。</span>
+      </div>
+    </div>
+
     <div class="mx-auto max-w-4xl space-y-4 px-3 py-4">
       <!-- お知らせ -->
       <div class="border border-[#999] bg-white">
@@ -93,32 +147,28 @@ const ruleGroups: [string, boolean, [string, string][]][] = [
         </div>
         <ul class="divide-y divide-[#eee] px-3 py-1">
           {
-            notices.map(([date, tag, dept, text]) => (
+            notices.map((n) => (
               <li class="flex flex-wrap items-baseline gap-2 py-1.5">
-                <span class="text-[#888]">{date}</span>
+                <span class="text-[#888]">{n.date}</span>
                 <span
                   class:list={[
                     'px-1.5 py-0.5 text-[10px] font-bold',
-                    tag === '重要' ? 'bg-[#c00] text-white' : 'bg-[#eef1f5] text-[#1b3a6b] border border-[#1b3a6b]',
+                    n.tag === '重要' ? 'bg-[#c00] text-white' : 'bg-[#eef1f5] text-[#1b3a6b] border border-[#1b3a6b]',
                   ]}
                 >
-                  {tag}
+                  {n.tag}
                 </span>
-                <span class="text-[#666]">[{dept}]</span>
-                {text === '既存基準へのAI項目追加について（情報セキュリティ・クラウド・調達・契約・製品開発の各基準を改定）' ? (
-                  <a href="/company/kitei-taikei/" class="text-[#00c] underline">
-                    {text}
-                  </a>
-                ) : text === 'AI関連規程の体系整備について（規程・基準・ガイドラインの制定）' ? (
-                  <a href="/company/kitei-taikei/" class="text-[#00c] underline">
-                    {text}
-                  </a>
-                ) : text === 'AI利用規程（暫定版）の制定について' ? (
-                  <a href="/company/ai-kitei/" class="text-[#00c] underline">
-                    {text}
+                <span class="text-[#666]">[{n.dept}]</span>
+                {n.openBot ? (
+                  <button type="button" data-open-bot class="text-left text-[#00c] underline">
+                    {n.text}
+                  </button>
+                ) : n.href ? (
+                  <a href={n.href} class="text-[#00c] underline">
+                    {n.text}
                   </a>
                 ) : (
-                  <span class="cursor-default text-[#00c] underline decoration-dotted">{text}</span>
+                  <span class="cursor-default text-[#00c] underline decoration-dotted">{n.text}</span>
                 )}
               </li>
             ))
@@ -158,18 +208,38 @@ const ruleGroups: [string, boolean, [string, string][]][] = [
           }
         </div>
 
-        <!-- リンク集 -->
-        <div class="border border-[#999] bg-white">
-          <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
-            ■ 社内システム
+        <div class="space-y-4">
+          <!-- リンク集 -->
+          <div class="border border-[#999] bg-white">
+            <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+              ■ 社内システム
+            </div>
+            <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
+              <li class="py-1.5">
+                <button type="button" data-open-bot class="underline">AI相談窓口（総務課・忍者）</button>
+                <span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">←これは使えます（24時間対応）</span>
+              </li>
+              <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりAI自動集計</span></li>
+              <li class="py-1.5"><a href="/company/intranet/kaigiroku/" class="underline">会議録（AI自動作成）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/kaigiroku-manual/" class="underline">操作手引</a></span></li>
+              <li class="py-1.5"><a href="/company/intranet/kintai/" class="underline">勤怠管理システム</a><span class="ml-2 text-[10px] font-bold text-[#c00]">8/17 復旧しました（7年ぶり）</span></li>
+              <li class="py-1.5"><a href="/company/intranet/keihi/" class="underline">経費精算システム</a><span class="ml-2 text-[10px] text-[#c00]">Internet Explorer 11 推奨</span></li>
+              <li class="py-1.5"><a href="/company/intranet/bunsho/" class="underline">文書管理システム</a><span class="ml-2 text-[10px] text-[#999]">（要VPN→接続済みと判定されます）</span></li>
+              <li class="py-1.5"><span class="cursor-default underline decoration-dotted">Copilot Chat</span><span class="ml-2 text-[10px] text-[#999]">（ライセンス申請中・稟議148日目）</span></li>
+            </ul>
           </div>
-          <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
-            <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりAI自動集計</span></li>
-            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">勤怠管理システム</span><span class="ml-2 text-[10px] text-[#999]">（応答なし）</span></li>
-            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">経費精算システム</span><span class="ml-2 text-[10px] text-[#c00]">Internet Explorer 11 推奨</span></li>
-            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">文書管理システム</span><span class="ml-2 text-[10px] text-[#999]">（要VPN・要申請・要研修）</span></li>
-            <li class="py-1.5"><span class="cursor-default underline decoration-dotted">Copilot Chat</span><span class="ml-2 text-[10px] text-[#1b3a6b] font-bold">←これは使えます</span></li>
-          </ul>
+
+          <!-- 庶務連絡(様式美の小ネタ枠) -->
+          <div class="border border-[#999] bg-white">
+            <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+              ■ 庶務連絡
+            </div>
+            <ul class="space-y-1.5 px-3 py-2 text-[12px]">
+              <li><span class="font-bold text-[#666]">【安全】</span>今月の安全標語: 「まだいける」 その油断が 命取り（製造二課・入選作）</li>
+              <li><span class="font-bold text-[#666]">【食堂】</span>本日のA定食: 生姜焼き ／ B定食: 焼き魚（売切）※カレーの大盛りは廃止になりました</li>
+              <li><span class="font-bold text-[#666]">【会議室】</span>本日の空きはありません（第3会議室は資材置場のため当面予約不可）</li>
+              <li><span class="font-bold text-[#666]">【落とし物】</span>認印1本を総務部で保管しています（8月末で処分します）</li>
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -228,13 +298,22 @@ const ruleGroups: [string, boolean, [string, string][]][] = [
         </div>
       </div>
 
-      <!-- 社員証(登録導線) -->
-      <div class="border-2 border-[#c00] bg-[#fffbe6] px-4 py-3 text-[12px]">
-        <p class="font-bold text-[#c00]">🔒 閲覧権限について</p>
-        <p class="mt-1 leading-relaxed">
-          一部の回覧資料（規程の編集可能版・稟議実録・決裁権限表の全文）は社員限定です。
-          社員証をお持ちでない方は、入社手続き（<a href="https://dararinu.substack.com" class="font-bold text-[#00c] underline">Substack無料登録・1分</a>）をお願いします。
-          新しい通達も受信箱に届きます。
+      <!-- 回覧板(社員限定・登録導線) -->
+      <div class="border-2 border-[#c00] bg-[#fffbe6] px-4 py-3 text-[12px]" id="kairan">
+        <p class="font-bold text-[#c00]">🔒 回覧板（社員限定資料）</p>
+        <ul class="mt-2 divide-y divide-[#eee0b0]">
+          {
+            kairan.map(([name]) => (
+              <li class="flex flex-wrap items-baseline justify-between gap-2 py-1.5">
+                <span class="cursor-default text-[#00c] underline decoration-dotted">🔒 {name}</span>
+                <span class="text-[10px] text-[#999]">要社員証・順次回覧</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-2 leading-relaxed">
+          回覧資料の閲覧には社員証が必要です。お持ちでない方は、入社手続き（<a href="https://dararinu.substack.com" class="font-bold text-[#00c] underline">Substack無料登録・1分</a>）をお願いします。
+          新しい通達も受信箱に届き、回覧資料は整い次第そちらでお回しします。
         </p>
       </div>
 
@@ -250,3 +329,16 @@ const ruleGroups: [string, boolean, [string, string][]][] = [
     </div>
   </div>
 </Base>
+
+<script>
+  // AI相談窓口への導線: data-open-bot要素のクリックでChatWidgetのパネルを開く。
+  // 掟: 要素が無いページ・状況では何もしない(存在ガード必須。非null断定は禁止)
+  const openBtn = document.getElementById('djb-open');
+  const panel = document.getElementById('djb-panel');
+  document.querySelectorAll('[data-open-bot]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (panel && panel.hidden) openBtn?.click();
+    });
+  });
+</script>
