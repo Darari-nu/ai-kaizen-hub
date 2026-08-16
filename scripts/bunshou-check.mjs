@@ -11,6 +11,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { micromark } from 'micromark';
+import { gfm, gfmHtml } from 'micromark-extension-gfm';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RULES_PATH = path.join(REPO, '10_drafts', '20_添削の学び', 'ng-rules.json');
@@ -73,11 +75,45 @@ function endingCategory(sentence) {
   return null;
 }
 
+// 実レンダリング検査: Astroと同じCommonMark(micromark)で描画し、生の**が残ったら崩れ。
+// 典型例: 約物が**の内側の端に接すると強調判定が失敗する（×は**「スキル」**に → 生の**が公開される）。
+// 2026-08-16 darari指摘（005で発覚。「AIが書いたとわかると萎える」）。
+function renderCheck(content, lines) {
+  const body = content.replace(/^---[\s\S]*?\n---\n/, '');
+  let html;
+  try {
+    html = micromark(body, { extensions: [gfm()], htmlExtensions: [gfmHtml()], allowDangerousHtml: true });
+  } catch {
+    html = micromark(body, { allowDangerousHtml: true });
+  }
+  // コード表記（<code>/<pre>）内の**は意図的なのでNGにしない
+  const visible = html.replace(/<pre[\s\S]*?<\/pre>/g, '').replace(/<code[\s\S]*?<\/code>/g, '');
+  const findings = [];
+  for (const m of visible.matchAll(/(?:[^*\s>]{0,12})\*\*(?:[^*\s<]{0,12})/g)) {
+    const snippet = m[0];
+    // 出どころの行を推定（**を含む行のうち、前後の文字が一致するもの）
+    const probe = snippet.replace(/\*\*/g, '').slice(0, 8);
+    const lineNo = lines.findIndex(l => l.includes('**') && (probe === '' || l.includes(probe))) + 1;
+    findings.push({
+      id: 'RENDER-001', label: '強調記号**が生のまま表示される（Markdown崩れ）', severity: 'error',
+      line: lineNo > 0 ? lineNo : 1, matched: snippet,
+      sentence: snippet,
+      good: [
+        '約物（「」（）。、！？：等）を**の内側の端に置かない。×手順は**「スキル」**に → ○手順は「**スキル**」に（鉤括弧を外に出せば強調も括弧も残せる）',
+        '行頭・行末に接する**は約物入りでも安全。文中だけが事故る。直したら再検査で消えることを確認',
+      ],
+    });
+  }
+  return findings;
+}
+
 function checkFile(file, scope) {
   const content = fs.readFileSync(file, 'utf8');
   const lines = maskedLines(content);
   const rules = loadRules().filter(r => r.scope === 'all' || r.scope === scope || scope === 'force');
   const findings = [];
+
+  findings.push(...renderCheck(content, lines));
 
   for (const rule of rules) {
     const re = new RegExp(rule.pattern, 'g');
