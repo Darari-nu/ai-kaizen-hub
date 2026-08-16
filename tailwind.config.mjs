@@ -17,7 +17,7 @@ export default {
       },
       fontFamily: {
         display: ['"Shippori Mincho B1"', '"Zen Old Mincho"', 'serif'],
-        body: ['"BIZ UDPMincho"', '"Zen Old Mincho"', 'serif'],
+        body: ['"BIZ UDPGothic"', '"Hiragino Kaku Gothic ProN"', 'sans-serif'],
       },
       maxWidth: {
         prose: '42rem',
