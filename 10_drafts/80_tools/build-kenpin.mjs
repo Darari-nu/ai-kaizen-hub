@@ -125,9 +125,19 @@ const NOTES = {
 
   '050-reishou-shinai': { status: 'new', note: '【新規・darari原文の記事化】「AIを使う人を馬鹿にしない」——前職ガバナンス時代の一次体験(原文正本=10_drafts/素材_darari原文_冷笑しない_20260816.md)。原文の流れ・エピソードはそのまま。変更点: ⚠️会議の引用「4ヶ月に一回」→「数ヶ月に一度」にぼかし済み(Q6掲載NG対応。戻すかは検品判断)/「シャドーAI」の説明1文追加/自省を「その場で止めきれていません」に一歩具体化/想定問答3問+つかみ新設。確認3点: ①「止めきれていません」の踏み込みは事実と合うか ②申請周期のぼかしのまま行くか ③「シャドーAI」のカタカナ語でよいか(「隠れて使うAI」に差し替え可)' },
 
+  '051-ryousan-checklist': { status: 'new', note: '【新規・連載「ISO 9001×AIカイゼン」パイロット】量産開始前チェック12項目×AI(原文正本=10_drafts/素材_darari原文_ISO9001と量産移行_20260816.md)。12項目の中身・順番は原文のまま、言い回しだけ一般化(A4対応)。AI活用は全て「ぼくならこう使う」宣言フレーム(B2)・判断はAIに任せない縛り(C1)を一貫。失敗談は創作せず読者あるあるに圧縮(E9前例・要判断)。確認3点: ①経歴を「量産に送り出す現場を長く見てきた」とぼかした。「10年」「海外OEM」まで書くか ②12項目の並びが実在の社内様式に寄りすぎていないか(A4の本丸) ③「ISO審査でAI使用は問題？」に正直着地(まだ確かめていない・一緒に考える)でよいか' },
+
+  '052-jouhou-jidou': { status: 'new', note: '【新規・darari投げ込み5連発の1本目】欲しい情報は自動で取れ——自作の情報収集サイト・通知の実録(AI Reg Atlas=024既出/3時間ごと自動集計=047既出/自動通知=台帳2026-03-30)。失敗談は詰まり2連(プロキシ遮断→中継→403→User-Agentで解決)の実測のみ。確認3点: ①AI Reg Atlasの比較表は「13カ国×7つの観点」で合っているか(実物未照合) ②通知の実例を「支払いメールの確認」まで書いてよいか(現状は「予定など」にぼかし) ③会社相手の自動収集への注意はC3の書き方で足りるか' },
+
   // --- 8/15 新設ページ2つ(未公開・push前。詳細は各紹介文) ---
   'page-llm-cost': { status: 'new', note: '【新設ページ①・未公開】darari承認済みの「トークン数→月額」計算機の実装報告。動作検証済み。確認3点: ①入力の既定値の肌感 ②為替150円仮置き表記 ③SaaS公開価格帯(月0〜12万円)への言及の書き方' },
   'page-muryou-ai': { status: 'new', note: '【新設ページ②・未公開】83か所の常設一覧。イケハヤ・西野両部長の合同答申を反映(「地図」の語を排除/独断宣言/再検証予約のSubstack導線/ダラリ重工業は出さない)。確認3点: ①ページ名 ②スタンス宣言の文言 ③実名の罠注記をこのまま出すか' },
+
+  // --- 8/16 Brain教材(2,980円)の原稿。トーン検品の初回 ---
+  'brain-00': { status: 'new', note: '【Brain教材・販売ページ=無料部分】イケハヤ型11ブロック写像。8/16裁定3件は反映済み(金額そのまま/追伸の実話OK/1日3問明記※回数設計は要再考の宿題)。実演は本物の忍者への誘導。確認: トーン全体が「ぼく」の声になっているか(イケハヤに寄りすぎていないか)' },
+  'brain-01': { status: 'new', note: '【Brain教材・第0章】有料エリアの先頭。歩き方/忍者に触る3質問/約束3つ(検証実況・法的助言でない・会社のルールが先)/AI読み込みライセンスの使い方プロンプト。確認: 「今日からやること」を1個型にした(イケハヤは3個型)。どちらに揃えるか' },
+  'brain-02': { status: 'new', note: '【Brain教材・第1章】SaaS初年度104万vs月0円実測。「削減しました」と書かない線引き。確認1点: 今の上司の治具の名言(「失敗しても治具買うより安いし」)をそのまま載せてよいか(上司ポジティブ系は検品必須の申し送り)' },
+  'brain-03': { status: 'new', note: '【Brain教材・第2章】上限3点セット/4つの分岐点/規程にないことは答えない/RAG不要論/見積もり失敗の実録。確認1点: 「これ、テストに出ます。」の軽口が演出ジョーク禁止(8/15)に当たるか。当たるなら削ります' },
 };
 
 const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
@@ -175,6 +185,23 @@ if (existsSync(PAGES_DIR)) {
     articles.push({
       slug,
       fm: { title, series: 'ページ', number: `P-${pageNo}` },
+      raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw),
+    });
+  }
+}
+
+// Brain教材の原稿（10_drafts/50_brain/NN_*.md。frontmatterなし。1行目の見出しをタイトルに使う）
+const BRAIN_DIR = join(ROOT, '10_drafts/50_brain');
+if (existsSync(BRAIN_DIR)) {
+  for (const f of readdirSync(BRAIN_DIR).filter((f) => /^\d\d_/.test(f) && f.endsWith('.md')).sort()) {
+    const raw = readFileSync(join(BRAIN_DIR, f), 'utf8');
+    const title = raw.split('\n')[0].replace(/^#\s*/, '');
+    const no = f.slice(0, 2);
+    const slug = `brain-${no}`;
+    const meta = NOTES[slug] || { status: 'new', note: '' };
+    articles.push({
+      slug,
+      fm: { title, series: 'Brain教材', number: `B-${no}` },
       raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw),
     });
   }
