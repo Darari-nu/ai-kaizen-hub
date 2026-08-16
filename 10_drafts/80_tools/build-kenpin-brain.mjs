@@ -5,7 +5,7 @@ import { join } from 'node:path';
 const ROOT = '/Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP';
 const DIR = join(ROOT, 'src/content/articles');
 const PUBLIC = join(ROOT, 'public');
-const OUT = '/tmp/kenpin.html';
+const OUT = '/tmp/kenpin-brain.html';
 
 // ヒーロー画像をdataURIで埋め込む（Artifactは外部ホストへの通信が禁止のため）
 // 元画像は数MBあるので、macOSのsipsで幅720pxのjpegサムネを作ってから埋める
@@ -132,54 +132,30 @@ const NOTES = {
   // --- 8/15 新設ページ2つ(未公開・push前。詳細は各紹介文) ---
   'page-llm-cost': { status: 'new', note: '【新設ページ①・未公開】darari承認済みの「トークン数→月額」計算機の実装報告。動作検証済み。確認3点: ①入力の既定値の肌感 ②為替150円仮置き表記 ③SaaS公開価格帯(月0〜12万円)への言及の書き方' },
   'page-muryou-ai': { status: 'new', note: '【新設ページ②・未公開】83か所の常設一覧。イケハヤ・西野両部長の合同答申を反映(「地図」の語を排除/独断宣言/再検証予約のSubstack導線/ダラリ重工業は出さない)。確認3点: ①ページ名 ②スタンス宣言の文言 ③実名の罠注記をこのまま出すか' },
+
+  // --- Brain教材(2,980円)の原稿。トーン検品の初回(8/16執筆・8/17図解マーカー追加) ---
+  'brain-00': { status: 'new', note: '【販売ページ=無料部分】イケハヤ型11ブロック写像。8/16裁定3件は反映済み(金額そのまま/追伸の実話OK/1日3問明記※回数設計は要再考の宿題)。実演は本物の忍者への誘導。図解z02(SaaS対自作の費用対比)のマーカー入り=「画像がまだありません」表示は未生成の印。確認: トーン全体が「ぼく」の声になっているか(イケハヤに寄りすぎていないか)' },
+  'brain-01': { status: 'new', note: '【第0章 はじめに】有料エリアの先頭。歩き方/忍者に触る3質問/約束3つ(検証実況・法的助言でない・会社のルールが先)/AI読み込みライセンスの使い方プロンプト。図解z01(教材の地図)マーカー入り。確認: 「今日からやること」を1個型にした(イケハヤは3個型)。どちらに揃えるか' },
+  'brain-02': { status: 'new', note: '【第1章 なぜ自作か】SaaS初年度104万vs月0円実測。「削減しました」と書かない線引き。図解z02・z03(月0円の内訳)マーカー入り。確認1点: 今の上司の治具の名言(「失敗しても治具買うより安いし」)をそのまま載せてよいか(上司ポジティブ系は検品必須の申し送り)' },
+  'brain-03': { status: 'new', note: '【第2章 設計】上限3点セット/4つの分岐点/規程にないことは答えない/RAG不要論/見積もり失敗の実録。図解z04(上限3点)・z05(正本から抽出)マーカー入り。確認1点: 「これ、テストに出ます。」の軽口が演出ジョーク禁止(8/15)に当たるか。当たるなら削ります' },
 };
-// Brain教材の検品はこのページではやらない（2026-08-17 darari指示で専用の検品室に分離。build-kenpin-brain.mjs 参照）
 
-const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
-const articles = files.map((f) => {
-  const raw = readFileSync(join(DIR, f), 'utf8');
-  const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  const fm = Object.fromEntries(
-    m[1].split('\n').filter((l) => l.includes(':')).map((l) => {
-      const i = l.indexOf(':');
-      return [l.slice(0, i).trim(), l.slice(i + 1).trim().replace(/^'(.*)'$/, '$1')];
-    })
-  );
-  const slug = f.replace('.md', '');
-  const meta = NOTES[slug] || { status: 'new', note: '' };
-  return { slug, fm, raw, status: meta.status, note: meta.note, hero: embedImage(fm.ogImage), media: inlineMediaMap(raw) };
-});
+const articles = [];
 
-// Substack配信下書き（frontmatterなし。配信タイトル案の行をタイトルに使う）
-const SUBSTACK_DIR = join(ROOT, '10_drafts/10_substack');
-if (existsSync(SUBSTACK_DIR)) {
-  for (const f of readdirSync(SUBSTACK_DIR).filter((f) => f.endsWith('.md')).sort()) {
-    const raw = readFileSync(join(SUBSTACK_DIR, f), 'utf8');
-    const title = (raw.match(/^配信タイトル案: (.+)$/m) || [, f.replace('.md', '')])[1];
-    const no = (f.match(/\d+/) || ['?'])[0];
-    const slug = `substack-tsuutatsu-${no}`;
-    const meta = NOTES[slug] || { status: 'new', note: '' };
-    articles.push({
-      slug,
-      fm: { title, series: 'Substack', number: `S-${no}` },
-      raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw),
-    });
-  }
-}
 
-// 新設ページの紹介文（10_drafts/60_回覧資料/検品ページ紹介/*.md。HP記事でないページの検品用）
-const PAGES_DIR = join(ROOT, '10_drafts/60_回覧資料/検品ページ紹介');
-if (existsSync(PAGES_DIR)) {
-  let pageNo = 0;
-  for (const f of readdirSync(PAGES_DIR).filter((f) => f.endsWith('.md')).sort()) {
-    const raw = readFileSync(join(PAGES_DIR, f), 'utf8');
+
+// Brain教材の原稿（10_drafts/50_brain/NN_*.md。frontmatterなし。1行目の見出しをタイトルに使う）
+const BRAIN_DIR = join(ROOT, '10_drafts/50_brain');
+if (existsSync(BRAIN_DIR)) {
+  for (const f of readdirSync(BRAIN_DIR).filter((f) => /^\d\d_/.test(f) && f.endsWith('.md')).sort()) {
+    const raw = readFileSync(join(BRAIN_DIR, f), 'utf8');
     const title = raw.split('\n')[0].replace(/^#\s*/, '');
-    pageNo += 1;
-    const slug = 'page-' + f.replace('.md', '');
+    const no = f.slice(0, 2);
+    const slug = `brain-${no}`;
     const meta = NOTES[slug] || { status: 'new', note: '' };
     articles.push({
       slug,
-      fm: { title, series: 'ページ', number: `P-${pageNo}` },
+      fm: { title, series: 'Brain教材', number: `B-${no}` },
       raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw),
     });
   }
@@ -234,7 +210,7 @@ const sections = articles.map((a) => `
 
 const html = `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AIカイゼン 検品室</title>
+<title>Brain教材 検品室</title>
 <style>
 :root{--paper:#FBFAF7;--ink:#1C1B18;--nezu:#6E6A61;--rule:#E3E0D8;--shu:#C73E2E;--card:#F4F0E7;--ok:#2E7D4F;}
 @media (prefers-color-scheme: dark){:root{--paper:#14181F;--ink:#ECEAE4;--nezu:#9A968C;--rule:#2A303B;--shu:#D96A5A;--card:#1B2029;--ok:#5FB584;}}
@@ -298,7 +274,7 @@ a:focus-visible{outline:2px solid var(--shu);outline-offset:2px;}
 </style>
 <div class="wrap">
   <p class="lead">社外秘（あなた専用）｜全${articles.length}本｜✅検品ずみ ${done}本 / のこり ${articles.length - done}本</p>
-  <h1>AIカイゼン <span>検品室</span></h1>
+  <h1>Brain教材 <span>検品室</span></h1>
   <p class="conn" id="conn">Googleドライブ連携: 確認中…</p>
   <div class="howto">
     <b>使い方</b><br>

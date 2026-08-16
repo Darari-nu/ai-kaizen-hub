@@ -12,6 +12,9 @@ darariは会社PC・スマホ・自宅PCを行き来する。だから**検品�
 
 1. **同じURLを使い続ける**。新しいURLを生やさない
    - 検品室URL: `https://claude.ai/code/artifact/81fd4910-daef-412b-bc58-13b13cf7f122`
+   - **Brain教材 検品室**（2026-08-17 darari指示で分離。favicon🥷）: `https://claude.ai/code/artifact/234c83fd-d4d0-471c-8e04-9dbba52c8430`
+     - ビルド: `node 10_drafts/80_tools/build-kenpin-brain.mjs` → `/tmp/kenpin-brain.html`。原稿は `10_drafts/50_brain/NN_*.md`（gitignore内・公開リポに載せない）
+     - Brain教材の原稿は本体の検品室に混ぜない
    - 別セッションから更新するときは、Artifactツールの `url` パラメータにこのURLを渡す（渡さないと新URLが生える）
 2. **保存先はGoogleドライブ**。GitHubコネクタは使わない（2026-08-07: 本人環境で繋がらなくなったため変更）
 3. **検品が済んだものは一目で分かるようにする**（`status` フィールド。下記）
