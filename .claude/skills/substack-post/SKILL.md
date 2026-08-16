@@ -35,7 +35,7 @@ description: >
 ### 1. ストック作成（執筆はしない。転記だけ）
 
 - 元記事の**現行版**を `src/content/articles/` から読む（必ず読み直す。検品反映で変わっていることがある）
-- `配信用.md` を作る: Title=記事title、Subtitle=記事description、サムネ=記事ogImage、
+- `配信用.md` を作る: Title=記事titleから**「——」を除去**（削除または「。」に置換。darari 8/16「AIっぽいので」・RULES F1鉄則）、Subtitle=記事description、サムネ=記事ogImage、
   本文=記事本文そのまま＋末尾に「このニュースレターは、無料で学べるサイト「AIカイゼン」の記事をお届けしています。／👉 [サイトで他の記事も読む](https://darari-nu.com/)」
 - 配信前チェック: `grep -nE '私は|僕は|※|一概には' 配信用.md` が0件、リンク先URLがcurlで200
 
