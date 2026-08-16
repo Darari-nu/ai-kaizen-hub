@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 文章の機械検査（Hooks用）
-// - ルール台帳: 10_drafts/添削の学び/ng-rules.json（正規表現＋グッドパターン）
+// - ルール台帳: 10_drafts/20_添削の学び/ng-rules.json（正規表現＋グッドパターン）
 // - 文書集計検査: 同じ文末（ます。です。等）が3文以上連続したら警告
 // 使い方:
 //   node scripts/bunshou-check.mjs <file.md>...   手動検査（scope外のファイルも強制検査）
@@ -13,7 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const RULES_PATH = path.join(REPO, '10_drafts', '添削の学び', 'ng-rules.json');
+const RULES_PATH = path.join(REPO, '10_drafts', '20_添削の学び', 'ng-rules.json');
 const ENDING_RUN_LIMIT = 4; // 同一文末がこの数以上連続でwarn（検品済み記事に3連続は普通にあるため）
 
 function loadRules() {
@@ -25,7 +25,7 @@ function scopeOf(file) {
   const rel = path.relative(REPO, path.resolve(file)).split(path.sep).join('/');
   if (rel.startsWith('..') || !rel.endsWith('.md')) return null;
   if (rel.startsWith('src/content/articles/') && path.basename(rel) !== '_template.md') return 'articles';
-  if (rel.startsWith('10_drafts/substack/')) return 'substack';
+  if (rel.startsWith('10_drafts/10_substack/')) return 'substack';
   return null;
 }
 

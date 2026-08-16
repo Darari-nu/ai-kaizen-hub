@@ -104,7 +104,7 @@ YES該当: 「情報を見せる」のみ（問い合わせ=Substack埋め込み
 ## STEP 9-10: インフラ・デプロイ
 
 - 🟢 Astro + Tailwind、`site: 'https://darari-nu.com'`、`base: '/'`
-- 🟢 **ホスティング: Cloudflare Pages**（2026-08-05裁定。GitHub Pages用のCNAME/Actionsは`10_drafts/github-pages-backup/`に退避済み）
+- 🟢 **ホスティング: Cloudflare Pages**（2026-08-05裁定。GitHub Pages用のCNAME/Actionsは`10_drafts/91_github-pages-backup/`に退避済み）
 - 🟡 GitHub: `Darari-nu/ai-kaizen-hub`（Public）＝ソース置き場。Cloudflareが連携して自動ビルド。**push前に本人確認**
 - 🟢 デプロイ: push → Cloudflare Pages自動ビルド&反映（1〜2分）。戻すときはダッシュボードから1クリックロールバック
 - DNS: **Cloudflareへネームサーバー移管を推奨**（Xserverで変更・本人作業）。詳細は`公開手順書.md`
@@ -147,7 +147,7 @@ privacy（解析ツールを入れる場合はその旨記載）のみ。特商�
 
 ## 追加裁定（2026-08-05・実装中）
 
-- 無料コンテンツは**3軸「記録・カイゼン・ガバナンス」**（darari命名）。「○○にお金払ってません？」シリーズとデプロイ入門はボツ（`10_drafts/ボツ/`に退避）
+- 無料コンテンツは**3軸「記録・カイゼン・ガバナンス」**（darari命名）。「○○にお金払ってません？」シリーズとデプロイ入門はボツ（`10_drafts/90_ボツ/`に退避）
 - **記録**=僕のAI記録（実況・実録）／**カイゼン**=道具型／**ガバナンス**=元担当の現場語訳（独立シリーズ・差別化の核）
 - ネタの正本は `10_drafts/ネタ帳.md`（★=一次体験の裏付けあり優先）。記事①「社内AIルール3点セット」②「ChatGPT禁止の会社」執筆済み・検品待ち
 

@@ -1,6 +1,6 @@
 ---
 name: bunshou-kaizen-loop
-description: darariの検品・加筆を回収して差分を分析し、次回の執筆ルールに反映する自己改善ループ。「検品回収して」「差分を取り込んで」「学びを反映して」「ルールを更新して」で発動。darariから検品の指摘・加筆・「だめ」「ボツ」が来たときも発動。記事を書く前にも必ず参照し、10_drafts/添削の学び/RULES.md を読んでから書きはじめる。
+description: darariの検品・加筆を回収して差分を分析し、次回の執筆ルールに反映する自己改善ループ。「検品回収して」「差分を取り込んで」「学びを反映して」「ルールを更新して」で発動。darariから検品の指摘・加筆・「だめ」「ボツ」が来たときも発動。記事を書く前にも必ず参照し、10_drafts/20_添削の学び/RULES.md を読んでから書きはじめる。
 ---
 
 # 文章カイゼン・ループ（このリポの自己学習の仕組み・2026-08-08 darari指示）
@@ -20,7 +20,7 @@ darariの依頼原文（8/8）:
 | 何 | どこ | 役割 |
 |---|---|---|
 | 記事の型と機械検査 | `src/content/articles/_template.md` | 8ブロック構成・grep検査。**機械で守れるルール** |
-| 検品から抽出した執筆ルール | `10_drafts/添削の学び/RULES.md` | **人の判断が要るルール**。このスキルが育てる |
+| 検品から抽出した執筆ルール | `10_drafts/20_添削の学び/RULES.md` | **人の判断が要るルール**。このスキルが育てる |
 | 文体の人格・語り口の正本 | `~/Claudecode/260307_2nd-Brain/00_システム/00_UserProfile/03_執筆スタイル(Style_Guidelines).md` | ペルソナの根っこ（全レーン共通） |
 | 文体のトーン見本 | `src/content/articles/004-claude-team.md` | 本人が「好き」と言った文体。少しだけ寄せる |
 | ネタ | `10_drafts/ネタ帳.md` | ★=一次体験の裏付けあり。ここからしか書かない |
@@ -65,7 +65,7 @@ darariの依頼原文（8/8）:
 
 ### 4. ルールに昇格させる
 
-`10_drafts/添削の学び/RULES.md` を更新する。掟:
+`10_drafts/20_添削の学び/RULES.md` を更新する。掟:
 
 - **根拠必須**: darariの言葉の引用＋日付＋記事番号。根拠のないルール・一般論は作らない
 - 同じ趣旨のルールが既にあれば、**新規追加ではなく観測回数を+1**し、根拠を追記する
@@ -76,12 +76,12 @@ darariの依頼原文（8/8）:
 
 ### 5. 機械で守れるものは機械に落とす
 
-正規表現で検出できるものは `10_drafts/添削の学び/ng-rules.json` にルールとして追加し、
+正規表現で検出できるものは `10_drafts/20_添削の学び/ng-rules.json` にルールとして追加し、
 RULES.mdからは外す（例: 「※」「——挟み込み」「私は」。実在の部署名・サービス名も辞書化すれば検出できる）。
 **RULES.mdには人の判断が要るものだけを残す**のが理想の状態。
 
 ng-rules.json は Hooks で自動実行される（2026-08-15導入。`.claude/settings.json` +
-`scripts/bunshou-check.mjs`）。対象ファイル（`src/content/articles/*.md`・`10_drafts/substack/**`）を
+`scripts/bunshou-check.mjs`）。対象ファイル（`src/content/articles/*.md`・`10_drafts/10_substack/**`）を
 Write/Edit した直後に検査が走り、NGはエージェントに自動でフィードバックされる。
 セッション終了時にも再検査され、NGが残っていると完了できない。
 
@@ -94,7 +94,7 @@ Write/Edit した直後に検査が走り、NGはエージェントに自動で�
 
 ### 6. ログを残す
 
-`10_drafts/添削の学び/log/YYYYMMDD_件名.md` に短く残す:
+`10_drafts/20_添削の学び/log/YYYYMMDD_件名.md` に短く残す:
 
 - 指摘・加筆の内容（本人の言葉のまま）／分類／どのルールに昇格・加算したか
 - **再発の有無**: 既に鉄則だったルールが今回また指摘されたか。
@@ -117,7 +117,7 @@ Write/Edit した直後に検査が走り、NGはエージェントに自動で�
 執筆前に必ずReadすること:
 1. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles/_template.md
    （8ブロック構成と機械検査。公開前にgrep検査が0件になること）
-2. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/添削の学び/RULES.md
+2. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/20_添削の学び/RULES.md
    （darari本人の検品から抽出したルール。「鉄則」は絶対に守る。特にA会社特定/B創作禁止/C安全）
 3. 文体見本: /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles/004-claude-team.md
    （少しだけ寄せる。完全には寄せない）

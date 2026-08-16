@@ -1,6 +1,6 @@
 最終更新: 2026-08-15
 収録者: Opus / 規約: ../00_収録規約.md
-⬛非公開: 81件 ／ 🔴宿題: 1件 ／ 🟠本人待ち: 1件
+⬛非公開: 82件 ／ 🔴宿題: 0件 ／ 🟠本人待ち: 1件
 （数え方: 本文の表の行に付いた印を数えた実測値。`grep -E '^\|' | grep -c '⬛非公開'` で再現できる）
 
 ---
@@ -372,7 +372,7 @@ denshihozon / seikyu / saikenkanri / jinjiroumu / mailmarketing / jidootai] + ne
 |---|---|---|---|---|
 | 事前購入（クレジットパック） | **¥29,985 / パック / 月**（25,000 Copilot クレジット） | 一次 | https://www.microsoft.com/ja-jp/microsoft-365-copilot/pricing/copilot-studio | 2026-08-15 |
 | 従量課金制 | 「支払いは利用した分だけ」（事前契約不要）。**単価の記載なし** | 一次 | https://www.microsoft.com/ja-jp/microsoft-365-copilot/pricing/copilot-studio | 2026-08-15 |
-| 従量課金の単価（円/1 Copilot クレジット） | 🔴宿題（**未解決**。下記「宿題の記録」参照） | - | - | 2026-08-15 |
+| 従量課金の単価 | **0.01 ドル/Copilot クレジット**（USD。**取得済み → 下記 18-3**。円建ては非公開=18-3参照） | 一次 | https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/ja-jp/microsoft-365/Microsoft%20Copilot%20Studio%20Licensing%20Guide%20July%202026%20PUB_JP.pdf | 2026-08-15 |
 | 前払い購入の割引 | 「Copilot クレジット コミット ユニットを前払いで購入すると、コストを最大 20% 削減できます」 | 一次 | https://www.microsoft.com/ja-jp/microsoft-365-copilot/pricing/copilot-studio | 2026-08-15 |
 | プリペイド枯渇時 | 自動で従量課金制に切り替え | 一次 | https://www.microsoft.com/ja-jp/microsoft-365-copilot/pricing/copilot-studio | 2026-08-15 |
 | 初期費用 | ⬛非公開（記載なし） | 一次 | https://www.microsoft.com/ja-jp/microsoft-365-copilot/pricing/copilot-studio | 2026-08-15 |
@@ -411,14 +411,41 @@ denshihozon / seikyu / saikenkanri / jinjiroumu / mailmarketing / jidootai] + ne
 | 未使用クレジットの繰越 | **なし**（「毎月の購入容量が適用され、未使用のCopilotクレジットは翌月に引き継がれません」） | 一次 | https://learn.microsoft.com/ja-jp/microsoft-copilot-studio/requirements-messages-management | 2026-08-15 |
 | 適用範囲 | 「これらの料金は、Copilot Studio が提供するすべての言語モデルに適用されます」。持ち込みモデル（Azure Foundry含む）は別課金のため除外 | 一次 | https://learn.microsoft.com/ja-jp/microsoft-copilot-studio/requirements-messages-management | 2026-08-15 |
 
-**🔴 宿題の記録（Copilot Studio 円/クレジット単価）**:
-価格ページ（`microsoft.com/.../pricing/copilot-studio`）が公開しているのは**前払いパックの ¥29,985 / 25,000クレジット だけ**で、
-従量課金制メーターの「円/1クレジット」は書かれていない。ライセンスガイドPDFを取りに行ったが、
-`aka.ms/CopilotStudioLicensingGuide` と `go.microsoft.com/fwlink/?linkid=2320884` は**どちらもBing検索トップにリダイレクト**され、
-PDFに到達できなかった。Learn側（`billing-licensing` / `requirements-messages-management`）にも円建て単価はなかった。
-→ **次にやること**: Power Platform ライセンスガイドPDFの実URLを特定する／Azureポータルの料金計算ツールで従量メーター単価を確認する。
-（**⚠️ ¥29,985 ÷ 25,000 の割り算で単価を出して書かないこと。** 前払いパックと従量課金は別メニューで、
-前払いには「最大20%削減」と明記があるため、割り算の結果は従量単価と一致しない。）
+### 18-3. Microsoft Copilot Studio ライセンスガイド（2026年7月版・日本語PDF） 🟢従量課金単価を取得（2026-08-15 追加取得）
+
+**前回の宿題（従量課金単価）を解決した一次資料。**
+PDF実URL: `https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/ja-jp/microsoft-365/Microsoft%20Copilot%20Studio%20Licensing%20Guide%20July%202026%20PUB_JP.pdf`
+到達経路: `go.microsoft.com/fwlink/?linkid=2320995`（Power Platform ライセンスガイド `fwlink/?LinkId=2085130` のPDF内リンクから特定）。
+`aka.ms/CopilotStudioLicensingGuide` は引き続きBingへリダイレクトされ死んでいるが、**fwlink 2320995 は生きている**。
+ガイド冒頭に「**すべての価格は米ドル (USD) 表記**であり、変更される可能性があります」と明記。
+
+| 項目 | 値 | 一次/二次 | 出典URL | 取得日 |
+|---|---|---|---|---|
+| **従量課金メーター単価** | **0.01 ドル/Copilot クレジット**（「価格: 0.01 ドル/Copilot クレジット」p.11。請求月中に消費した実クレジット数を月末に後払い。事前契約不要） | 一次 | https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/ja-jp/microsoft-365/Microsoft%20Copilot%20Studio%20Licensing%20Guide%20July%202026%20PUB_JP.pdf | 2026-08-15 |
+| 従量課金メーターの円建て単価 | ⬛非公開（ガイドは全価格USD表記。日本語の価格ページ・Learnにも円建て従量単価の記載なし） | 一次 | 同上 | 2026-08-15 |
+| 従量課金SKU名 | Microsoft Copilot Studio Pay-As-You-Go Copilot Credit | 一次 | 同上 | 2026-08-15 |
+| クレジットパック | **200 ドル/クレジットパック/月（年払い）**。1パック=25,000 Copilot クレジット。未使用分の翌月繰越不可 | 一次 | 同上 | 2026-08-15 |
+| Copilot クレジット事前購入プラン (P3) | 1年間有効の前払い。未使用クレジットは1年の契約期間終了時に失効。超過時は追加購入または従量課金 | 一次 | 同上 | 2026-08-15 |
+| Microsoft Agent 事前購入プラン (P3) | Copilot Studio と Microsoft Foundry 横断の1年前払いプラン。**1 ACU（エージェントコミットユニット）= 1ドル分 = 100 Copilot クレジット** | 一次 | 同上 | 2026-08-15 |
+| Microsoft 365 Copilot | **30 ドル/ユーザー/月** | 一次 | 同上 | 2026-08-15 |
+| Copilot Studio ユーザーライセンス（作成者） | 無償（エージェントを構築・管理するユーザー1人につき1つ必要） | 一次 | 同上 | 2026-08-15 |
+
+**Copilot クレジット事前購入プラン (P3) の割引表**（ガイドp.12掲載の全9 Tier）:
+
+| Tier | Copilot クレジット | 割引 |
+|---|---|---|
+| 1 | 300,000 | 5% |
+| 2 | 1,500,000 | 6% |
+| 3 | 3,000,000 | 7% |
+| 4 | 15,000,000 | 8% |
+| 5 | 30,000,000 | 10% |
+| 6 | 75,000,000 | 12% |
+| 7 | 150,000,000 | 14% |
+| 8 | 225,000,000 | 17% |
+| 9 | 300,000,000 | 20% |
+
+（価格ページ `pricing/copilot-studio` の日本円「¥29,985 / パック / 月」とガイドの「200ドル/パック/月」は同一SKUの別通貨表記。
+円建てとUSD建てのどちらを引用するかは用途で選ぶこと。従量課金メーターの方はUSDのみ公開。）
 
 ---
 
@@ -691,6 +718,7 @@ ES料金ページの正しいURLは `https://cloud.google.com/products/dialogflo
 | **Zendesk 従業員向けサービス（Suite Team）** | **$29 エージェント/月（年払い）** | https://www.zendesk.co.jp/pricing/employee-service-pricing/ |
 | **Zendesk 従業員向けサービス（Suite Growth）** | **$59 エージェント/月（年払い）** | https://www.zendesk.co.jp/pricing/employee-service-pricing/ |
 | **Zendesk 従業員向けサービス（Suite Professional）** | **$99 エージェント/月（年払い）** | https://www.zendesk.co.jp/pricing/employee-service-pricing/ |
+| **Copilot Studio 従量課金メーター** | **$0.01 / Copilot クレジット**（月末後払い・事前契約不要） | https://cdn-dynmedia-1.microsoft.com/is/content/microsoftcorp/microsoft/bade/documents/products-and-services/ja-jp/microsoft-365/Microsoft%20Copilot%20Studio%20Licensing%20Guide%20July%202026%20PUB_JP.pdf |
 
 （下の4行は2026-08-15の追加取得。Zendesk従業員向けサービスは**社内向け用途そのもの**で、
 Zendeskのカスタマーサービス版（$19/$55/$115）より安い価格帯が公開されている）
@@ -735,7 +763,10 @@ Zendeskのカスタマーサービス版（$19/$55/$115）より安い価格帯�
 規約 `../00_収録規約.md`「穴の3分類」で仕分けたもの。
 **⬛は穴ではない。「調べた結果、公開されていなかった」という確定した事実。**
 
-## ⬛ 非公開（対応不要。これ自体が結論）— 81件
+## ⬛ 非公開（対応不要。これ自体が結論）— 82件
+
+（2026-08-15 第2次追加調査で+1: Copilot Studio 従量課金メーターの**円建て**単価。
+ライセンスガイドが「すべての価格は米ドル (USD) 表記」と明記しており、USD単価 0.01ドル/クレジットのみ公開）
 
 一次で「金額の記載なし／要問い合わせ／資料請求のみ」を確認したもの:
 OfficeBot / HiTTO（月額のみ非公開）/ sAI Chat / PKSHA ChatAgent / KARAKURI chatbot /
@@ -770,11 +801,22 @@ ChatPlus AI Agent Plus（月額本体）/ Zendesk AIエージェント自動解�
 つまり **⬛の増加は調査が進んだ証拠であって、悪化ではない。**
 「日本のBtoB SaaSは価格を出さない」という主張の根拠は、この81件の方にある。
 
-## 🔴 宿題（公開されているはずだが、こちらの都合で取れていない）— 1件
+## 🔴 宿題（公開されているはずだが、こちらの都合で取れていない）— 0件
 
-| 対象 | 状況 | 次にやること |
+**残り宿題なし**（2026-08-15 第2次追加調査で最後の1件を解決）。
+
+### 2026-08-15 第2次追加調査で潰した宿題（最後の1件）
+
+| 対象 | 取れた値 | 出典URL |
 |---|---|---|
-| Copilot Studio の従量課金**単価**（円/1 Copilot クレジット） | 価格ページは前払いパック ¥29,985 / 25,000クレジット のみ公開。ライセンスガイドPDFへの短縮URL（`aka.ms/CopilotStudioLicensingGuide`、`go.microsoft.com/fwlink/?linkid=2320884`）が**どちらもBing検索トップにリダイレクト**され、PDFに到達できず。Learn（`billing-licensing` / `requirements-messages-management`）にも円建て単価はなかった | Power Platform ライセンスガイドPDFの実URLを特定する／Azureポータルの料金計算ツールで従量メーターの単価を見る。**割り算で単価を作らないこと**（前払いは「最大20%削減」と明記があり、従量単価と一致しない） |
+| Copilot Studio の従量課金**単価** | **0.01 ドル/Copilot クレジット**（USD・月末後払い。円建てはUSDのみ表記のため非公開扱い=18-3） | Microsoft Copilot Studio ライセンスガイド 2026年7月版 日本語PDF（`go.microsoft.com/fwlink/?linkid=2320995` 経由。詳細=本文18-3） |
+
+到達方法の記録: 前回死んでいた `aka.ms/CopilotStudioLicensingGuide` は今回もBingへ飛んで使えなかったが、
+**Power Platform ライセンスガイドの fwlink（`?LinkId=2085130`）は生きており**、そのPDF内のリンク注釈（`/URI`）から
+Copilot Studio ライセンスガイドの **fwlink 2320995** を特定して到達した。
+「PDF内のリンクURLは `pdftotext` では消えるが、PDFバイナリの `/URI (...)` を正規表現で抜けば取れる」——次回も使える技。
+なお、単価 0.01ドル/クレジットの取得により「¥29,985 ÷ 25,000 の割り算をするな」という前回の注意が正しかったことも確認できた
+（割り算では従量単価にならない。パックとメーターは別SKU・別通貨表記）。
 
 ### 2026-08-15 に潰した宿題（記録）
 

@@ -1,6 +1,6 @@
 # 画像親レシピ「JTCの日常×頭部の超現実」v3
 
-みどり脳の親レシピ②キャラクター・世界観型。**2026-08-05 darari裁定で確定**（v1朱一点静物・v2ハンコ頭はボツ→`10_drafts/images/`に退避）。
+みどり脳の親レシピ②キャラクター・世界観型。**2026-08-05 darari裁定で確定**（v1朱一点静物・v2ハンコ頭はボツ→`10_drafts/71_images/`に退避）。
 トップヒーロー・記事ヒーロー・OGP・挿絵すべてこの世界観。**記事には必ずヒーロー画像を付ける**。
 
 ## 世界観（固定・変えない）
@@ -13,9 +13,9 @@
 
 ## スタイルリファレンス（生成時にCodexに必ず開かせる）
 
-- `10_drafts/images/reference-2-birdcage.jpeg`（鳥かご頭・高架下）
-- `10_drafts/images/reference-3-aquarium.jpeg`（水槽頭・コインランドリー）
-- `10_drafts/images/reference-4-flowers.jpeg`（花の頭・ダイナー）
+- `10_drafts/71_images/reference-2-birdcage.jpeg`（鳥かご頭・高架下）
+- `10_drafts/71_images/reference-3-aquarium.jpeg`（水槽頭・コインランドリー）
+- `10_drafts/71_images/reference-4-flowers.jpeg`（花の頭・ダイナー）
 - `public/images/hero.png`（確定トップヒーロー。シリーズの基準として毎回参照させる）
 
 ## ベースプロンプト（{SCENE+HEAD}を差し替える）
@@ -41,7 +41,7 @@ yet hopeful poetic atmosphere, no text, no letters, no logos
 | 001 AIルール3点セット | 信号機・青だけ点灯＝ルールが「進んでいい」の合図になる | `articles/001-ai-rules-starter.png` |
 | 002 ChatGPT禁止 | 閉じた鳥かご・中で鳥が灯る＝禁止で閉じ込められた可能性 | `articles/002-chatgpt-kinshi.png` |
 | OGP共通(16:9) | 頭が夜明けの空＝頭の中にはもう夜明けが来ている | `og-default.png` |
-| 挿絵在庫 | 頭から花咲く残業デスク／金魚水槽頭と自販機 | `10_drafts/images/hero-candidates/v2-a.png` / `v2-b.png` |
+| 挿絵在庫 | 頭から花咲く残業デスク／金魚水槽頭と自販機 | `10_drafts/71_images/hero-candidates/v2-a.png` / `v2-b.png` |
 | 001 JTC AI事情 | 潜望鏡頭＝キュービクルの中から観察して実況 | `articles/001-jtc-ai-jijou.png` |
 | 3軸ビジュアル(1:1) | 記録=光るペン先／AIカイゼン=工具箱の若葉／ガバナンス=天秤の灯り（人物なし静物・小物版の子レシピ） | `axis/kiroku.png` `axis/kaizen.png` `axis/governance.png` |
 

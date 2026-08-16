@@ -8,6 +8,12 @@
       "port": 4321
     },
     {
+      "name": "ai-kaizen-hub-dev-4325",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "--port", "4325"],
+      "port": 4325
+    },
+    {
       "name": "ai-kaizen-hub-preview",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "--", "--port", "4323"],
