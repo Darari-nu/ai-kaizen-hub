@@ -4,7 +4,7 @@ description: '毎月、各装置の稼働率・エラー件数・不良率をExc
 pubDate: 2026-08-08
 series: 'AIカイゼン'
 number: 16
-ogImage: '/images/articles/016-excel-shukei.jpg'
+ogImage: '/images/articles/016-excel-shukei.png'
 draft: true
 hook: '毎月のExcel手作業集計、そろそろ引退させませんか'
 ---

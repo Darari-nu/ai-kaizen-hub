@@ -4,7 +4,7 @@ description: 'ホームページ制作、外注すると高いって聞きます
 pubDate: 2026-08-08
 series: '記録'
 number: 20
-ogImage: '/images/articles/020-hp-seisaku.jpg'
+ogImage: '/images/articles/020-hp-seisaku.png'
 draft: true
 ---
 
