@@ -28,6 +28,8 @@ const articleNotices: Notice[] = published.map((a) => ({
 }));
 
 const manualNotices: Notice[] = [
+  { date: '2026.08.17', tag: '通達', dept: '経営企画本部', text: '目標管理シート（様式H-2）のシステム化試験について（β運用開始。ベクトル整合チェックつき）', href: '/company/intranet/mokuhyo/' },
+  { date: '2026.08.17', tag: 'お願い', dept: '生産技術課', text: '改善提案の提出について（一人・年2件が目標です。ノルマではありません）', href: '/company/intranet/kaizen-teian/' },
   { date: '2026.08.17', tag: 'お願い', dept: '品質保証部', text: '内部監査（上期）指摘の是正処置提出について（期限超過1件。なぜなぜは最低3回です）', href: '/company/intranet/kansa/' },
   { date: '2026.08.17', tag: '通達', dept: '秘書室', text: '「社長への目安箱」をポータルに設置しました（従来の木箱も併設します）', href: '/company/intranet/meyasubako/' },
   { date: '2026.08.17', tag: '通達', dept: '総務部', text: '稟議システムの利用開始について（紙の稟議書との併用は当面の間続きます）', href: '/company/intranet/ringi/' },
@@ -52,7 +54,7 @@ const manualNotices: Notice[] = [
 // 日付降順でマージ(YYYY.MM.DD形式なので文字列比較でよい)
 const notices: Notice[] = [...manualNotices, ...articleNotices]
   .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1))
-  .slice(0, 18);
+  .slice(0, 20);
 
 const kettai = [
   ['10万円未満', '課長', '即日〜3営業日'],
@@ -246,6 +248,8 @@ const kairan = [
             <div class="border-b border-t border-[#eee] bg-[#f5f5f0] px-3 py-1 text-[11px] font-bold text-[#666]">総務・職場</div>
             <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
               <li class="py-1.5"><a href="/files/様式H-1_四半期フォローシート_2025-2026年度.xlsx" class="underline">方針管理 四半期フォローシート（Excel・様式H-1）</a><span class="ml-2 text-[10px] text-[#999]">システム化は移行中</span></li>
+              <li class="py-1.5"><a href="/company/intranet/mokuhyo/" class="underline">目標管理シート（様式H-2・β）</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#999]">ベクトル整合チェックつき</span></li>
+              <li class="py-1.5"><a href="/company/intranet/kaizen-teian/" class="underline">改善提案システム</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#999]">採用500円〜</span></li>
               <li class="py-1.5"><a href="/company/intranet/meyasubako/" class="underline">社長への目安箱</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#999]">匿名可・木箱も併設</span></li>
               <li class="py-1.5"><a href="/company/intranet/shanaihou/" class="underline">社内報「だらり」</a><span class="ml-2 text-[10px] text-[#999]">7月号 掲載中</span></li>
               <li class="py-1.5"><a href="/company/intranet/chourei/" class="underline">朝礼スピーチ当番表</a><span class="ml-2 text-[10px] text-[#999]">1分厳守</span></li>
