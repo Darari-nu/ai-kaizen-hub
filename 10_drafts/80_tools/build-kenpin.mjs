@@ -70,14 +70,14 @@ const NOTES = {
   '007-rpa-daitai': { status: 'ok', note: '✅8/13検品OK「修正なし」。ありがとうございます！' },
   '008-shanai-system': { status: 'fix', note: '⚙️8/13夜の検品反映・初見殺し化: ①会議録システムに謎項目「分類1(1・2・3・4・9)/分類2(A・B・C)/分類3(1・2・3)」を実装。画面にヒントなし、注意書きは「選択を誤った会議録は差戻しとなります」と脅すだけ ②答えはマニュアル付録A(76ページ)にだけ記載(分類1=主管部門コード。9=その他は事前照会が必要。コードの由来は1998年導入・2011年廃止の旧システム、というオチつき) ③本文に「この分類1、なんだと思います？…慣れればわかる。でも初見殺しですよね」の流れを追記し、スクショも分類1を赤枠強調した実物で撮り直しました。' },
   '011-dare-ga-itta': { status: 'ok', note: '✅8/13検品OK「修正なし」(図解3枚込み)。ありがとうございます！' },
-  '012-kuni-mo-yare': { status: 'ok', note: '✅8/13検品OK「おけ！」。ありがとうございます！(タイトル末尾「だから、メールを1本だけ」はこのまま公開します)' },
+  '012-kuni-mo-yare': { status: 'ok', note: '✅8/13検品OK「おけ！」→ 8/21(金)公開予定（追加作業なし）' },
 
   // --- 8/8 新規5本（Fableサブエージェントが1本ずつ執筆） ---
   '014-nyuuryoku-handan': { status: 'ok', note: '✅8/13検品OK「いいかな！」。ありがとうございます！' },
   '015-joushisu-shitsumon': { status: 'fix', note: '🔎8/13検品「よさそう！プロンプトだけあとで見る」→ 🎁特典プロンプト(記事のいちばん最後のコードブロック)の確認だけお待ちしています。【】を埋めて実際に1回使ってみてもらうのが一番早いです。OKならこの記事は✅にします。' },
-  '016-excel-shukei': { status: 'fix', note: '⚙️8/13検品反映: 「作り方を教える」から「そのまま使えるものを渡す」見せ方に変更——①冒頭に「この記事はコピペ用プロンプト3本つき。【】だけ書き換えればそのまま使えます」を宣言 ②各プロンプト直前を「渡す」トーンに ③プロンプト内の装置名・列名・ファイル名を【】穴埋め式に整形。技術内容・実演スクショ・失敗談は不変。確認1点: プロンプト1は列名・計算式まで【】にして穴埋め多めです。読みにくければ装置名・ファイル名だけに減らせます。' },
+  '016-excel-shukei': { status: 'fix', note: '🔴【明日8/18公開予定・これだけ返事ください】⚙️8/13検品反映:「作り方を教える」から「そのまま使えるものを渡す」見せ方に変更——①冒頭に「この記事はコピペ用プロンプト3本つき。【】だけ書き換えればそのまま使えます」を宣言 ②各プロンプト直前を「渡す」トーンに ③プロンプト内の装置名・列名・ファイル名を【】穴埋め式に整形。技術内容・実演スクショ・失敗談は不変。確認1点: プロンプト1は列名・計算式まで【】にして穴埋め多めです。読みにくければ装置名・ファイル名だけに減らせます。' },
   '017-gijiroku': { status: 'fix', note: '⚙️8/13検品反映: ①「最後は自分で確認」を具体化——重要な論点は会議中に自分でも一言メモ→AIの議事録と突き合わせ→食い違った箇所だけ録音か本人に確認、の流れを追加 ②失敗談は「削除」ではなく圧縮+接続で存置しました。理由: 後半の紙メモ・「自分のメモを要約させる」の前提になっていて、新しく足した「自分でもメモ」の実体験証拠として機能するため。浮いて見えた原因(唐突な導入・在宅禁止や社長講話の脇道)を削って本流に繋ぎ直しています。それでも削りたければ一声ください。' },
-  '020-hp-seisaku': { status: 'ok', note: '✅8/13検品OK「概ねOK。大きな修正は不要」。ありがとうございます！(darariのClaude Code作業画面スクショはいつでも歓迎です)' },
+  '020-hp-seisaku': { status: 'ok', note: '✅8/13検品OK「概ねOK。大きな修正は不要」→ 明日8/18公開予定（追加作業なし。016のOKが間に合えば2本同時、間に合わなければ020だけ先に出します）' },
   '021-level-kitei': { status: 'fix', note: '⚙️8/13検品反映(D6): 「入れていい」の一般論言い切りを6箇所直し、すべて「ダラリ重工業では、この条件なら入れてよいと判断しました」の自社判断表現に統一。「あなたの会社が同じ結論になるとは限らない。持ち帰るのはレベル分け×AI区分の考え方、線は自社で引き直して」の注意も新設しました。判断表・実話は不変。確認1点: Q1「(レベル分けを社内で)決めていいんです」は可否ではなく制度の説明なので言い切りのまま残しています。' },
   '022-ai-browser': { status: 'fix', note: '⚙️8/13検品反映: 管理画面はログイン必須でこちらから実物スクショが撮れない(偽造は禁止)ため、🎁特典として「設定画面を一緒にスクショしていく案内プロンプト」を記事末尾に新設+冒頭で予告しました。darariがデスクトップアプリに貼ると、AIが1枚ずつ「どの画面を・どの状態で・どこを撮るか」を案内し、毎回キー写り込みチェックの声かけをする設計(撮るのは5枚: LINE×2/Google Cloud×2/APIキー×1)。撮れたスクショが揃ったら本文に差し込みます。確認1点: 5枚のリストでカバー範囲は足りますか？' },
 
@@ -129,6 +129,12 @@ const NOTES = {
 
   '052-jouhou-jidou': { status: 'new', note: '【新規・darari投げ込み5連発の1本目】欲しい情報は自動で取れ——自作の情報収集サイト・通知の実録(AI Reg Atlas=024既出/3時間ごと自動集計=047既出/自動通知=台帳2026-03-30)。失敗談は詰まり2連(プロキシ遮断→中継→403→User-Agentで解決)の実測のみ。確認3点: ①AI Reg Atlasの比較表は「13カ国×7つの観点」で合っているか(実物未照合) ②通知の実例を「支払いメールの確認」まで書いてよいか(現状は「予定など」にぼかし) ③会社相手の自動収集への注意はC3の書き方で足りるか' },
 
+  // --- 8/17 第4陣4本(資料庫の大物統計・事例の深掘り。事前添削は執筆時に鉄則注入済み) ---
+  '053-mawari-tsukatteru': { status: 'new', note: '【新規・第4陣】利用率9.1%→52.2%(2年で約5.7倍)の統計もの。経験/業務利用/会社導入の3設問を混ぜない設計・年代別つき。確認3点: ①「約5.7倍」等は公表値からのぼく側計算(原典に印字なし)。残すか ②失敗談(3つの利用率を1本のグラフにまとめかけた)の体感 ③公開順=034が先(Q3で034へリンク)' },
+  '054-dena-workflow': { status: 'new', note: '【新規・第4陣】DeNAの時系列3段(2020 Slack bot 5時間→58分・AIなし→リマインダーで20時間短縮・AIなし→法務確認LLMで91%減)。「AIは最後」の順番論。確認3点: ①**kintone・Slackの実名掲載の可否**(SaaS社名を出さない旧裁定との整合。他社の公開事例の事実記述という文脈) ②タイトルの「91%減らした会社」を「法務確認の待ち時間を〜」に伸ばすか ③038・044へのリンク=公開順の前提' },
+  '055-shimadzu-3nen': { status: 'new', note: '【新規・第4陣】島津製作所が2年かけてAI判定の人チェックを一部やめた段階論。「最初から外すな、外す条件を先に決めろ」。確認3点: ①タイトルは「2年」にした(2023秋→2025秋。slugは3nenのまま) ②「なぜ外せたか」の2つの読み解きは「ぼくの解釈です」と宣言して書いた。よいか ③失敗談(二次の「3,000人超」→一次は「約3,000人」)の一人称化' },
+  '056-kouka-jitan': { status: 'new', note: '【新規・第4陣】効果は効率化91.6% vs 売上向上3.9%→最初の稟議は時短で書け(005接続)。確認3点: ①失敗談(総務省86.4%の母集団限定を見落としかけた)を本人体験として出してよいか ②「複数回答なので合計100%超」は算術推定(原本の文言未確認) ③タイトル後半「時短に偏っていました」の言い切り(数字上の語は「効率化」)' },
+
   // --- 8/15 新設ページ2つ(未公開・push前。詳細は各紹介文) ---
   'page-llm-cost': { status: 'new', note: '【新設ページ①・未公開】darari承認済みの「トークン数→月額」計算機の実装報告。動作検証済み。確認3点: ①入力の既定値の肌感 ②為替150円仮置き表記 ③SaaS公開価格帯(月0〜12万円)への言及の書き方' },
   'page-muryou-ai': { status: 'new', note: '【新設ページ②・未公開】83か所の常設一覧。イケハヤ・西野両部長の合同答申を反映(「地図」の語を排除/独断宣言/再検証予約のSubstack導線/ダラリ重工業は出さない)。確認3点: ①ページ名 ②スタンス宣言の文言 ③実名の罠注記をこのまま出すか' },
@@ -147,7 +153,7 @@ const articles = files.map((f) => {
   );
   const slug = f.replace('.md', '');
   const meta = NOTES[slug] || { status: 'new', note: '' };
-  return { slug, fm, raw, status: meta.status, note: meta.note, hero: embedImage(fm.ogImage), media: inlineMediaMap(raw) };
+  return { slug, fm, raw, status: meta.status, note: meta.note, hero: embedImage(fm.ogImage), media: inlineMediaMap(raw), pubUrl: 'https://darari-nu.com/articles/' + slug + '/' };
 });
 
 // Substack配信下書き（frontmatterなし。配信タイトル案の行をタイトルに使う）
@@ -162,7 +168,7 @@ if (existsSync(SUBSTACK_DIR)) {
     articles.push({
       slug,
       fm: { title, series: 'Substack', number: `S-${no}` },
-      raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw),
+      raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw), pubUrl: 'https://dararinu.substack.com/',
     });
   }
 }
@@ -180,7 +186,7 @@ if (existsSync(PAGES_DIR)) {
     articles.push({
       slug,
       fm: { title, series: 'ページ', number: `P-${pageNo}` },
-      raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw),
+      raw, status: meta.status, note: meta.note, hero: null, media: inlineMediaMap(raw), pubUrl: (title.match(/（(\/[^・）]+)/) ? 'https://darari-nu.com' + title.match(/（(\/[^・）]+)/)[1] : null),
     });
   }
 }
@@ -205,6 +211,7 @@ const sections = articles.map((a) => `
 <article id="${a.slug}" data-slug="${a.slug}">
   <header>
     <p class="meta"><span class="chip">${esc(a.fm.series)}</span> No.${String(a.fm.number).padStart(3, '0')}｜draft <span class="save-state" id="state-${a.slug}"></span></p>
+    ${a.pubUrl ? `<p class="puburl">公開先: <a href="${a.pubUrl}" target="_blank" rel="noopener">${a.pubUrl.replace('https://', '')}</a></p>` : ''}
     <p class="badge-row"><span class="badge ${STATUS[a.status].cls}">${STATUS[a.status].label}</span></p>
     <h2>${esc(a.fm.title)}</h2>
     ${a.fm.hook ? `<p class="hook">📣 メニュー呼び込み文: ${esc(a.fm.hook)}</p>` : ''}
@@ -256,6 +263,8 @@ h1 span{color:var(--shu)}
 .toc-title{flex:1;font-size:.92rem;font-weight:600;}
 .chip{font-size:.65rem;letter-spacing:.15em;color:var(--shu);border:1px solid var(--shu);padding:.1rem .45rem;white-space:nowrap;align-self:center;}
 article{margin-top:3.5rem;border-top:2px solid var(--ink);padding-top:1.2rem;}
+.puburl{font-size:.72rem;color:var(--nezu);margin:0 0 .5rem;}
+.puburl a{color:var(--nezu);text-underline-offset:3px;}
 article .meta{font-size:.75rem;color:var(--nezu);display:flex;gap:.6rem;align-items:center;margin:0 0 .5rem;flex-wrap:wrap;}
 .save-state{color:var(--ok);font-weight:700;}
 article h2{font-size:1.25rem;line-height:1.6;margin:.2rem 0 1rem;text-wrap:balance;}

@@ -1,0 +1,103 @@
+# 公開カレンダー（正本）— 記事公開日・Substack配信日・X投稿日の台帳
+#
+# - 戦略の文書は 10_drafts/公開作戦_20260812.md（3本柱・ウェーブ制はあちらが正本）
+# - この台帳の運用ルールは .claude/skills/koukai-yotei/SKILL.md
+# - 大原則: 検品OKが出ていない記事は日程が来ても飛ばさない。日付ごと後ろにズラす（品質優先）
+# - channel: hp（記事公開）/ substack（配信）/ x（シェアポスト）
+# - status: 執筆前 → 執筆中 → 検品待ち → 検品OK → 予約済み → 公開済み（hp/x）・配信済み（substack）／ 未定
+# - owner: claude=Claude側の作業 / darari=本人の作業
+
+slots:
+  - date: 2026-08-17
+    channel: substack
+    what: 創刊号（記事001 JTC事情・記事そのまま方式）
+    ref: 10_drafts/10_substack/001_20260817/配信用.md
+    status: 配信済み
+    owner: darari
+    next: 完了（8/17朝配信をアーカイブで確認済み）
+
+  - date: 2026-08-18
+    channel: hp
+    what: 第2弾 020 サイト自作メイキング + 016 Excel集計
+    ref: src/content/articles/020-hp-seisaku.md
+    status: 検品待ち
+    owner: darari
+    next: 020は検品OK済み。016の再検品（確認1点・検品室掲示済み）だけ返事→claudeがdraft解除→push。016が間に合わなければ020だけ先行公開
+
+  - date: 2026-08-18
+    channel: x
+    what: 020/016 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260818_020-016.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darariが貼って投稿
+
+  - date: 2026-08-21
+    channel: hp
+    what: 012 国もやれ
+    ref: src/content/articles/012-kuni-mo-yare.md
+    status: 検品OK
+    owner: claude
+    next: 当日claudeがdraft解除→push（8/13検品OK済み・darari作業なし）
+
+  - date: 2026-08-21
+    channel: substack
+    what: 第2号（記事002 ルール3点）
+    ref: 10_drafts/10_substack/002_20260821/配信用.md
+    status: 検品OK
+    owner: claude
+    next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
+
+  - date: 2026-08-21
+    channel: x
+    what: 012 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260821_012.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darariが貼って投稿
+
+  - date: 2026-08-25
+    channel: hp
+    what: 第3弾 006 名刺Bot + 022 AIブラウザ
+    ref: src/content/articles/006-meishi-bot.md
+    status: 検品待ち
+    owner: darari
+    next: darari検品OK → claudeがdraft解除→push
+
+  - date: 2026-08-25
+    channel: x
+    what: 006/022 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260825_006-022.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darariが貼って投稿
+
+  - date: 2026-08-28
+    channel: hp
+    what: 017 議事録（007/008 は実機確認が取れ次第合流）
+    ref: src/content/articles/017-gijiroku.md
+    status: 検品待ち
+    owner: darari
+    next: darari検品OK → claudeがdraft解除→push
+
+  - date: 2026-08-28
+    channel: substack
+    what: 第3号（対象未定。候補は公開済みの 004 Claude Team / 005 費用対効果）
+    ref: 未定
+    status: 未定
+    owner: claude
+    next: 対象を決めて配信フォルダを作る（10_drafts/10_substack/00X_20260828/）
+
+  - date: 2026-08-28
+    channel: x
+    what: 017 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260828_017.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darariが貼って投稿
+
+# --- 9月: ガバナンス連載月間（公開作戦の第4弾） ---
+# 014 → 015 → 021 → 023〜032 を火・金 2本/週で連続公開、毎金曜にSubstackダイジェスト。
+# 検品の進み方で日付が動くため、個別スロットは8月末に検品状況を見て起こす。
+# 緩急要員（連載の間に挟む読み物）: 011 誰が言ったか / 027 愚痴回
+# 10月上旬に在庫公開完了 → 以降は新作1〜2本/週 + Substack週1の巡航速度へ。
