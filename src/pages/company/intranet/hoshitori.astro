@@ -1,0 +1,95 @@
+---
+// 力量管理・星取表(スキルマップ) — ダラリ重工業の品質システム(という設定のパロディページ)。
+// ISO 9001の力量管理の実物。壁に貼ってあるアレ。2026年8月に「AI活用」列が突然追加され、
+// 評価基準が検討中のまま全員△、という現在進行形のネタを仕込んである。
+import Base from '@/layouts/Base.astro';
+
+const skills = ['組立', '検査', '段取り替え', '玉掛け', 'フォークリフト', 'ＡＩ活用'];
+
+// [氏名, 役割, 各スキル評価] ◎=指導可 ○=独力可 △=指導下で可 ×=未習得
+const members: [string, string, string[]][] = [
+  ['「別の方法」課長', '課長', ['◎', '○', '◎', '○', '○', '△']],
+  ['段取 良子', '班長', ['◎', '○', '◎', '◎', '○', '△']],
+  ['組立 早人', '作業者', ['◎', '△', '○', '○', '◎', '△']],
+  ['検査 目見', '作業者', ['○', '◎', '△', '×', '×', '△']],
+  ['若手 伸彦', '作業者（2年目）', ['○', '△', '△', '×', '△', '△']],
+  ['推進さん', 'AI活用推進室（間借り）', ['△', '×', '×', '×', '×', '◎']],
+];
+---
+
+<Base
+  title="力量管理・星取表（架空企業の社内システム）"
+  description="架空企業ダラリ重工業の力量管理表・星取表（という設定のページ）。2026年8月に「AI活用」列が追加され、評価基準は検討中のまま全員△です。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内資料（という設定）です。力量管理の様式ごと流用できます。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">力量管理表（星取表）｜製造一課 第2ライン</p>
+        <p class="text-[11px] text-white/80">所管: 製造一課（様式Q-8）｜ 評価は年1回・4月（＋異動時）</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-4 px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a> &gt; 品質 &gt; 力量管理・星取表
+      </p>
+
+      <div class="border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
+        【凡例】◎＝指導できる　○＝ひとりでできる　△＝指導のもとでできる　×＝未習得<br />
+        【運用】各職場の壁に印刷して掲示しています（このページが原本。壁が正、という説もあります）。<br />
+        【注記】<b class="text-[#c00]">「ＡＩ活用」の列は2026年8月に追加されました。評価基準は検討中のため、とりあえず全員「△」です</b>（推進さんを除く。評価者も推進さんのため、自己評価です）。
+      </div>
+
+      <div class="overflow-x-auto border border-[#999] bg-white">
+        <table class="w-full min-w-[680px] border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">氏名</th>
+              <th class="w-40 border border-[#ddd] px-3 py-1.5">役割</th>
+              {skills.map((s) => (
+                <th class:list={['w-20 border border-[#ddd] px-2 py-1.5 text-center', s === 'ＡＩ活用' && 'bg-[#fffbe6]']}>{s}{s === 'ＡＩ活用' && <span class="ml-1 bg-[#c00] px-1 py-0.5 text-[8px] font-bold text-white">NEW</span>}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {
+              members.map(([name, role, evals]) => (
+                <tr>
+                  <td class="border border-[#ddd] px-3 py-1.5 font-bold">{name}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5 text-[11px]">{role}</td>
+                  {evals.map((ev, i) => (
+                    <td
+                      class:list={[
+                        'border border-[#ddd] px-2 py-1.5 text-center text-[15px]',
+                        skills[i] === 'ＡＩ活用' && 'bg-[#fffbe6]',
+                        ev === '◎' && 'font-bold text-[#1b3a6b]',
+                        ev === '×' && 'text-[#bbb]',
+                      ]}
+                    >
+                      {ev}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="border border-[#999] bg-white px-4 py-3 text-[11px] leading-relaxed text-[#666]">
+        ※ 各工程「◎」1名以上・「○」2名以上が配置基準です（多能工化）。基準未達の工程は教育訓練計画（様式Q-9）の対象になります。<br />
+        ※ 玉掛け・フォークリフトは資格（技能講習）が別途必要です。星取表の「○」だけでは作業できません。<br />
+        ※ 「ＡＩ活用」の教育は、AI活用推進室が<a href="/" class="text-[#00c] underline">無料の教材サイト</a>を準備中です（本人談）。
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">製造一課 内線 5100 ｜ 評価の異議申し立ては課長面談で（例年ゼロ件。言い出しにくいだけ、という説もあります）</p>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,99 @@
+---
+// 朝礼スピーチ当番表 — ダラリ重工業の社内ページ(という設定のパロディページ)。
+// 「AIに朝礼ネタを作らせる」記事の入口。今週の当番は日付から自動判定(クライアントサイド)。
+import Base from '@/layouts/Base.astro';
+
+// 当番ローテーション(製造一課)。週替わり
+const rotation = ['段取 良子', '組立 早人', '検査 目見', '若手 伸彦', '推進さん（AI活用推進室）', '「別の方法」課長'];
+
+// 過去の演題(実在した朝礼スピーチの様式美)
+const past = [
+  ['8月2週', '検査 目見', '最近見た夢について'],
+  ['8月1週', '組立 早人', '駅の階段の段数を数えた話'],
+  ['7月4週', '段取 良子', '段取りと弁当作りの共通点'],
+  ['7月3週', '「別の方法」課長', '別の方法もあるんじゃないかと思った話'],
+  ['7月2週', '若手 伸彦', 'すみません、特にありません（3分間の沈黙）'],
+  ['7月1週', '推進さん', 'AIに朝礼ネタを考えてもらった話（本日のスピーチもAI作です、と最後に明かして騒然）'],
+];
+---
+
+<Base
+  title="朝礼スピーチ当番表（架空企業の社内ページ）"
+  description="架空企業ダラリ重工業の朝礼スピーチ当番表（という設定のページ）。今週の当番が自動で表示されます。演題は自由（1分厳守）。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内ページ（という設定）です。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-3xl items-baseline justify-between">
+        <p class="text-lg font-bold">朝礼スピーチ当番表（製造一課）</p>
+        <p class="text-[11px] text-white/80">毎朝8:00 ｜ ラジオ体操のあと</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-3xl space-y-4 px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a> &gt; 職場 &gt; 朝礼スピーチ当番表
+      </p>
+
+      <div class="border-2 border-[#c00] bg-[#fffbe6] px-4 py-3">
+        <p class="text-[11px] font-bold text-[#c00]">今週の当番</p>
+        <p id="chourei-toban" class="mt-1 text-xl font-bold">（判定中…）</p>
+        <p class="mt-1 text-[11px] text-[#666]">来週: <span id="chourei-next">—</span></p>
+      </div>
+
+      <div class="border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ スピーチの心得（1998年制定・改訂なし）</p>
+        <ol class="list-decimal space-y-1 px-8 py-3 text-[12px]">
+          <li>演題は自由。ただし<b>1分厳守</b>（超過すると製造開始が遅れます）。</li>
+          <li>オチは不要です。オチをつけようとして2分になる方が問題です。</li>
+          <li>「特にありません」は演題として認められません（前例: 7月2週）。</li>
+          <li>安全に関する一言を添えると喜ばれます（「ご安全に」で締めれば形になります）。</li>
+        </ol>
+      </div>
+
+      <div class="border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ 最近の演題</p>
+        <table class="w-full border-collapse text-[12px]">
+          <tbody>
+            {
+              past.map(([week, name, title]) => (
+                <tr>
+                  <td class="w-20 border border-[#ddd] bg-[#f5f5f0] px-3 py-1.5">{week}</td>
+                  <td class="w-44 border border-[#ddd] px-3 py-1.5">{name}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5">{title}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <p class="px-3 py-2 text-[10px] text-[#888]">
+          ※ 7月1週の「AI作スピーチ」については賛否があり、安全衛生委員会で議題になりました（結論: 「面白かったのでよい」）。
+        </p>
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">製造一課 内線 5100 ｜ 当番の交代は前日までに課長へ</p>
+    </div>
+  </div>
+
+  <script>
+    // 掟: 本体が無いページでは何もしない（存在ガード。非null断定は禁止）
+    const toban = document.getElementById('chourei-toban');
+    if (toban) {
+      const rotation = ['段取 良子', '組立 早人', '検査 目見', '若手 伸彦', '推進さん（AI活用推進室）', '「別の方法」課長'];
+      // 2026-08-17(月)の週を「検査 目見」の翌週=若手週として基準に、週番号でローテーション
+      const base = new Date('2026-08-17T00:00:00');
+      const now = new Date();
+      const weeks = Math.floor((now.getTime() - base.getTime()) / (7 * 24 * 3600 * 1000));
+      const idx = ((weeks % rotation.length) + rotation.length) % rotation.length;
+      toban.textContent = `${rotation[(idx + 3) % rotation.length]} さん`;
+      const next = document.getElementById('chourei-next');
+      if (next) next.textContent = `${rotation[(idx + 4) % rotation.length]} さん`;
+    }
+  </script>
+</Base>

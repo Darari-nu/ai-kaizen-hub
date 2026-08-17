@@ -1,0 +1,135 @@
+---
+// 内線電話帳・座席表 — ダラリ重工業の社内ページ(という設定のパロディページ)。
+// 「◯◯さんの内線をAIに探させる」自動化練習台の小物。検索はクライアントサイド。
+import Base from '@/layouts/Base.astro';
+
+// [部署・窓口, 内線, 備考]
+const naisen: [string, string, string][] = [
+  ['総務部 文書課', '2200', '規程・様式の照会はこちら'],
+  ['総務部（代表）', '2000', ''],
+  ['情報システム部', '2100', 'つながらない場合が多い。根気よく'],
+  ['経理部', '2500', '締切日前は離席が多い'],
+  ['人事部 勤労課', '3100', '打刻修正・様式K-2はこちら'],
+  ['安全衛生室', '3900', 'ご安全に'],
+  ['品質保証部', '3300', ''],
+  ['開発本部 開発管理課', '4100', 'DR・テーマ番号の照会'],
+  ['調達部', '4500', ''],
+  ['製造一課 事務所', '5100', '呼出のみ（現場は出られません）'],
+  ['製造二課 事務所', '5200', '呼出のみ'],
+  ['生産技術課', '5400', ''],
+  ['時差第二工場 守衛室', '5900', '24時間'],
+  ['食堂', '9999', '呼出のみ。売切の問い合わせはご遠慮ください'],
+  ['AI活用推進室', '—', '内線はありません。AI相談窓口（画面右下の忍者）へどうぞ'],
+  ['秘書室（目安箱係）', '1100', '社長への目安箱はポータルから投書できます'],
+];
+
+// 座席表(製造部事務所2階): 1マス=1席。空文字=通路
+const seats = [
+  ['現島 製造本部長', '', '製造部長', '', 'コピー機（紙詰まり中）'],
+  ['製造一課長', '段取 良子', '組立 早人', '検査 目見', '柱'],
+  ['「別の方法」課長', '推進さん（AI活用推進室・間借り）', '若手 伸彦', '書類の山（持ち主不明）', 'FAX（現役）'],
+];
+---
+
+<Base
+  title="内線電話帳・座席表（架空企業の社内ページ）"
+  description="架空企業ダラリ重工業の内線電話帳と座席表（という設定のページ）。検索できます。AI活用推進室に内線はありません。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内ページ（という設定）です。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">内線電話帳・座席表</p>
+        <p class="text-[11px] text-white/80">所管: 総務部 ｜ 2026年4月改訂（座席は既に2回変わっています）</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-4 px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a> &gt; 総務 &gt; 内線電話帳・座席表
+      </p>
+
+      <div class="border border-[#999] bg-white">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[#999] bg-[#eef1f5] px-3 py-1.5">
+          <p class="font-bold text-[#1b3a6b]">■ 内線電話帳</p>
+          <input id="naisen-q" type="text" placeholder="部署・番号で検索" class="border border-[#999] bg-white px-2 py-0.5 text-[11px]" />
+        </div>
+        <table class="w-full border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">部署・窓口</th>
+              <th class="w-20 border border-[#ddd] px-3 py-1.5">内線</th>
+              <th class="border border-[#ddd] px-3 py-1.5">備考</th>
+            </tr>
+          </thead>
+          <tbody id="naisen-rows">
+            {
+              naisen.map(([dept, no, note]) => (
+                <tr>
+                  <td class="border border-[#ddd] px-3 py-1.5">{dept}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5 text-center font-bold">{no}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5 text-[11px] text-[#666]">{note}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+        <p class="px-3 py-2 text-[10px] text-[#888]">※ 外線発信は「0」発信。私用電話は禁止です（1998年 総務部通達。携帯電話の普及後も撤回されていません）。</p>
+      </div>
+
+      <div class="border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ 座席表（製造部事務所・2階）</p>
+        <div class="overflow-x-auto p-3">
+          <table class="w-full min-w-[640px] border-collapse text-[11px]">
+            <tbody>
+              {
+                seats.map((row) => (
+                  <tr>
+                    {row.map((s) => (
+                      <td
+                        class:list={[
+                          'h-14 w-1/5 border border-[#999] px-2 py-1 text-center align-middle',
+                          s === '' && 'bg-[#eee]',
+                          (s.includes('柱') || s.includes('コピー機') || s.includes('FAX') || s.includes('書類の山')) && 'bg-[#f5f5f0] text-[#888]',
+                          s.includes('推進さん') && 'bg-[#fffbe6] font-bold',
+                        ]}
+                      >
+                        {s}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="px-3 pb-3 text-[10px] text-[#888]">
+          ※ AI活用推進室（1名）は製造部事務所に間借りしています。専用の部屋は「検討中」です（2026年1月より）。<br />
+          ※ 窓側から役職順です。異動のたびに総務部が手作業でExcelを直しています（システム化は要望受付中）。
+        </p>
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">総務部 内線 2000 ｜ 記載誤りは所属長経由でご連絡ください</p>
+    </div>
+  </div>
+
+  <script>
+    // 掟: 本体が無いページでは何もしない（存在ガード。非null断定は禁止）
+    const q = document.getElementById('naisen-q') as HTMLInputElement | null;
+    const rows = document.getElementById('naisen-rows');
+    if (q && rows) {
+      q.addEventListener('input', () => {
+        const t = q.value.trim().toLowerCase();
+        rows.querySelectorAll('tr').forEach((tr) => {
+          (tr as HTMLElement).style.display = !t || (tr.textContent || '').toLowerCase().includes(t) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</Base>

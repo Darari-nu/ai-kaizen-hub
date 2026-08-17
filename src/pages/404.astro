@@ -1,0 +1,31 @@
+---
+// 404ページ — サイト全体用。従来は404.htmlが無くCloudflare PagesのSPAフォールバックで
+// トップが200で返っていた(2026-08-17発見)。白ベースは維持しつつ、書庫(紙)ネタで世界観に回収する。
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+---
+
+<Base title="ページが見つかりません" description="お探しのページは見つかりませんでした。">
+  <Header />
+  <main class="mx-auto max-w-site px-5 py-24 text-center">
+    <p class="text-[13px] tracking-[0.3em] text-ink/50">404 NOT FOUND</p>
+    <h1 class="mt-4 font-display text-2xl font-bold">お探しのページは、見つかりませんでした。</h1>
+    <p class="mt-6 text-[15px] leading-relaxed text-ink/70">
+      移動したか、削除されたか、最初から存在しなかったかのいずれかです。
+    </p>
+    <div class="mx-auto mt-10 max-w-md border border-ink/20 bg-[#f7f4ee] px-6 py-4 text-left text-[13px] leading-relaxed text-ink/70">
+      <p class="font-bold">📁 ダラリ重工業 総務部からのお知らせ（という設定）</p>
+      <p class="mt-2">
+        電子化されていない資料は、総務部書庫（本館2階・紙）にあります。<br />
+        開架時間: 平日9:00〜16:00（昼休みを除く）。持出しは所属長の承認が必要です。
+      </p>
+    </div>
+    <p class="mt-10 text-[14px]">
+      <a href="/" class="underline underline-offset-4">トップへ戻る</a>　｜
+      <a href="/articles/" class="underline underline-offset-4">記事一覧</a>　｜
+      <a href="/company/intranet/" class="underline underline-offset-4">DARARIポータル（社内向け）</a>
+    </p>
+  </main>
+  <Footer />
+</Base>

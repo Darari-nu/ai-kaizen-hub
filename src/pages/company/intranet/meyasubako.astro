@@ -1,0 +1,128 @@
+---
+// 社長への目安箱 — ダラリ重工業の社内ページ(という設定のパロディページ)。
+// 投書に陀楽進社長が答えるコーナー。回答は10_drafts/45_社長脳/IDENTITY_陀楽進.mdの文体規則で書く。
+// AI社長化の最短の実験場: 回答ストックが溜まったら「AI社長が答える」に切り替える記事が撮れる。
+// 投書はlocalStorageに残さない(受付番号の発行だけ。「秘書室経由で社長が読む」の体)。
+import Base from '@/layouts/Base.astro';
+
+// 過去の投書と社長回答: [受付月, 投書(要旨), 回答]
+const answers: [string, string, string[]][] = [
+  [
+    '2026年7月',
+    '食堂のカレー大盛りを復活してほしいです。仕事の張り合いがなくなりました。',
+    [
+      '投書ありがとうございます。私も大盛り派でしたので、お気持ちはよく分かります。',
+      '食堂に確認したところ、廃止の理由は「大盛りの基準が人によって違う」ことにあるそうです。であれば、基準を作ればよい。標準化は当社の得意とするところであります。',
+      '経営会議の議題とするには少々小さく、しかし皆さんの士気には大きい。こういう案件こそ改善提案制度の出番です。「大盛り基準の標準化」の提案を待っています。採用されれば報奨金も出ます。カレーは、あきらめてはいけません。',
+    ],
+  ],
+  [
+    '2026年6月',
+    '会議が多すぎます。会議を減らす会議をしていて、さすがにおかしいと思いました。',
+    [
+      'ご指摘のとおりです。「会議を減らす会議」は、私も出席しておりました。おかしいとは思っておりました。',
+      '弁明しますと、会議を減らすには関係部門の合意が要り、合意には会議が要る。これが当社の現実であります。しかし原点に立ち返れば、会議の目的は決めることであり、集まることではありません。',
+      'まず私から実行します。私が議長の定例会議は、資料の事前配布をもって報告部分を廃止し、時間を半分にします。各部門長にも同じことを求めます。半年後、この目安箱に「会議が減った」という投書が届くことを願っています。',
+    ],
+  ],
+  [
+    '2026年5月',
+    '社長は現場に来るとき、事前に知らせないでほしいです。前日の掃除で1日つぶれます。',
+    [
+      '耳の痛い投書です。ありがとうございます。三現主義を口にしながら、私が見ていたのは「準備された現場」だったわけです。',
+      '今後、私の工場訪問は原則として予告なしとします。ただし安全のため、入場時の保護具着用と立入区域の制限は守ります。掃除は私のためでなく、皆さんの安全のためにしてください。',
+      'なお、予告なしで伺った先で5Sが行き届いていた第2ラインには、この場を借りて敬意を表します。日頃からやっている職場は、突然でも強い。',
+    ],
+  ],
+];
+---
+
+<Base
+  title="社長への目安箱（架空企業の社内ページ）"
+  description="架空企業ダラリ重工業の「社長への目安箱」（という設定のページ）。投書に社長・陀楽進が答えます。カレー大盛り問題から会議削減まで。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内ページ（という設定）です。投書は実際にはどこにも送信されません。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-3xl items-baseline justify-between">
+        <p class="text-lg font-bold">社長への目安箱</p>
+        <p class="text-[11px] text-white/80">所管: 秘書室 ｜ 匿名可 ｜ 社長が月1回、全件読みます</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-3xl space-y-4 px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a> &gt; 総務 &gt; 社長への目安箱
+      </p>
+
+      <div class="border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
+        【約束】投書は秘書室で開封せず、社長が直接読みます。人事上の不利益は一切ありません（<a href="/company/ai-kitei/" class="text-[#00c] underline">自己申告に不利益なし</a>、と同じ思想です）。<br />
+        【注意】回答は毎月、選ばれた投書のみ掲載されます。個人が特定される内容は掲載時に加工します。<br />
+        【参考】従来の木箱（本館1階）も併設しています。木箱の投書数がポータルを上回っています（紙は強い）。
+      </div>
+
+      <!-- 投書フォーム -->
+      <div class="border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">投書する（匿名可）</p>
+        <form id="meyasu-form" class="p-4">
+          <textarea id="meyasu-text" rows="4" class="w-full border border-[#999] bg-white px-2 py-1" placeholder="社長に伝えたいことをどうぞ。ご意見・ご提案・ぼやき、何でも構いません。"></textarea>
+          <div class="mt-3 flex items-center gap-3">
+            <button type="submit" class="border border-[#1b3a6b] bg-gradient-to-b from-[#4a6fae] to-[#1b3a6b] px-6 py-1.5 font-bold text-white">投函</button>
+            <span class="text-[11px] text-[#666]">※このページは設定上の演出です。投書はどこにも送信・保存されません。</span>
+          </div>
+          <p id="meyasu-result" class="mt-3 hidden border border-[#1b3a6b] bg-[#eef7ee] px-3 py-2 text-[12px] font-bold"></p>
+        </form>
+      </div>
+
+      <!-- 社長の回答 -->
+      <div class="space-y-4">
+        {
+          answers.map(([month, q, paras]) => (
+            <div class="border border-[#999] bg-white">
+              <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 text-[11px] font-bold text-[#1b3a6b]">{month} 掲載</p>
+              <div class="px-5 py-4">
+                <p class="border-l-4 border-[#ccc] pl-3 text-[12px] text-[#555]">投書（要旨）: {q}</p>
+                <div class="mt-3 space-y-2 text-[12px] leading-relaxed">
+                  {paras.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                </div>
+                <p class="mt-3 text-right text-[11px] text-[#666]">代表取締役社長　陀楽 進</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">秘書室（目安箱係） 内線 1100 ｜ 歴代の社長訓話は<a href="/company/message/" class="text-[#00c] underline">社長メッセージ</a>へ</p>
+    </div>
+  </div>
+
+  <script>
+    // 掟: 本体が無いページでは何もしない（存在ガード。非null断定は禁止）
+    const meyasuForm = document.getElementById('meyasu-form');
+    if (meyasuForm) {
+      (meyasuForm as HTMLFormElement).addEventListener('submit', (e) => {
+        e.preventDefault();
+        const text = (document.getElementById('meyasu-text') as HTMLTextAreaElement | null)?.value?.trim() || '';
+        const result = document.getElementById('meyasu-result');
+        if (!result) return;
+        result.classList.remove('hidden');
+        if (!text) {
+          result.textContent = '白紙の投書が最も多い月がありました。何か一言だけでもどうぞ。';
+          return;
+        }
+        const no = 'MB-2026-' + String(Math.floor(Math.random() * 900) + 100);
+        result.textContent = `受付番号 ${no}。投函ありがとうございました（という設定です。実際にはどこにも送信されていません）。社長の回答は月1回このページに掲載されます。`;
+        const ta = document.getElementById('meyasu-text') as HTMLTextAreaElement | null;
+        if (ta) ta.value = '';
+      });
+    }
+  </script>
+</Base>

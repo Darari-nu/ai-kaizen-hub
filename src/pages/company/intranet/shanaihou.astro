@@ -1,0 +1,97 @@
+---
+// 社内報「だらり」 — ダラリ重工業の広報・IR室発行(という設定のパロディページ)。
+// お知らせ通達(7月号掲載)の実体。最新号だけ読めて、バックナンバーは書庫(の体)。
+// 将来「社内報をAIに書かせてみた」記事の実機になる。
+import Base from '@/layouts/Base.astro';
+
+const backnumbers = [
+  ['2026年8月号', '編集中（8月末発行予定）', ''],
+  ['2026年7月号', '掲載中（このページ）', 'current'],
+  ['2026年6月号', '書庫（紙）', ''],
+  ['2026年5月号', '書庫（紙）', ''],
+  ['〜1997年4月号（創刊）', '書庫（紙・合本版）', ''],
+];
+---
+
+<Base
+  title="社内報「だらり」2026年7月号（架空企業）"
+  description="架空企業ダラリ重工業の社内報「だらり」（という設定のページ）。AI活用推進室に行ってみた、カレー大盛り廃止の経緯、5S表彰。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内報（という設定）です。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-3xl items-baseline justify-between">
+        <p class="text-lg font-bold">社内報「だらり」2026年7月号</p>
+        <p class="text-[11px] text-white/80">発行: 広報・IR室（季刊のはずが月刊になった経緯は不明）</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-3xl space-y-4 px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a> &gt; 広報 &gt; 社内報「だらり」
+      </p>
+
+      <div class="border-2 border-[#1b3a6b] bg-white px-6 py-5">
+        <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold text-[#1b3a6b]">特集: AI活用推進室に行ってみた（室員1名）</h2>
+        <p class="mt-3 leading-relaxed">
+          本年新設されたAI活用推進室。取材に向かうと、専用の部屋はなく、製造部事務所の一角に机がひとつ。「ここが推進室です」と室員（1名）は笑う。
+        </p>
+        <p class="mt-2 leading-relaxed">
+          机の上には稟議書の控えが積まれている。「AIの仕事より、申請の仕事のほうが多い日もあります。でも、正規に通すからこそ、堂々と使えるんです」。
+          最近は会議録発行システムの自動入力を実演し、見学した現場から「うちの集計もやってくれ」と依頼が相次いでいるという。
+        </p>
+        <p class="mt-2 leading-relaxed">
+          将来の夢を聞くと「全社員が、申請書の書き方ではなくAIの使い方で悩む会社にしたい」。編集部は、まず推進室に内線を引くことを総務部に要望したい。（広報・IR室 T）
+        </p>
+      </div>
+
+      <div class="border border-[#999] bg-white px-6 py-5">
+        <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold text-[#1b3a6b]">検証: 食堂のカレー大盛りは、なぜ廃止されたのか</h2>
+        <p class="mt-3 leading-relaxed">
+          6月末をもって廃止されたカレーの大盛り。食堂に聞くと「大盛りの基準が人によって違い、原価管理ができないため」。
+          復活を望む声は編集部にも多数届いているが、食堂は「ルウの公平な配分方法が確立されるまで再開は難しい」としている。
+          有志による「大盛り基準の標準化提案」が改善提案制度に出されたとの情報もあり、続報を待ちたい。
+        </p>
+      </div>
+
+      <div class="border border-[#999] bg-white px-6 py-5">
+        <h2 class="border-l-4 border-[#1b3a6b] pl-2 font-bold text-[#1b3a6b]">おめでとう: 6月度 5S表彰は第2ライン</h2>
+        <p class="mt-3 leading-relaxed">
+          6月度の5Sパトロールで、製造一課・第2ラインが最優秀職場に選ばれた。受賞理由は「社長視察の前日に仕上げたのではなく、常にこの状態だったため」（審査員談）。
+          職場方針「5Sを徹底する。挨拶をする。前年比3%。」の実践が評価された形だ。
+        </p>
+      </div>
+
+      <div class="border border-[#999] bg-white px-6 py-4">
+        <p class="text-[11px] font-bold text-[#1b3a6b]">編集後記</p>
+        <p class="mt-1 text-[12px] leading-relaxed text-[#666]">
+          今月から社内報もポータル掲載になりました。「紙で回覧のほうが読んだ気がする」という声が早速3件届いています。検討します。（T）
+        </p>
+      </div>
+
+      <div class="border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ バックナンバー</p>
+        <table class="w-full border-collapse text-[12px]">
+          <tbody>
+            {
+              backnumbers.map(([go, state, cur]) => (
+                <tr class:list={[cur && 'bg-[#fffbe6]']}>
+                  <td class="w-52 border border-[#ddd] px-3 py-1.5">{go}</td>
+                  <td class="border border-[#ddd] px-3 py-1.5 text-[11px] text-[#666]">{state}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">広報・IR室 ｜ 投稿・お便りは社内メール便で（メールでも可、と言い続けて3年目）</p>
+    </div>
+  </div>
+</Base>

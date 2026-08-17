@@ -28,6 +28,8 @@ const articleNotices: Notice[] = published.map((a) => ({
 }));
 
 const manualNotices: Notice[] = [
+  { date: '2026.08.17', tag: 'お願い', dept: '品質保証部', text: '内部監査（上期）指摘の是正処置提出について（期限超過1件。なぜなぜは最低3回です）', href: '/company/intranet/kansa/' },
+  { date: '2026.08.17', tag: '通達', dept: '秘書室', text: '「社長への目安箱」をポータルに設置しました（従来の木箱も併設します）', href: '/company/intranet/meyasubako/' },
   { date: '2026.08.17', tag: '通達', dept: '総務部', text: '稟議システムの利用開始について（紙の稟議書との併用は当面の間続きます）', href: '/company/intranet/ringi/' },
   { date: '2026.08.17', tag: '回覧', dept: '広報・IR室', text: '社長メッセージのページを開設しました（歴代の年頭挨拶・創立記念訓話・安全大会訓示）', href: '/company/message/' },
   { date: '2026.08.17', tag: '通達', dept: '経営企画本部', text: '四半期フォローシート（様式H-1）のExcel最新版について（今年度もExcelで提出してください。システム化は移行中です）', href: '/files/様式H-1_四半期フォローシート_2025-2026年度.xlsx' },
@@ -43,14 +45,14 @@ const manualNotices: Notice[] = [
   { date: '2026.08.01', tag: '通達', dept: '情報システム部', text: 'AI利用規程（暫定版）の制定について', href: '/company/ai-kitei/' },
   { date: '2026.07.28', tag: 'お願い', dept: '経理部', text: '経費精算の締切厳守について（今月こそ）' },
   { date: '2026.07.15', tag: '通達', dept: '総務部', text: '夏季休業期間中の入退館について' },
-  { date: '2026.07.01', tag: '回覧', dept: '広報・IR室', text: '社内報「だらり」7月号を掲載しました' },
+  { date: '2026.07.01', tag: '回覧', dept: '広報・IR室', text: '社内報「だらり」7月号を掲載しました', href: '/company/intranet/shanaihou/' },
   { date: '2026.06.20', tag: '重要', dept: '品質保証部', text: '検査記録の記入漏れ防止について（月例）' },
 ];
 
 // 日付降順でマージ(YYYY.MM.DD形式なので文字列比較でよい)
 const notices: Notice[] = [...manualNotices, ...articleNotices]
   .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1))
-  .slice(0, 16);
+  .slice(0, 18);
 
 const kettai = [
   ['10万円未満', '課長', '即日〜3営業日'],
@@ -214,26 +216,40 @@ const kairan = [
         </div>
 
         <div class="space-y-4">
-          <!-- リンク集 -->
+          <!-- リンク集（グループ表示。増えすぎたため2026-08-17整理） -->
           <div class="border border-[#999] bg-white">
             <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
               ■ 社内システム
             </div>
+            <div class="border-b border-[#eee] bg-[#f5f5f0] px-3 py-1 text-[11px] font-bold text-[#666]">業務システム</div>
             <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
               <li class="py-1.5">
                 <button type="button" data-open-bot class="underline">AI相談窓口（総務課・忍者）</button>
                 <span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">←これは使えます（24時間対応）</span>
               </li>
               <li class="py-1.5"><a href="/company/intranet/ringi/" class="underline">稟議システム（電子決裁）</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#999]">紙と併用</span></li>
-              <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりAI自動集計</span></li>
-              <li class="py-1.5"><a href="/company/intranet/kaigiroku/" class="underline">会議録（AI自動作成）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/kaigiroku-manual/" class="underline">操作手引</a></span></li>
-              <li class="py-1.5"><a href="/company/intranet/nittei/" class="underline">開発日程作成システム（大日程）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/nittei-manual/" class="underline">操作手引（第9版・必読）</a></span></li>
               <li class="py-1.5"><a href="/company/intranet/kintai/" class="underline">勤怠管理システム</a><span class="ml-2 text-[10px] font-bold text-[#c00]">8/17 復旧しました（7年ぶり）</span></li>
               <li class="py-1.5"><a href="/company/intranet/keihi/" class="underline">経費精算システム</a><span class="ml-2 text-[10px] text-[#c00]">Internet Explorer 11 推奨</span></li>
               <li class="py-1.5"><a href="/company/intranet/bunsho/" class="underline">文書管理システム</a><span class="ml-2 text-[10px] text-[#999]">（要VPN→接続済みと判定されます）</span></li>
-              <li class="py-1.5"><a href="/company/intranet/kyt/" class="underline">安全衛生ポータル（KYT・OPL）</a><span class="ml-2 text-[10px] text-[#1b3a6b]">ご安全に</span></li>
-              <li class="py-1.5"><a href="/files/様式H-1_四半期フォローシート_2025-2026年度.xlsx" class="underline">方針管理 四半期フォローシート（Excel・様式H-1）</a><span class="ml-2 text-[10px] text-[#999]">システム化は移行中（AI活用推進室が作業中）</span></li>
+              <li class="py-1.5"><a href="/company/intranet/kaigiroku/" class="underline">会議録（AI自動作成）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/kaigiroku-manual/" class="underline">操作手引</a></span></li>
+              <li class="py-1.5"><a href="/company/intranet/nittei/" class="underline">開発日程作成システム（大日程）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/nittei-manual/" class="underline">操作手引（第9版・必読）</a></span></li>
+              <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりAI自動集計</span></li>
               <li class="py-1.5"><span class="cursor-default underline decoration-dotted">Copilot Chat</span><span class="ml-2 text-[10px] text-[#999]">（ライセンス申請中・稟議148日目）</span></li>
+            </ul>
+            <div class="border-b border-t border-[#eee] bg-[#f5f5f0] px-3 py-1 text-[11px] font-bold text-[#666]">品質・安全</div>
+            <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
+              <li class="py-1.5"><a href="/company/intranet/kansa/" class="underline">内部監査・是正処置（CAPA）台帳</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#c00]">期限超過1件</span></li>
+              <li class="py-1.5"><a href="/company/intranet/hoshitori/" class="underline">力量管理・星取表</a><span class="ml-2 text-[10px] text-[#999]">「AI活用」列を追加（基準検討中）</span></li>
+              <li class="py-1.5"><a href="/company/intranet/henka-4m/" class="underline">4M変化点管理ボード</a><span class="ml-2 text-[10px] text-[#1b3a6b]">朝礼で共有</span></li>
+              <li class="py-1.5"><a href="/company/intranet/kyt/" class="underline">安全衛生ポータル（KYT・OPL）</a><span class="ml-2 text-[10px] text-[#1b3a6b]">ご安全に</span></li>
+            </ul>
+            <div class="border-b border-t border-[#eee] bg-[#f5f5f0] px-3 py-1 text-[11px] font-bold text-[#666]">総務・職場</div>
+            <ul class="divide-y divide-[#eee] px-3 py-1 text-[#00c]">
+              <li class="py-1.5"><a href="/files/様式H-1_四半期フォローシート_2025-2026年度.xlsx" class="underline">方針管理 四半期フォローシート（Excel・様式H-1）</a><span class="ml-2 text-[10px] text-[#999]">システム化は移行中</span></li>
+              <li class="py-1.5"><a href="/company/intranet/meyasubako/" class="underline">社長への目安箱</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#999]">匿名可・木箱も併設</span></li>
+              <li class="py-1.5"><a href="/company/intranet/shanaihou/" class="underline">社内報「だらり」</a><span class="ml-2 text-[10px] text-[#999]">7月号 掲載中</span></li>
+              <li class="py-1.5"><a href="/company/intranet/chourei/" class="underline">朝礼スピーチ当番表</a><span class="ml-2 text-[10px] text-[#999]">1分厳守</span></li>
+              <li class="py-1.5"><a href="/company/intranet/naisen/" class="underline">内線電話帳・座席表</a></li>
             </ul>
           </div>
 
