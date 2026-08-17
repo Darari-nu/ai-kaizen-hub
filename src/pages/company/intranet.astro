@@ -28,6 +28,10 @@ const articleNotices: Notice[] = published.map((a) => ({
 }));
 
 const manualNotices: Notice[] = [
+  { date: '2026.08.17', tag: '通達', dept: '総務部', text: '稟議システムの利用開始について（紙の稟議書との併用は当面の間続きます）', href: '/company/intranet/ringi/' },
+  { date: '2026.08.17', tag: '回覧', dept: '広報・IR室', text: '社長メッセージのページを開設しました（歴代の年頭挨拶・創立記念訓話・安全大会訓示）', href: '/company/message/' },
+  { date: '2026.08.17', tag: '通達', dept: '経営企画本部', text: '方針管理ページの掲載について（2025・2026年度の本部方針・四半期フォローシート）', href: '/company/intranet/hoshin/' },
+  { date: '2026.08.17', tag: 'お願い', dept: '安全衛生室', text: 'KYT記録のシステム入力開始について（紙の安全ファイルも当面継続します）', href: '/company/intranet/kyt/' },
   { date: '2026.08.17', tag: '通達', dept: '開発本部', text: '開発日程作成システムの操作マニュアル改訂について（第9版・全113ページ。週番号の数え方は第5章）', href: '/company/intranet/nittei-manual/' },
   { date: '2026.08.17', tag: '重要', dept: '情報システム部', text: '勤怠管理システムの復旧について（7年ぶり。月次申請は本日よりシステムで受け付けます）', href: '/company/intranet/kintai/' },
   { date: '2026.08.17', tag: '通達', dept: '経理部', text: '経費精算システムの利用開始について（領収書は引き続き紙で提出してください）', href: '/company/intranet/keihi/' },
@@ -46,7 +50,7 @@ const manualNotices: Notice[] = [
 // 日付降順でマージ(YYYY.MM.DD形式なので文字列比較でよい)
 const notices: Notice[] = [...manualNotices, ...articleNotices]
   .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1))
-  .slice(0, 14);
+  .slice(0, 16);
 
 const kettai = [
   ['10万円未満', '課長', '即日〜3営業日'],
@@ -220,12 +224,15 @@ const kairan = [
                 <button type="button" data-open-bot class="underline">AI相談窓口（総務課・忍者）</button>
                 <span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">←これは使えます（24時間対応）</span>
               </li>
+              <li class="py-1.5"><a href="/company/intranet/ringi/" class="underline">稟議システム（電子決裁）</a><span class="ml-2 bg-[#c00] px-1.5 py-0.5 text-[9px] font-bold text-white">NEW</span><span class="ml-1 text-[10px] text-[#999]">紙と併用</span></li>
               <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりAI自動集計</span></li>
               <li class="py-1.5"><a href="/company/intranet/kaigiroku/" class="underline">会議録（AI自動作成）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/kaigiroku-manual/" class="underline">操作手引</a></span></li>
               <li class="py-1.5"><a href="/company/intranet/nittei/" class="underline">開発日程作成システム（大日程）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/nittei-manual/" class="underline">操作手引（第9版・必読）</a></span></li>
               <li class="py-1.5"><a href="/company/intranet/kintai/" class="underline">勤怠管理システム</a><span class="ml-2 text-[10px] font-bold text-[#c00]">8/17 復旧しました（7年ぶり）</span></li>
               <li class="py-1.5"><a href="/company/intranet/keihi/" class="underline">経費精算システム</a><span class="ml-2 text-[10px] text-[#c00]">Internet Explorer 11 推奨</span></li>
               <li class="py-1.5"><a href="/company/intranet/bunsho/" class="underline">文書管理システム</a><span class="ml-2 text-[10px] text-[#999]">（要VPN→接続済みと判定されます）</span></li>
+              <li class="py-1.5"><a href="/company/intranet/kyt/" class="underline">安全衛生ポータル（KYT・OPL）</a><span class="ml-2 text-[10px] text-[#1b3a6b]">ご安全に</span></li>
+              <li class="py-1.5"><a href="/company/intranet/hoshin/" class="underline">方針管理（年度別・四半期フォロー）</a></li>
               <li class="py-1.5"><span class="cursor-default underline decoration-dotted">Copilot Chat</span><span class="ml-2 text-[10px] text-[#999]">（ライセンス申請中・稟議148日目）</span></li>
             </ul>
           </div>
@@ -296,6 +303,7 @@ const kairan = [
           }
           <p class="mt-3 text-[11px] text-[#888]">
             ※ 下位方針は上位方針とベクトルを合わせて策定してください（毎年1月・方針展開会議にて審議）。
+            年度別の本部方針・四半期フォローは<a href="/company/intranet/hoshin/" class="text-[#00c] underline">方針管理ページ</a>へ。
           </p>
         </div>
       </div>

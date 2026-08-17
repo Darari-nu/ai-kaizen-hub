@@ -1,0 +1,157 @@
+---
+// 方針管理（年度別） — ダラリ重工業の方針展開・四半期フォロー(という設定のパロディページ)。
+// 2026-08-17 darari指示「年度別に用意・四半期のチェックシートまで欲しい」。
+// 様式美: 階層を下るほど「前年比3%」に純化する方針展開(社長脳notes/keisu-no-mahou.md)、
+// 挽回策の三種の神器(徹底する・意識を高める・引き続き注視する)、達成率99%以上は「概ね達成」。
+// 将来の目標管理(MBO)シートシステムはこの最下段に接続する(Phase 2)。
+import Base from '@/layouts/Base.astro';
+
+// 本部別方針: [本部, 2025年度方針, 2026年度方針, 数値目標(共通の様式美)]
+const honbu: [string, string, string, string][] = [
+  ['製造本部', '変化に対応し、生産性を前年比3%改善する', '変化に対応し、生産性を前年比3%改善する', '生産性 前年比+3%／不良率 前年比−3%'],
+  ['営業本部', '既存顧客を深耕し、受注を前年比3%拡大する', '新規市場に挑戦し、受注を前年比3%拡大する', '受注高 前年比+3%'],
+  ['品質本部', '品質不良ゼロを前提とし、市場クレームを前年比3%削減する', '品質不良ゼロを前提とし、市場クレームを前年比3%削減する', '市場クレーム 前年比−3%'],
+  ['開発本部', 'DR日程遵守率を高め、開発期間を前年比3%短縮する', 'DR日程遵守率を高め、開発期間を前年比3%短縮する', '開発期間 前年比−3%'],
+  ['管理本部', '経費を前年比3%削減し、締切遵守を徹底する', '経費を前年比3%削減し、DX（デジタル何とか）を推進する', '間接経費 前年比−3%'],
+  ['経営企画本部', '機能別組織の定着を図る', '中期経営計画「DARARI 2030」の展開を徹底する', '計画展開率 100%'],
+];
+
+// 四半期フォロー: [年度, [四半期, 計画, 実績, 達成率, 差異要因, 挽回策][]]
+const followSheets: [string, string, [string, string, string, string, string, string][]][] = [
+  [
+    '2026年度', '実施中（第2四半期 集計中）',
+    [
+      ['第1四半期', '生産性 前年比+0.75%', '+0.62%', '98.9%（概ね達成）', '5月連休明けの立上げ遅れ、および新製品AX-7の段取り習熟不足', '第2四半期で挽回する。段取り訓練を徹底する'],
+      ['第2四半期', '生産性 前年比+1.50%（累計）', '（集計中）', '—', '—', '—'],
+      ['第3四半期', '生産性 前年比+2.25%（累計）', '—', '—', '—', '—'],
+      ['第4四半期', '生産性 前年比+3.00%（累計）', '—', '—', '—', '—'],
+    ],
+  ],
+  [
+    '2025年度', '実績確定（2026年4月 方針展開会議 承認済み）',
+    [
+      ['第1四半期', '生産性 前年比+0.75%', '+0.77%', '102.7%（達成）', '特記事項なし', '—'],
+      ['第2四半期', '生産性 前年比+1.50%（累計）', '+1.48%', '98.7%（概ね達成）', '猛暑による設備停止（空調能力不足。7月に3回）', '扇風機を増設し、意識を高める'],
+      ['第3四半期', '生産性 前年比+2.25%（累計）', '+2.21%', '98.2%（概ね達成）', '年末の駆け込み受注による段取り替え増加', '計画的な段取りを徹底する'],
+      ['第4四半期', '生産性 前年比+3.00%（累計）', '+3.02%', '100.7%（達成）', '第3四半期の遅れを挽回（3月に集中生産）', '来年度も引き続き注視する'],
+    ],
+  ],
+];
+---
+
+<Base
+  title="方針管理・年度別（架空企業の社内サイト）"
+  description="架空企業ダラリ重工業の方針管理ページ（という設定）。2025・2026年度の本部別方針と四半期フォローシート（様式H-1）。方針展開の様式美の実物サンプル。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内資料（という設定）です。方針管理の様式ごと流用できます。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-5xl items-baseline justify-between">
+        <p class="text-lg font-bold">方針管理（年度別）</p>
+        <p class="text-[11px] text-white/80">所管: 経営企画本部 ｜ 毎年1月・方針展開会議にて審議</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-5xl space-y-4 px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a>
+        &gt; 方針管理 ｜ 今年度の方針体系（社方針〜職場方針）は<a href="/company/intranet/#kettai" class="text-[#00c] underline">ポータルトップ</a>に掲示
+      </p>
+
+      <div class="border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
+        【運用】下位方針は上位方針とベクトルを合わせて策定してください。四半期ごとに様式H-1でフォローし、方針展開会議に報告します。<br />
+        【注記】達成率99%以上は「概ね達成」と記載します（2013年度 方針展開会議決定）。挽回策は具体的に記載してください（「徹底する」等）。<br />
+        【関連】中期経営計画「DARARI 2030」については<a href="/company/message/" class="text-[#00c] underline">社長メッセージ</a>を参照。
+      </div>
+
+      <!-- 本部別方針（年度比較） -->
+      <div class="border border-[#999] bg-white">
+        <div class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">
+          ■ 本部方針一覧（2025年度・2026年度）
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full min-w-[720px] border-collapse text-[12px]">
+            <thead>
+              <tr class="bg-[#f5f5f0] text-left">
+                <th class="w-28 border border-[#ddd] px-3 py-1.5">本部</th>
+                <th class="border border-[#ddd] px-3 py-1.5">2025年度 方針</th>
+                <th class="border border-[#ddd] px-3 py-1.5">2026年度 方針</th>
+                <th class="w-48 border border-[#ddd] px-3 py-1.5">数値目標</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                honbu.map(([bu, h25, h26, kpi]) => (
+                  <tr>
+                    <th class="border border-[#ddd] bg-[#f5f5f0] px-3 py-1.5 text-left align-top font-bold">{bu}</th>
+                    <td class="border border-[#ddd] px-3 py-1.5 align-top">{h25}</td>
+                    <td class:list={['border border-[#ddd] px-3 py-1.5 align-top', h25 !== h26 && 'bg-[#fffbe6]']}>{h26}</td>
+                    <td class="border border-[#ddd] px-3 py-1.5 align-top text-[11px]">{kpi}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="px-3 py-2 text-[11px] text-[#888]">
+          ※ 黄色のセルは前年度から文言が変わった方針です（変わっていない方針が多いのは、方針が安定している証です——経営企画本部）。
+        </p>
+      </div>
+
+      <!-- 四半期フォローシート -->
+      {
+        followSheets.map(([nendo, status, rows]) => (
+          <div class="border border-[#999] bg-white">
+            <div class="flex flex-wrap items-baseline justify-between border-b border-[#999] bg-[#eef1f5] px-3 py-1.5">
+              <p class="font-bold text-[#1b3a6b]">■ 四半期フォローシート（様式H-1）｜{nendo}（例: 製造本部）</p>
+              <p class="text-[10px] text-[#666]">{status}</p>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[760px] border-collapse text-[12px]">
+                <thead>
+                  <tr class="bg-[#f5f5f0] text-left">
+                    <th class="w-24 border border-[#ddd] px-2 py-1.5">四半期</th>
+                    <th class="border border-[#ddd] px-2 py-1.5">計画</th>
+                    <th class="w-24 border border-[#ddd] px-2 py-1.5">実績</th>
+                    <th class="w-32 border border-[#ddd] px-2 py-1.5">達成率</th>
+                    <th class="border border-[#ddd] px-2 py-1.5">差異要因</th>
+                    <th class="border border-[#ddd] px-2 py-1.5">挽回策</th>
+                    <th class="w-14 border border-[#ddd] px-2 py-1.5 text-center">確認印</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map(([q, plan, actual, rate, cause, action]) => (
+                    <tr>
+                      <th class="border border-[#ddd] bg-[#f5f5f0] px-2 py-1.5 text-left align-top font-bold">{q}</th>
+                      <td class="border border-[#ddd] px-2 py-1.5 align-top">{plan}</td>
+                      <td class="border border-[#ddd] px-2 py-1.5 align-top">{actual}</td>
+                      <td class:list={['border border-[#ddd] px-2 py-1.5 align-top', rate.includes('概ね') && 'text-[#a06000]', rate.startsWith('10') && 'text-[#1b3a6b]']}>{rate}</td>
+                      <td class="border border-[#ddd] px-2 py-1.5 align-top text-[11px]">{cause}</td>
+                      <td class="border border-[#ddd] px-2 py-1.5 align-top text-[11px]">{action}</td>
+                      <td class="border border-[#ddd] px-2 py-1.5 text-center align-top">{actual !== '—' && actual !== '（集計中）' ? '㊞' : ''}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="border border-[#999] bg-white px-3 py-2 text-[11px] leading-relaxed text-[#666]">
+        ※ 各部門のフォローシート原本は経営企画本部が保管しています（紙）。本ページは製造本部の例を掲示したものです。<br />
+        ※ 個人の目標管理シート（様式H-2）は方針体系の最下段に接続します。システム化は検討中です（AI活用推進室に期待）。
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">
+        推奨環境: Internet Explorer 11 ｜ 経営企画本部 企画課 内線 1200
+      </p>
+    </div>
+  </div>
+</Base>

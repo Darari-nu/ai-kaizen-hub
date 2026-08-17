@@ -1,0 +1,296 @@
+---
+// 稟議システム（電子決裁） — ダラリ重工業の社内システム(という設定のパロディページ)。
+// サイトの旗「会社にAIを正規に申請→導入」のど真ん中の実機。金額を入れると決裁権限表どおりに
+// 決裁ルートが自動判定され、理由が薄い・事前確認漏れ・相見積なしは差戻しになる。
+// 「AIと書いた稟議書、一発で通るか」記事(037稟議ゼロ講座・004 Claude Team実録)の実演場所。
+// 保存はlocalStorage。全入力欄に安定IDあり(ringi-title / ringi-amount / ringi-riyu 等)。
+import Base from '@/layouts/Base.astro';
+---
+
+<Base
+  title="稟議システム（架空企業の社内システム）"
+  description="架空企業ダラリ重工業の稟議システム（という設定のページ）。金額で決裁ルートが自動判定され、理由が薄いと差戻しされます。稟議の練習台としてどうぞ。"
+>
+  <div
+    class="min-h-screen bg-[#d4d0c8] text-[13px] text-[#222]"
+    style="font-family: 'Hiragino Kaku Gothic ProN', 'MS PGothic', 'Yu Gothic', sans-serif;"
+  >
+    <div class="bg-shu px-4 py-2 text-center text-xs font-bold text-white">
+      ⚠️ これは「<a href="/" class="underline decoration-white/60 underline-offset-2">AIカイゼン</a>」の記事に登場する架空企業の社内システム（という設定）です。実際に起案して遊べます（保存はお使いのブラウザ内のみ）。
+    </div>
+
+    <div class="border-b-4 border-[#1b3a6b] bg-gradient-to-b from-[#3a5f9e] to-[#1b3a6b] px-4 py-3 text-white">
+      <div class="mx-auto flex max-w-4xl items-baseline justify-between">
+        <p class="text-lg font-bold">稟議システム</p>
+        <p class="text-[11px] text-white/80">DARARI-RINGI v1.4 ｜ ログイン中: AI活用推進室 さん</p>
+      </div>
+    </div>
+
+    <div class="mx-auto max-w-4xl px-4 py-6">
+      <p class="mb-1 text-[11px]">
+        <a href="/company/intranet/" class="text-[#00c] underline">DARARIポータル</a>
+        &gt; 業務システム &gt; 稟議システム
+      </p>
+
+      <div class="mb-4 border border-[#999] bg-[#fffbe6] px-3 py-2 text-[11px] leading-relaxed">
+        【注意】起案の前に<a href="/company/ringi-kitei/" class="text-[#00c] underline">稟議規程（社規第1965-03号）</a>と<a href="/company/intranet/#kettai" class="text-[#00c] underline">決裁権限表</a>を確認してください。<br />
+        【注意】有料クラウドサービス（SaaS等）は、<b class="text-[#c00]">金額にかかわらず</b>情報システム部・法務部の事前確認が必要です。<br />
+        【注意】100万円以上の案件は2社以上の見積書を紙で回付してください（電子添付は準備中です。2016年より）。<br />
+        【参考】理由・効果には定量効果（時間・金額）を記載してください。「業務効率化のため」だけでは差戻しになります。
+      </div>
+
+      <!-- 起案フォーム -->
+      <div class="border-2 border-[#1b3a6b] bg-white">
+        <p class="bg-[#1b3a6b] px-3 py-1.5 font-bold text-white">稟議 起案</p>
+        <form id="ringi-form" class="p-4">
+          <table class="w-full border-collapse">
+            <tbody>
+              <tr class="border-b border-[#ddd]">
+                <th class="w-40 bg-[#eef1f5] px-3 py-2 text-left font-normal">件名<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2"><input id="ringi-title" type="text" placeholder="例: 生成AIサービスの利用契約について" class="w-full border border-[#999] bg-white px-2 py-1" /></td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">起案部署<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2">
+                  <select id="ringi-dept" class="border border-[#999] bg-white px-2 py-1">
+                    <option>AI活用推進室</option>
+                    <option>製造一課</option>
+                    <option>製造二課</option>
+                    <option>生産技術課</option>
+                    <option>品質保証部</option>
+                    <option>情報システム部</option>
+                    <option>総務部</option>
+                  </select>
+                </td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">区分<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2">
+                  <select id="ringi-kubun" class="border border-[#999] bg-white px-2 py-1">
+                    <option>設備・工具</option>
+                    <option>システム・SaaS（クラウド）</option>
+                    <option>消耗品</option>
+                    <option>役務・外注</option>
+                    <option>その他</option>
+                  </select>
+                </td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left font-normal">金額（円・年額）<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2">
+                  <input id="ringi-amount" type="number" min="1" placeholder="例: 108000" class="w-44 border border-[#999] bg-white px-2 py-1" />
+                  <span id="ringi-route-preview" class="ml-3 text-[11px] font-bold text-[#1b3a6b]"></span>
+                </td>
+              </tr>
+              <tr class="border-b border-[#ddd]">
+                <th class="bg-[#eef1f5] px-3 py-2 text-left align-top font-normal">理由・効果<span class="ml-1 text-[#c00]">*</span></th>
+                <td class="px-3 py-2">
+                  <textarea id="ringi-riyu" rows="5" class="w-full border border-[#999] bg-white px-2 py-1" placeholder="現状の課題／導入内容／定量効果（例: 月◯時間の削減、年◯円の効果）／リスクと対策 を記載"></textarea>
+                </td>
+              </tr>
+              <tr>
+                <th class="bg-[#eef1f5] px-3 py-2 text-left align-top font-normal">添付・事前確認</th>
+                <td class="px-3 py-2 text-[11px] leading-relaxed">
+                  <label class="block"><input type="checkbox" id="ringi-jizen" class="mr-1" />情報システム部・法務部の事前確認済み（SaaS・クラウドの場合は必須）</label>
+                  <label class="block"><input type="checkbox" id="ringi-mitsumori" class="mr-1" />見積書2社以上を紙で回付します（100万円以上の場合は必須）</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="mt-4 flex items-center gap-3">
+            <button type="submit" id="ringi-submit" class="border border-[#1b3a6b] bg-gradient-to-b from-[#4a6fae] to-[#1b3a6b] px-6 py-1.5 font-bold text-white">起案</button>
+            <span class="text-[11px] text-[#666]">起案後の取下げは「稟議取下届（様式R-3）」の提出が必要です。</span>
+          </div>
+          <div id="ringi-result" class="mt-3 hidden border px-3 py-2 text-[12px] font-bold"></div>
+        </form>
+      </div>
+
+      <!-- 回覧状況 -->
+      <div class="mt-4 hidden border border-[#999] bg-white" id="ringi-status-box">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ 回覧状況</p>
+        <table class="w-full border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">順</th>
+              <th class="border border-[#ddd] px-3 py-1.5">決裁者</th>
+              <th class="border border-[#ddd] px-3 py-1.5">状態</th>
+              <th class="border border-[#ddd] px-3 py-1.5">備考</th>
+            </tr>
+          </thead>
+          <tbody id="ringi-status-rows"></tbody>
+        </table>
+        <p class="px-3 py-2 text-[11px] text-[#888]">※ 押印状況は毎営業日17時に更新されます（手作業）。</p>
+      </div>
+
+      <!-- 起案履歴 -->
+      <div class="mt-4 border border-[#999] bg-white">
+        <p class="border-b border-[#999] bg-[#eef1f5] px-3 py-1.5 font-bold text-[#1b3a6b]">■ 起案履歴</p>
+        <table class="w-full border-collapse text-[12px]">
+          <thead>
+            <tr class="bg-[#f5f5f0] text-left">
+              <th class="border border-[#ddd] px-3 py-1.5">稟議番号</th>
+              <th class="border border-[#ddd] px-3 py-1.5">件名</th>
+              <th class="border border-[#ddd] px-3 py-1.5 text-right">金額</th>
+              <th class="border border-[#ddd] px-3 py-1.5">最終決裁者</th>
+              <th class="border border-[#ddd] px-3 py-1.5">状態</th>
+            </tr>
+          </thead>
+          <tbody id="ringi-history">
+            <tr><td class="border border-[#ddd] px-3 py-1.5 text-[#888]" colspan="5">（起案履歴はありません）</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mt-4 text-[11px] text-[#666]">
+        推奨環境: Internet Explorer 11 ｜ 総務部 文書課 内線 2200 ｜ 決裁の催促は所属長を経由してください
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // 掟: 本体が無いページでは何もしない（存在ガード。非null断定は禁止）
+    const form = document.getElementById('ringi-form');
+    if (form) initRingi(form as HTMLFormElement);
+
+    function initRingi(form: HTMLFormElement) {
+      const KEY = 'darari-ringi';
+      type Hist = { no: string; title: string; amount: number; approver: string; status: string };
+
+      // 決裁権限表（イントラ掲示の抜粋と同一）
+      const route = (amount: number) => {
+        if (amount < 100000) return { approver: '課長', period: '即日〜3営業日', chain: ['課長'] };
+        if (amount < 1000000) return { approver: '部長', period: '1〜2週間', chain: ['課長', '部長'] };
+        if (amount < 10000000) return { approver: '本部長', period: '2週間〜1ヶ月', chain: ['課長', '部長', '本部長'] };
+        return { approver: '稟議（役員決裁）', period: '1〜6ヶ月', chain: ['課長', '部長', '本部長', '担当役員', '社長'] };
+      };
+
+      const load = (): Hist[] => {
+        try {
+          const raw = localStorage.getItem(KEY);
+          if (raw) return JSON.parse(raw) as Hist[];
+        } catch {
+          /* 壊れた保存は無視 */
+        }
+        return [];
+      };
+      const save = (h: Hist[]) => localStorage.setItem(KEY, JSON.stringify(h));
+      const yen = (n: number) => n.toLocaleString('ja-JP') + '円';
+
+      const renderHistory = () => {
+        const el = document.getElementById('ringi-history');
+        if (!el) return;
+        const h = load();
+        if (h.length === 0) {
+          el.innerHTML = '<tr><td class="border border-[#ddd] px-3 py-1.5 text-[#888]" colspan="5">（起案履歴はありません）</td></tr>';
+          return;
+        }
+        el.innerHTML = '';
+        h.forEach((r) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML =
+            `<td class="border border-[#ddd] px-3 py-1.5">${r.no}</td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5"></td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5 text-right">${yen(r.amount)}</td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5">${r.approver}</td>` +
+            `<td class="border border-[#ddd] px-3 py-1.5">${r.status}</td>`;
+          const tds = tr.querySelectorAll('td');
+          if (tds[1]) tds[1].textContent = r.title; // 件名はユーザー入力なのでtextContentで
+          el.appendChild(tr);
+        });
+      };
+
+      // 金額を入れた瞬間に決裁ルートをプレビュー（ここだけ親切なのが逆に不気味、という様式美）
+      const amountEl = document.getElementById('ringi-amount') as HTMLInputElement | null;
+      const preview = document.getElementById('ringi-route-preview');
+      amountEl?.addEventListener('input', () => {
+        if (!preview) return;
+        const v = Number(amountEl.value);
+        if (!v || v <= 0) {
+          preview.textContent = '';
+          return;
+        }
+        const r = route(v);
+        preview.textContent = `→ 決裁者: ${r.approver}（所要目安 ${r.period}）`;
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = (document.getElementById('ringi-title') as HTMLInputElement | null)?.value?.trim() || '';
+        const kubun = (document.getElementById('ringi-kubun') as HTMLSelectElement | null)?.value || '';
+        const amount = Number((document.getElementById('ringi-amount') as HTMLInputElement | null)?.value);
+        const riyu = (document.getElementById('ringi-riyu') as HTMLTextAreaElement | null)?.value?.trim() || '';
+        const jizen = (document.getElementById('ringi-jizen') as HTMLInputElement | null)?.checked || false;
+        const mitsumori = (document.getElementById('ringi-mitsumori') as HTMLInputElement | null)?.checked || false;
+        const result = document.getElementById('ringi-result');
+        if (!result) return;
+        result.classList.remove('hidden');
+        const ng = (lines: string[]) => {
+          result.innerHTML = lines.map((l) => l.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('<br />');
+          result.className = 'mt-3 border border-[#c00] bg-[#fdeaea] px-3 py-2 text-[12px] font-bold text-[#c00]';
+        };
+
+        const errors: string[] = [];
+        if (!title) errors.push('差戻し: 件名が未入力です。');
+        if (!amount || amount <= 0) errors.push('差戻し: 金額が未入力です。');
+        if (riyu.length < 40) {
+          errors.push('差戻し: 理由・効果が具体的ではありません（40字未満）。定量効果（月◯時間削減・年◯円の効果）を記載してください（稟議規程 第7条）。');
+        } else if (!/[0-9０-９]/.test(riyu)) {
+          errors.push('差戻し: 理由・効果に数字がありません。「業務効率化のため」では決裁者に効果が伝わりません。定量効果を1つ以上記載してください。');
+        }
+        if (kubun === 'システム・SaaS（クラウド）' && !jizen) {
+          errors.push('差戻し: 有料クラウドサービスは金額にかかわらず情報システム部・法務部の事前確認が必要です（決裁権限表 注記）。先に事前確認を済ませてください。');
+        }
+        if (amount >= 1000000 && !mitsumori) {
+          errors.push('差戻し: 100万円以上の案件は2社以上の見積書の回付が必要です（調達基準）。');
+        }
+        if (errors.length > 0) {
+          ng(errors);
+          return;
+        }
+
+        const r = route(amount);
+        const no = 'RG-2026-' + String(Math.floor(Math.random() * 90000) + 10000);
+        const hist = load();
+        hist.unshift({ no, title, amount, approver: r.approver, status: `回覧中（${r.period}）` });
+        save(hist);
+        renderHistory();
+
+        result.textContent = `稟議番号 ${no} で起案されました。決裁ルート: ${['起案者', ...r.chain].join(' → ')}（所要目安 ${r.period}）。`;
+        result.className = 'mt-3 border border-[#1b3a6b] bg-[#eef7ee] px-3 py-2 text-[12px] font-bold';
+
+        // 回覧状況を描画（1人目だけ即承認、2人目以降は様式美で止まる）
+        const box = document.getElementById('ringi-status-box');
+        const rows = document.getElementById('ringi-status-rows');
+        if (box && rows) {
+          box.classList.remove('hidden');
+          rows.innerHTML = '';
+          r.chain.forEach((name, i) => {
+            const tr = document.createElement('tr');
+            const state =
+              i === 0
+                ? '<span class="font-bold text-[#1b3a6b]">承認（即日）</span>'
+                : i === 1
+                  ? '<span class="text-[#a06000]">回覧中（押印待ち）</span>'
+                  : '<span class="text-[#888]">未着</span>';
+            const note =
+              i === 1
+                ? name === '部長'
+                  ? '出張中のため今週は押印されません'
+                  : '前の案件を確認中です'
+                : i === r.chain.length - 1 && name === '社長'
+                  ? '「現物を見せてくれ」と言われる可能性があります（三現主義）'
+                  : '';
+            tr.innerHTML =
+              `<td class="border border-[#ddd] px-3 py-1.5">${i + 1}</td>` +
+              `<td class="border border-[#ddd] px-3 py-1.5">${name}</td>` +
+              `<td class="border border-[#ddd] px-3 py-1.5">${state}</td>` +
+              `<td class="border border-[#ddd] px-3 py-1.5 text-[11px] text-[#666]">${note}</td>`;
+            rows.appendChild(tr);
+          });
+        }
+      });
+
+      renderHistory();
+    }
+  </script>
+</Base>
