@@ -123,7 +123,9 @@ Write/Edit した直後に検査が走り、NGはエージェントに自動で�
    （darari本人の検品から抽出したルール。「鉄則」は絶対に守る。特にA会社特定/B創作禁止/C安全）
 3. 文体トーン見本: /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles/001-jtc-ai-jijou.md
    （第1話がトーンの基準。※004を見本にするのは2026-08-18 darari指示で廃止）
-   文体の規則: 1文1行を基本・句点のあと改行・体言止め多用しない・「って」→「という」
+   文体学習素材: /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/素材_darari_note記事一覧と文体分析_20260818.md
+   （本人noteの「取り込むもの/取り込まないもの」リスト。ツッコミ・引用→一言ツッコミ・小さい提案を学ぶ）
+   文体の規則: 1文1行を基本・句点のあと改行・体言止め多用しない・「って」→「という」・「じゃあ」→「では」
    （イケハヤ添削くん文体ルール。詳細は ikehaya-tensaku スキル）
 4. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/20_添削の学び/AI臭チェック_だらリーヌ版.md
    （AI臭の6分類検査表。提出前に自分の原稿を上から照合する。「家風としてOK」の項も読むこと）
