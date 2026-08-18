@@ -16,7 +16,7 @@ import { gfm, gfmHtml } from 'micromark-extension-gfm';
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RULES_PATH = path.join(REPO, '10_drafts', '20_添削の学び', 'ng-rules.json');
-const ENDING_RUN_LIMIT = 4; // 同一文末がこの数以上連続でwarn（検品済み記事に3連続は普通にあるため）
+const ENDING_RUN_LIMIT = 3; // 同一文末がこの数以上連続でNG（darari裁定 8/18「同じ語尾は2連続まで」）
 
 function loadRules() {
   return JSON.parse(fs.readFileSync(RULES_PATH, 'utf8')).rules.filter(r => r.enabled !== false);
@@ -139,7 +139,7 @@ function checkFile(file, scope) {
       findings.push({
         id: 'DOC-001', label: `文末単調（「${run.cat}。」が${run.count}文連続）`, severity: 'error',
         line: run.line, matched: `${run.cat}。×${run.count}`, sentence: run.sample,
-        good: ['連続のどれか1文の文末を変える。体言止め・短文・「〜ですよね？」の問いかけ・独り言（F参照）。darari裁定「4連発は普通に直したい」（8/15）'],
+        good: ['連続のどれか1文の文末を変える。体言止め・短文・「〜ですよね？」の問いかけ・独り言（F参照）。darari裁定「同じ語尾は2連続まで」（8/18。8/15の4連発NGを強化）'],
       });
     }
     run = { cat: null, count: 0, line: 0, sample: '' };
