@@ -4,7 +4,7 @@ description: '上司・AI倫理・情シス・法務。JTCで有料AIを通す�
 pubDate: 2026-08-06
 series: '記録'
 number: 4
-ogImage: '/images/articles/004-claude-team.jpg'
+ogImage: '/images/articles/004-claude-team.png'
 draft: false
 ---
 

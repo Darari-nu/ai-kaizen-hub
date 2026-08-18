@@ -28,6 +28,7 @@ const articleNotices: Notice[] = published.map((a) => ({
 }));
 
 const manualNotices: Notice[] = [
+  { date: '2026.08.18', tag: '通達', dept: '生産技術課', text: '設備稼働月報（様式S-3・まとめExcel）の提出廃止について（8月度より設備稼働管理アプリへ移行。旧様式は参考掲載します）', href: '/files/様式S-3_設備稼働月報まとめ_製造一課_2026年7月度.xlsx' },
   { date: '2026.08.17', tag: '通達', dept: '経営企画本部', text: '目標管理シート（様式H-2）のシステム化試験について（β運用開始。ベクトル整合チェックつき）', href: '/company/intranet/mokuhyo/' },
   { date: '2026.08.17', tag: 'お願い', dept: '生産技術課', text: '改善提案の提出について（一人・年2件が目標です。ノルマではありません）', href: '/company/intranet/kaizen-teian/' },
   { date: '2026.08.17', tag: 'お願い', dept: '品質保証部', text: '内部監査（上期）指摘の是正処置提出について（期限超過1件。なぜなぜは最低3回です）', href: '/company/intranet/kansa/' },
@@ -235,7 +236,7 @@ const kairan = [
               <li class="py-1.5"><a href="/company/intranet/bunsho/" class="underline">文書管理システム</a><span class="ml-2 text-[10px] text-[#999]">（要VPN→接続済みと判定されます）</span></li>
               <li class="py-1.5"><a href="/company/intranet/kaigiroku/" class="underline">会議録（AI自動作成）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/kaigiroku-manual/" class="underline">操作手引</a></span></li>
               <li class="py-1.5"><a href="/company/intranet/nittei/" class="underline">開発日程作成システム（大日程）</a><span class="ml-2 text-[10px] text-[#1b3a6b]"><a href="/company/intranet/nittei-manual/" class="underline">操作手引（第9版・必読）</a></span></li>
-              <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりAI自動集計</span></li>
+              <li class="py-1.5"><a href="/company/intranet/kadou-shukei/" class="underline">設備稼働集計（月次）</a><span class="ml-2 text-[10px] font-bold text-[#1b3a6b]">8月度よりアプリで自動集計</span><span class="ml-1 text-[10px] text-[#1b3a6b]"><a href="/files/様式S-3_設備稼働月報まとめ_製造一課_2026年7月度.xlsx" class="underline">旧様式S-3（Excel）</a></span></li>
               <li class="py-1.5"><span class="cursor-default underline decoration-dotted">Copilot Chat</span><span class="ml-2 text-[10px] text-[#999]">（ライセンス申請中・稟議148日目）</span></li>
             </ul>
             <div class="border-b border-t border-[#eee] bg-[#f5f5f0] px-3 py-1 text-[11px] font-bold text-[#666]">品質・安全</div>
