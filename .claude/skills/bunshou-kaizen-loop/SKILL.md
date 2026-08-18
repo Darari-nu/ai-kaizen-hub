@@ -102,8 +102,9 @@ Write/Edit した直後に検査が走り、NGはエージェントに自動で�
 
 ### 7. 反映して閉じる
 
-記事修正 → `_template.md` の機械検査 → `npm run build` → push →
-検品室を再発行（`kenpin-shitsu` スキル）→ 本人に「何を直したか」「何をルールにしたか」を報告する。
+記事修正 → `_template.md` の機械検査 → **AI臭セルフチェック**（`10_drafts/20_添削の学び/AI臭チェック_だらリーヌ版.md` の検査表） →
+**Codexセカンドオピニオン検品**（RULES F6・2026-08-18 darari指示。`codex exec` にAI臭・読みにくさの指摘を出させ、妥当なものを反映） →
+`npm run build` → push → 検品室を再発行（`kenpin-shitsu` スキル）→ 本人に「何を直したか」「何をルールにしたか」を報告する。
 
 ## 執筆時の注入（ループの出口・ここまでがこのスキルの範囲）
 
@@ -121,6 +122,8 @@ Write/Edit した直後に検査が走り、NGはエージェントに自動で�
    （darari本人の検品から抽出したルール。「鉄則」は絶対に守る。特にA会社特定/B創作禁止/C安全）
 3. 文体見本: /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles/004-claude-team.md
    （少しだけ寄せる。完全には寄せない）
+4. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/20_添削の学び/AI臭チェック_だらリーヌ版.md
+   （AI臭の6分類検査表。提出前に自分の原稿を上から照合する。「家風としてOK」の項も読むこと）
 
 縛り:
 - 使ってよい実体験・数字は次に列挙するものだけ: （ここに列挙する）
