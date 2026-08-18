@@ -4,8 +4,16 @@ import { join } from 'node:path';
 
 const ROOT = '/Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP';
 const DIR = join(ROOT, 'src/content/articles');
+
+// 2館制（2026-08-19 darari指示「検品ファイルが重くなりすぎたので2つに分けて」）
+// 第1館 = 記事001〜032＋Substack原稿（既存URL）／第2館 = 記事033以降＋新設ページ紹介
+// 使い方: node build-kenpin.mjs      → 第1館 /tmp/kenpin.html
+//         node build-kenpin.mjs 2    → 第2館 /tmp/kenpin2.html
+const VOL = process.argv[2] === '2' ? 2 : 1;
+const VOL1_URL = 'https://claude.ai/code/artifact/81fd4910-daef-412b-bc58-13b13cf7f122';
+const VOL2_URL = 'https://claude.ai/code/artifact/77633bc0-f512-4ad3-a84f-9937a5d91d3a';
 const PUBLIC = join(ROOT, 'public');
-const OUT = '/tmp/kenpin.html';
+const OUT = VOL === 2 ? '/tmp/kenpin2.html' : '/tmp/kenpin.html';
 
 // ヒーロー画像をdataURIで埋め込む（Artifactは外部ホストへの通信が禁止のため）
 // 元画像は数MBあるので、macOSのsipsで幅720pxのjpegサムネを作ってから埋める
@@ -34,7 +42,7 @@ function inlineMediaMap(raw) {
     const src = join(PUBLIC, p.replace(/^\//, ''));
     if (!existsSync(src)) { map[p] = { missing: true }; continue; }
     const kb = statSync(src).size / 1024;
-    if (kb > 3072) { map[p] = { tooBig: true, kb: Math.round(kb) }; continue; }
+    if (kb > 512) { map[p] = { tooBig: true, kb: Math.round(kb) }; continue; } // 512KB超は埋め込まず公開サイトへのリンクにする（2026-08-19軽量化）
     map[p] = { video: `data:video/mp4;base64,${readFileSync(src).toString('base64')}` };
   }
   return map;
@@ -49,7 +57,7 @@ function embedImage(ogImage) {
     const thumb = join(CACHE, base.replace(/\//g, '_') + '.jpg');
     try {
       if (!existsSync(thumb) || statSync(thumb).mtimeMs < statSync(src).mtimeMs) {
-        execFileSync('sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '62', '-Z', '720', src, '--out', thumb], { stdio: 'ignore' });
+        execFileSync('sips', ['-s', 'format', 'jpeg', '-s', 'formatOptions', '55', '-Z', '640', src, '--out', thumb], { stdio: 'ignore' });
       }
       const buf = readFileSync(thumb);
       return { uri: `data:image/jpeg;base64,${buf.toString('base64')}`, path: base + ext, kb: origKb };
@@ -142,7 +150,7 @@ const NOTES = {
 // Brain教材の検品はこのページではやらない（2026-08-17 darari指示で専用の検品室に分離。build-kenpin-brain.mjs 参照）
 
 const files = readdirSync(DIR).filter((f) => f.endsWith('.md') && !f.startsWith('_')).sort();
-const articles = files.map((f) => {
+let articles = files.map((f) => {
   const raw = readFileSync(join(DIR, f), 'utf8');
   const m = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   const fm = Object.fromEntries(
@@ -196,6 +204,14 @@ const STATUS = {
   fix: { label: '🔄 指示を反映（再検品おねがいします）', cls: 'st-fix' },
   new: { label: '🆕 検品まち', cls: 'st-new' },
 };
+// 2館に振り分け: 数値番号<=32とSubstack(S-)は第1館、33以降とページ(P-)は第2館
+const inVol = (a) => {
+  const s = String(a.fm.number);
+  if (/^\d+$/.test(s)) return parseInt(s, 10) <= 32 ? 1 : 2;
+  return s.startsWith('P-') ? 2 : 1;
+};
+articles = articles.filter((a) => inVol(a) === VOL);
+
 const done = articles.filter((a) => a.status === 'ok').length;
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -241,7 +257,7 @@ const sections = articles.map((a) => `
 
 const html = `<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AIカイゼン 検品室</title>
+<title>AIカイゼン 検品室${VOL === 2 ? ' 第2館' : ''}</title>
 <style>
 :root{--paper:#FBFAF7;--ink:#1C1B18;--nezu:#6E6A61;--rule:#E3E0D8;--shu:#C73E2E;--card:#F4F0E7;--ok:#2E7D4F;}
 @media (prefers-color-scheme: dark){:root{--paper:#14181F;--ink:#ECEAE4;--nezu:#9A968C;--rule:#2A303B;--shu:#D96A5A;--card:#1B2029;--ok:#5FB584;}}
@@ -307,7 +323,8 @@ a:focus-visible{outline:2px solid var(--shu);outline-offset:2px;}
 </style>
 <div class="wrap">
   <p class="lead">社外秘（あなた専用）｜全${articles.length}本｜✅検品ずみ ${done}本 / のこり ${articles.length - done}本</p>
-  <h1>AIカイゼン <span>検品室</span></h1>
+  <h1>AIカイゼン <span>検品室</span>${VOL === 2 ? ' 第2館' : ' 第1館'}</h1>
+  <p class="lead">${VOL === 2 ? '記事033〜＋新設ページはこの館' : '記事001〜032＋Substack原稿はこの館'}${VOL === 2 ? (VOL1_URL ? `｜<a href="${VOL1_URL}">第1館（001〜032）はこちら</a>` : '') : (VOL2_URL ? `｜<a href="${VOL2_URL}">第2館（033〜）はこちら</a>` : '｜第2館は準備中')}</p>
   <p class="conn" id="conn">Googleドライブ連携: 確認中…</p>
   <div class="howto">
     <b>使い方</b><br>
@@ -355,7 +372,7 @@ function render(slug, raw){
     else if(vid){ flushP();flushL();flushQ();
       const m=media[vid[1]];
       if(m&&m.video) html+='<video controls muted playsinline preload="metadata" style="width:100%;border:1px solid var(--rule)" src="'+m.video+'"></video><p class="imgnote">動画: '+eschtml(vid[1])+'</p>';
-      else if(m&&m.tooBig) html+='<p class="imgnote">（動画 '+eschtml(vid[1])+' は'+m.kb+'KBと大きいためここでは省略。本番サイトで確認してください）</p>';
+      else if(m&&m.tooBig) html+='<p class="imgnote">🎬 動画（'+m.kb+'KB）はページを軽くするため埋め込んでいません → <a href="https://darari-nu.com'+eschtml(vid[1])+'" target="_blank" rel="noopener">サイトで再生する</a></p>';
       else html+='<p class="imgnote">（動画がまだありません: '+eschtml(vid[1])+'）</p>';
     }
     else if(/^### /.test(l)){ flushP();flushL();flushQ(); html+='<h4>'+mdInline(eschtml(l.slice(4)))+'</h4>'; }

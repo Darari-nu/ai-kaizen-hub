@@ -11,7 +11,12 @@ darariは会社PC・スマホ・自宅PCを行き来する。だから**検品�
 ## 鉄則
 
 1. **同じURLを使い続ける**。新しいURLを生やさない
-   - 検品室URL: `https://claude.ai/code/artifact/81fd4910-daef-412b-bc58-13b13cf7f122`
+   - **2館制**（2026-08-19 darari指示「重くなりすぎたので2つに分けて」）:
+     - 検品室 **第1館**（記事001〜032＋Substack原稿・favicon🔎）: `https://claude.ai/code/artifact/81fd4910-daef-412b-bc58-13b13cf7f122`
+     - 検品室 **第2館**（記事033〜＋新設ページ紹介・favicon🗂️）: `https://claude.ai/code/artifact/77633bc0-f512-4ad3-a84f-9937a5d91d3a`
+     - ビルド: `node 10_drafts/80_tools/build-kenpin.mjs`（第1館→/tmp/kenpin.html）／`node 10_drafts/80_tools/build-kenpin.mjs 2`（第2館→/tmp/kenpin2.html）
+     - 更新した記事が属する館だけ再発行すればよい。振り分けは記事番号（32以下=第1館）で自動
+     - 512KB超の動画は埋め込まず公開サイトへのリンクになる（軽量化。8/19〜）
    - **Brain教材 検品室**（2026-08-17 darari指示で分離。favicon🥷）: `https://claude.ai/code/artifact/234c83fd-d4d0-471c-8e04-9dbba52c8430`
      - ビルド: `node 10_drafts/80_tools/build-kenpin-brain.mjs` → `/tmp/kenpin-brain.html`。原稿は `10_drafts/50_brain/NN_*.md`（gitignore内・公開リポに載せない）
      - Brain教材の原稿は本体の検品室に混ぜない
