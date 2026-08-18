@@ -22,7 +22,8 @@ darariの依頼原文（8/8）:
 | 記事の型と機械検査 | `src/content/articles/_template.md` | 8ブロック構成・grep検査。**機械で守れるルール** |
 | 検品から抽出した執筆ルール | `10_drafts/20_添削の学び/RULES.md` | **人の判断が要るルール**。このスキルが育てる |
 | 文体の人格・語り口の正本 | `~/Claudecode/260307_2nd-Brain/00_システム/00_UserProfile/03_執筆スタイル(Style_Guidelines).md` | ペルソナの根っこ（全レーン共通） |
-| 文体のトーン見本 | `src/content/articles/004-claude-team.md` | 本人が「好き」と言った文体。少しだけ寄せる |
+| 文体の規則 | イケハヤ添削くんの文体ルール（`10_drafts/25_外部原典/`のフル原典＋`ikehaya-tensaku`スキル） | 1文1行・句点のあと改行・体言止め多用しない・って禁止 等（2026-08-18 darari支給）。※004を文体見本にするのは8/18 darari指示で廃止 |
+| 文体のトーン見本 | `src/content/articles/001-jtc-ai-jijou.md` | 第1話がトーンの基準（親しみ・熱。ikehaya-tensakuスキル既定） |
 | ネタ | `10_drafts/ネタ帳.md` | ★=一次体験の裏付けあり。ここからしか書かない |
 | 旧・添削原則（凍結） | `~/Claudecode/260307_2nd-Brain/43_JTC_AI推進室/_guides/` | 2026-08-05以前の資産。参照はするが、新しい学びはこのリポに書く |
 
@@ -120,8 +121,10 @@ Write/Edit した直後に検査が走り、NGはエージェントに自動で�
    （8ブロック構成と機械検査。公開前にgrep検査が0件になること）
 2. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/20_添削の学び/RULES.md
    （darari本人の検品から抽出したルール。「鉄則」は絶対に守る。特にA会社特定/B創作禁止/C安全）
-3. 文体見本: /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles/004-claude-team.md
-   （少しだけ寄せる。完全には寄せない）
+3. 文体トーン見本: /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/src/content/articles/001-jtc-ai-jijou.md
+   （第1話がトーンの基準。※004を見本にするのは2026-08-18 darari指示で廃止）
+   文体の規則: 1文1行を基本・句点のあと改行・体言止め多用しない・「って」→「という」
+   （イケハヤ添削くん文体ルール。詳細は ikehaya-tensaku スキル）
 4. /Volumes/DevSSD/Vibe_Website/260805_Darari-nu_HP/10_drafts/20_添削の学び/AI臭チェック_だらリーヌ版.md
    （AI臭の6分類検査表。提出前に自分の原稿を上から照合する。「家風としてOK」の項も読むこと）
 
