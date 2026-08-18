@@ -16,6 +16,7 @@ Substackの記事も「会社員のためのAIカイゼン」に全振り。
 | `AIカイゼンHP_構想整理_20260805.md` | 8/2〜8/4ブレストの正本。旗・コンテンツ方針・軍議の裁定 |
 | `要件定義_draft_v0.md` | 要件定義の素案（このリポジトリで育てて最終的にREQUESTS.mdに昇格させる） |
 | `~/Claudecode/tama/memory/project_darari_hasshin_positioning.md` | 発信ポジショニングの一次記録 |
+| `~/Claudecode/ai-darari-obsidian-memos/notes/inbox/` | **darari本人のObsidianメモ（GitHub: Darari-nu/ai-darari-obsidian-memos）**。記事の一次情報がここに入る（2026-08-19本人指示「記事書くときにはこのGithubに入ってますので」）。**記事を書く前に `git pull` して新着を確認する** |
 | `~/Claudecode/260307_2nd-Brain/00_システム/00_UserProfile/` | 本人プロフィール・文体ルールの正本 |
 | `~/Claudecode/260307_2nd-Brain/43_JTC_AI推進室/` | 既存記事在庫（HPコンテンツの母体） |
 
@@ -73,6 +74,7 @@ darariから文章の指摘が来たら、正規表現で拾えるものは台�
 - `image-gen-midori` — **画像を生成するときは必ずこれを使う**。プロンプトはみどり脳の7要素で組み、Codex CLIで生成、検品まで（darariの方針: この種の知識はメモリーでなくリポ内スキルに置く）
 - `kenpin-shitsu` — **文章をdarari本人に検品してもらうときは必ずこれを使う**。チャットに全文を貼らず、固定URLの検品室Artifactで見てもらう（会社PC・スマホ両対応）。保存はGoogleドライブ経由
 - `bunshou-kaizen-loop` — **記事を書く前と、検品を回収したあとに必ず使う**。検品の指摘を`10_drafts/20_添削の学び/RULES.md`に蓄積し、次回の執筆に自動で効かせる自己学習ループ。同じ指摘を二度受けないための仕組み
+- `koukai-yotei` — **公開スケジュール（記事・Substack・X投稿）の管理に必ず使う**。台帳の正本は `data/koukai-calendar.yaml`、閲覧は `node scripts/koukai-calendar.mjs`、毎朝4:30にDiscordへ当日タスクを自動通知（スケジュールタスク `koukai-asa-tsuuchi`・Sonnet実行）
 - `substack-post` — **Substackへの配信作業に必ず使う**。記事そのまま方式（通達・演出ジョークはボツ済み）、ストックは`10_drafts/10_substack/<記事番号>_<配信日>/配信用.md`、手順は必ずリポ→内蔵ブラウザで下書き投入→検証→本人が送信。送信ボタンは絶対に代行しない
 
 リンク保留（必要になったら使う。実体は `~/.claude/skills/` にある）:

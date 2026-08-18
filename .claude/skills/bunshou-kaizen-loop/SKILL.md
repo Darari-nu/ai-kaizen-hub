@@ -25,6 +25,7 @@ darariの依頼原文（8/8）:
 | 文体の規則 | イケハヤ添削くんの文体ルール（`10_drafts/25_外部原典/`のフル原典＋`ikehaya-tensaku`スキル） | 1文1行・句点のあと改行・体言止め多用しない・って禁止 等（2026-08-18 darari支給）。※004を文体見本にするのは8/18 darari指示で廃止 |
 | 文体のトーン見本 | `src/content/articles/001-jtc-ai-jijou.md` | 第1話がトーンの基準（親しみ・熱。ikehaya-tensakuスキル既定） |
 | ネタ | `10_drafts/ネタ帳.md` | ★=一次体験の裏付けあり。ここからしか書かない |
+| 本人の一次メモ | `~/Claudecode/ai-darari-obsidian-memos/notes/inbox/`（GitHub: Darari-nu/ai-darari-obsidian-memos） | darariのObsidianメモの同期先（8/19本人指示）。**書く前に`git pull`**。新着メモは素材として`素材_darari原文_*`に保存してから使う |
 | 旧・添削原則（凍結） | `~/Claudecode/260307_2nd-Brain/43_JTC_AI推進室/_guides/` | 2026-08-05以前の資産。参照はするが、新しい学びはこのリポに書く |
 
 ## 入力は2系統ある（片方だけ見ると取りこぼす）
