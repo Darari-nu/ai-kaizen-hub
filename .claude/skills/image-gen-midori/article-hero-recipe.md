@@ -45,6 +45,9 @@ yet hopeful poetic atmosphere, no text, no letters, no logos
 | 001 JTC AI事情 | 潜望鏡頭＝キュービクルの中から観察して実況 | `articles/001-jtc-ai-jijou.png` |
 | 3軸ビジュアル(1:1) | 記録=光るペン先／AIカイゼン=工具箱の若葉／ガバナンス=天秤の灯り（人物なし静物・小物版の子レシピ） | `axis/kiroku.png` `axis/kaizen.png` `axis/governance.png` |
 | 058 外注先AI(16:9) | 頭が開いた傘・傘下の書類一枚だけ暖色に灯る＝既存契約の機密保持義務が仕事を覆い続ける | `articles/058-gaichuusaki-ai.png` |
+| 059 EU透明性義務(16:9) | 中身が見えるガラスケースの頭＋暖色に灯る下げ札＝「これはAIです」と自ら名乗る透明性 | `articles/059-eu-toumeisei.png` |
+| 060 禁止AI(16:9) | 踏切警報灯の頭・赤一点＝人間を守るために引かれた「ここから先はダメ」の線 | `articles/060-kinshi-ai.png` |
+| 061 自分データ(16:9) | 小引き出しだらけのカードキャビネットの頭・開いた一段の小瓶だけ灯る＝眠るデータから特徴だけ抽出 | `articles/061-jibun-data.png` |
 
 ## 検品（親レシピ固有）
 
