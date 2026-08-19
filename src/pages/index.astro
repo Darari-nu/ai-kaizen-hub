@@ -190,7 +190,7 @@ const faqs = [
             <p class="mt-4 font-display text-lg font-bold">記録<span class="ml-2 text-shu">──</span></p>
             <p class="mt-1 text-sm leading-relaxed text-nezu">会社にAIを申請→導入→使い倒す実況</p>
           </a>
-          <a href="#article-list" data-series-link="AIカイゼン" class="group block no-underline" data-reveal data-reveal-delay="130">
+          <a href={kaizenMenu.length > 0 ? '#kaizen-menu' : '#article-list'} data-series-link="AIカイゼン" class="group block no-underline" data-reveal data-reveal-delay="130">
             <div class="overflow-hidden">
               <img
                 src="/images/axis/kaizen.png"
