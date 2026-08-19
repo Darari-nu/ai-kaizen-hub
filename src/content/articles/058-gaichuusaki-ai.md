@@ -5,7 +5,7 @@ pubDate: 2026-08-19
 series: 'ガバナンス'
 number: 58
 ogImage: '/images/articles/058-gaichuusaki-ai.png'
-draft: true
+draft: false
 hook: '外注先のAI利用、返事の入口は新ルールではなく、もう結んである契約です'
 ---
 

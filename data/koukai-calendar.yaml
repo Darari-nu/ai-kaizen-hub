@@ -96,33 +96,33 @@ slots:
     owner: claude
     next: HP公開と同時にclaudeが下書き作成 → darariが貼って投稿
 
-# --- 8/19執筆の本人メモ4本（058-061）: 3日おき配信・HP公開はSubstackと同日draft解除（8/20 darari裁定） ---
+# --- 8/19執筆の本人メモ4本（058-061）: 3日おき配信・HP公開はSubstackと同日draft解除（8/20 darari裁定・同日「058を今日に前倒し」で全体繰り上げ） ---
 
-  - date: 2026-08-23
+  - date: 2026-08-20
     channel: hp
     what: 058 外注先のAI利用（draft解除）
     ref: src/content/articles/058-gaichuusaki-ai.md
-    status: 検品OK
+    status: 公開済み
     owner: claude
-    next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
+    next: 完了（8/20 draft解除→push）
 
-  - date: 2026-08-23
+  - date: 2026-08-20
     channel: substack
     what: 058 外注先のAI利用（記事そのまま方式）
-    ref: 10_drafts/10_substack/058_20260823/配信用.md
+    ref: 10_drafts/10_substack/058_20260820/配信用.md
     status: 検品OK
-    owner: claude
-    next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
+    owner: darari
+    next: 本日は別セッションで投入・配信（8/20 darari指示）。ストック=058_20260820/配信用.md が正本
 
-  - date: 2026-08-23
+  - date: 2026-08-20
     channel: x
     what: 058 公開のシェアポスト
-    ref: 10_drafts/73_x-posts/20260823_058.md
+    ref: 10_drafts/73_x-posts/20260820_058.md
     status: 執筆前
     owner: claude
     next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
 
-  - date: 2026-08-26
+  - date: 2026-08-23
     channel: hp
     what: 059 EU透明性義務（draft解除）
     ref: src/content/articles/059-eu-toumeisei.md
@@ -130,23 +130,23 @@ slots:
     owner: claude
     next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
 
-  - date: 2026-08-26
+  - date: 2026-08-23
     channel: substack
     what: 059 EU透明性義務（記事そのまま方式）
-    ref: 10_drafts/10_substack/059_20260826/配信用.md
+    ref: 10_drafts/10_substack/059_20260823/配信用.md
     status: 検品OK
     owner: claude
     next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
 
-  - date: 2026-08-26
+  - date: 2026-08-23
     channel: x
     what: 059 公開のシェアポスト
-    ref: 10_drafts/73_x-posts/20260826_059.md
+    ref: 10_drafts/73_x-posts/20260823_059.md
     status: 執筆前
     owner: claude
     next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
 
-  - date: 2026-08-29
+  - date: 2026-08-26
     channel: hp
     what: 060 EU禁止AI（draft解除）
     ref: src/content/articles/060-kinshi-ai.md
@@ -154,23 +154,23 @@ slots:
     owner: claude
     next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
 
-  - date: 2026-08-29
+  - date: 2026-08-26
     channel: substack
     what: 060 EU禁止AI（記事そのまま方式）
-    ref: 10_drafts/10_substack/060_20260829/配信用.md
+    ref: 10_drafts/10_substack/060_20260826/配信用.md
     status: 検品OK
     owner: claude
     next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
 
-  - date: 2026-08-29
+  - date: 2026-08-26
     channel: x
     what: 060 公開のシェアポスト
-    ref: 10_drafts/73_x-posts/20260829_060.md
+    ref: 10_drafts/73_x-posts/20260826_060.md
     status: 執筆前
     owner: claude
     next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
 
-  - date: 2026-09-01
+  - date: 2026-08-29
     channel: hp
     what: 061 自分データ（draft解除）
     ref: src/content/articles/061-jibun-data.md
@@ -178,18 +178,18 @@ slots:
     owner: claude
     next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
 
-  - date: 2026-09-01
+  - date: 2026-08-29
     channel: substack
     what: 061 自分データ（記事そのまま方式）
-    ref: 10_drafts/10_substack/061_20260901/配信用.md
+    ref: 10_drafts/10_substack/061_20260829/配信用.md
     status: 検品OK
     owner: claude
     next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
 
-  - date: 2026-09-01
+  - date: 2026-08-29
     channel: x
     what: 061 公開のシェアポスト
-    ref: 10_drafts/73_x-posts/20260901_061.md
+    ref: 10_drafts/73_x-posts/20260829_061.md
     status: 執筆前
     owner: claude
     next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
