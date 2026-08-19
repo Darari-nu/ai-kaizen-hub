@@ -86,7 +86,7 @@ slots:
     ref: 未定
     status: 未定
     owner: claude
-    next: 対象を決めて配信フォルダを作る（10_drafts/10_substack/00X_20260828/）
+    next: ※058-061シリーズ（8/23〜3日おき）を開始したため、この枠の要否をdarariに確認（8/29に060配信があり近接）
 
   - date: 2026-08-28
     channel: x
@@ -95,6 +95,104 @@ slots:
     status: 執筆前
     owner: claude
     next: HP公開と同時にclaudeが下書き作成 → darariが貼って投稿
+
+# --- 8/19執筆の本人メモ4本（058-061）: 3日おき配信・HP公開はSubstackと同日draft解除（8/20 darari裁定） ---
+
+  - date: 2026-08-23
+    channel: hp
+    what: 058 外注先のAI利用（draft解除）
+    ref: src/content/articles/058-gaichuusaki-ai.md
+    status: 検品OK
+    owner: claude
+    next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
+
+  - date: 2026-08-23
+    channel: substack
+    what: 058 外注先のAI利用（記事そのまま方式）
+    ref: 10_drafts/10_substack/058_20260823/配信用.md
+    status: 検品OK
+    owner: claude
+    next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
+
+  - date: 2026-08-23
+    channel: x
+    what: 058 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260823_058.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
+
+  - date: 2026-08-26
+    channel: hp
+    what: 059 EU透明性義務（draft解除）
+    ref: src/content/articles/059-eu-toumeisei.md
+    status: 検品OK
+    owner: claude
+    next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
+
+  - date: 2026-08-26
+    channel: substack
+    what: 059 EU透明性義務（記事そのまま方式）
+    ref: 10_drafts/10_substack/059_20260826/配信用.md
+    status: 検品OK
+    owner: claude
+    next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
+
+  - date: 2026-08-26
+    channel: x
+    what: 059 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260826_059.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
+
+  - date: 2026-08-29
+    channel: hp
+    what: 060 EU禁止AI（draft解除）
+    ref: src/content/articles/060-kinshi-ai.md
+    status: 検品OK
+    owner: claude
+    next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
+
+  - date: 2026-08-29
+    channel: substack
+    what: 060 EU禁止AI（記事そのまま方式）
+    ref: 10_drafts/10_substack/060_20260829/配信用.md
+    status: 検品OK
+    owner: claude
+    next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
+
+  - date: 2026-08-29
+    channel: x
+    what: 060 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260829_060.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
+
+  - date: 2026-09-01
+    channel: hp
+    what: 061 自分データ（draft解除）
+    ref: src/content/articles/061-jibun-data.md
+    status: 検品OK
+    owner: claude
+    next: 当日claudeがdraft解除→push（8/19検品OK・画像込み完成済み）
+
+  - date: 2026-09-01
+    channel: substack
+    what: 061 自分データ（記事そのまま方式）
+    ref: 10_drafts/10_substack/061_20260901/配信用.md
+    status: 検品OK
+    owner: claude
+    next: claudeが内蔵ブラウザで下書き投入 → darariが予約設定（送信ボタンは本人）
+
+  - date: 2026-09-01
+    channel: x
+    what: 061 公開のシェアポスト
+    ref: 10_drafts/73_x-posts/20260901_061.md
+    status: 執筆前
+    owner: claude
+    next: HP公開と同時にclaudeが下書き作成 → darari承認後にdispatchが予約投稿
 
 # --- 9月: ガバナンス連載月間（公開作戦の第4弾） ---
 # 014 → 015 → 021 → 023〜032 を火・金 2本/週で連続公開、毎金曜にSubstackダイジェスト。
