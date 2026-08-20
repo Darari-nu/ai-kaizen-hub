@@ -19,7 +19,7 @@ slots:
   - date: 2026-08-18
     channel: hp
     what: 第2弾 020 サイト自作メイキング + 016 Excel集計
-    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/
+    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/020-hp-seisaku.md
     status: 未定
     owner: claude
     next: 取り下げ（8/20 darari裁定・006-057一括リセット。新文体で再執筆後に日程を組み直す）
@@ -35,7 +35,7 @@ slots:
   - date: 2026-08-21
     channel: hp
     what: 012 国もやれ
-    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/
+    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/012-kuni-mo-yare.md
     status: 未定
     owner: claude
     next: 取り下げ（8/20一括リセット。ネタは059/060の隣で再執筆候補）
@@ -59,7 +59,7 @@ slots:
   - date: 2026-08-25
     channel: hp
     what: 第3弾 006 名刺Bot + 022 AIブラウザ
-    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/
+    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/006-meishi-bot.md
     status: 未定
     owner: claude
     next: 取り下げ（8/20一括リセット）
@@ -75,7 +75,7 @@ slots:
   - date: 2026-08-28
     channel: hp
     what: 017 議事録（007/008 は実機確認が取れ次第合流）
-    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/
+    ref: 10_drafts/90_ボツ/旧文体リセット_20260820/017-gijiroku.md
     status: 未定
     owner: claude
     next: 取り下げ（8/20一括リセット）
